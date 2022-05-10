@@ -57,9 +57,7 @@ You may need to check for this in hover events.
             thresholded.color = color;
             thresholded.threshold = null;
             thresholded.originSeries = s;
-            thresholded.data = [];
- 
-            var origpoints = datapoints.points,
+            thresholded.data = [];           var origpoints = datapoints.points,
                 addCrossingPoints = s.lines.show;
 
             var threspoints = [];
