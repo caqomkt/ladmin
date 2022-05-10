@@ -18,10 +18,10 @@ class Migration extends Command
 {
     // The command signature.
     protected $signature = 'la:migration {table} {--generate}';
-    
+
     // The command description.
     protected $description = 'Generate Migrations for LaraAdmin';
-    
+
     /**
      * Generate a Migration file either sample or from DB Context
      *
@@ -31,7 +31,7 @@ class Migration extends Command
     {
         $table = $this->argument('table');
         $generateFromTable = $this->option('generate');
-        if($generateFromTable) {
+        if ($generateFromTable) {
             $generateFromTable = true;
         }
         CodeGenerator::generateMigration($table, $generateFromTable, $this);
