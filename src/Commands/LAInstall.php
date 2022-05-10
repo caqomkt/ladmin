@@ -237,7 +237,7 @@ class LAInstall extends Command
                 // $this->info(exec('composer dump-autoload'));
                 $this->call('db:seed');
                 // Install Spatie Backup
-                $this->call('vendor:publish', ['--provider' => 'Spatie\Backup\BackupServiceProvider']);
+                //$this->call('vendor:publish', ['--provider' => 'Spatie\Backup\BackupServiceProvider']);
                 
                 // Edit config/database.php for Spatie Backup Configuration
                 if(LAHelper::getLineWithString('config/database.php', "dump_command_path") == -1) {
