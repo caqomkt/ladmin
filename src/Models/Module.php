@@ -1,11 +1,4 @@
 <?php
-/**
- * Code generated using LaraAdmin
- * Help: http://laraadmin.com
- * LaraAdmin is open-sourced software licensed under the MIT license.
- * Developed by: Dwij IT Solutions
- * Developer Website: http://dwijitsolutions.com
- */
 
 namespace Dwij\Laraadmin\Models;
 
@@ -77,17 +70,6 @@ class Module extends Model
         return $module->id;
     }
     
-    /**
-     * This function handles Module Migration via "Module::generate()" call from migrations file.
-     * This creates all given Module fields into database.
-     *
-     * @param $module_name Module Name
-     * @param $module_name_db Module Database name in lowercase and concatenated by underscore.
-     * @param $view_col View Column of Module for Index Anchor purpose.
-     * @param string $faIcon Module FontAwesome Icon "fa-cube"
-     * @param $fields Array of Module fields
-     * @throws Exception Throws exceptions if Invalid view_column_name provided.
-     */
     public static function generate($module_name, $module_name_db, $view_col, $faIcon = "fa-cube", $fields)
     {
         
