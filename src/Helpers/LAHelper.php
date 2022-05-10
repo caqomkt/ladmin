@@ -488,10 +488,10 @@ class LAHelper
     {
         $var = \App::VERSION();
         
-        if(starts_with($var, "5.2")) {
-            return 5.2;
-        } else if(starts_with($var, "5.3")) {
-            return 5.3;
+        if(starts_with($var, "5.4")) {
+            return 5.4;
+        } else if(starts_with($var, "5.6")) {
+            return 5.6;
         } else if(substr_count($var, ".") == 3) {
             $var = substr($var, 0, strrpos($var, "."));
             return $var . "-str";
