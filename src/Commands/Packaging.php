@@ -1,11 +1,5 @@
 <?php
-/**
- * Code generated using LaraAdmin
- * Help: http://laraadmin.com
- * LaraAdmin is open-sourced software licensed under the MIT license.
- * Developed by: Dwij IT Solutions
- * Developer Website: http://dwijitsolutions.com
- */
+
 
 namespace Dwij\Laraadmin\Commands;
 
@@ -71,7 +65,7 @@ class Packaging extends Command
         
         // Routes
         $this->line('Exporting Routes...');
-        if(LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
+        if(LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
             // $this->copyFile($from."/routes/web.php", $to."/app/routes.php"); // Not needed anymore
             $this->copyFile($from . "/routes/admin_routes.php", $to . "/app/admin_routes.php");
         } else {

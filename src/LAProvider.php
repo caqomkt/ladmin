@@ -1,11 +1,5 @@
 <?php
-/**
- * Code generated using LaraAdmin
- * Help: http://laraadmin.com
- * LaraAdmin is open-sourced software licensed under the MIT license.
- * Developed by: Dwij IT Solutions
- * Developer Website: http://dwijitsolutions.com
- */
+
 
 namespace Dwij\Laraadmin;
 
@@ -16,13 +10,7 @@ use Illuminate\Support\ServiceProvider;
 
 use Dwij\Laraadmin\Helpers\LAHelper;
 
-/**
- * Class LAProvider
- * @package Dwij\Laraadmin
- *
- * This is LaraAdmin Service Provider which looks after managing aliases, other required providers, blade directives
- * and Commands.
- */
+
 class LAProvider extends ServiceProvider
 {
     /**
@@ -51,7 +39,7 @@ class LAProvider extends ServiceProvider
         | Blade Directives for Entrust not working in Laravel 5.3
         |--------------------------------------------------------------------------
         */
-        if(LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
+        if(LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
             
             // Call to Entrust::hasRole
             Blade::directive('role', function ($expression) {
@@ -161,7 +149,7 @@ class LAProvider extends ServiceProvider
         
         // LAForm Input Maker
         Blade::directive('la_input', function ($expression) {
-            if(LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
+            if(LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
                 $expression = "(" . $expression . ")";
             }
             return "<?php echo LAFormMaker::input$expression; ?>";
@@ -169,7 +157,7 @@ class LAProvider extends ServiceProvider
         
         // LAForm Form Maker
         Blade::directive('la_form', function ($expression) {
-            if(LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
+            if(LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
                 $expression = "(" . $expression . ")";
             }
             return "<?php echo LAFormMaker::form$expression; ?>";
@@ -177,7 +165,7 @@ class LAProvider extends ServiceProvider
         
         // LAForm Maker - Display Values
         Blade::directive('la_display', function ($expression) {
-            if(LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
+            if(LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
                 $expression = "(" . $expression . ")";
             }
             return "<?php echo LAFormMaker::display$expression; ?>";
@@ -185,7 +173,7 @@ class LAProvider extends ServiceProvider
         
         // LAForm Maker - Check Whether User has Module Access
         Blade::directive('la_access', function ($expression) {
-            if(LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
+            if(LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
                 $expression = "(" . $expression . ")";
             }
             return "<?php if(LAFormMaker::la_access$expression) { ?>";
@@ -196,7 +184,7 @@ class LAProvider extends ServiceProvider
         
         // LAForm Maker - Check Whether User has Module Field Access
         Blade::directive('la_field_access', function ($expression) {
-            if(LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
+            if(LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
                 $expression = "(" . $expression . ")";
             }
             return "<?php if(LAFormMaker::la_field_access$expression) { ?>";

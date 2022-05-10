@@ -1,11 +1,5 @@
 <?php
-/**
- * Code generated using LaraAdmin
- * Help: http://laraadmin.com
- * LaraAdmin is open-sourced software licensed under the MIT license.
- * Developed by: Dwij IT Solutions
- * Developer Website: http://dwijitsolutions.com
- */
+
 
 namespace Dwij\Laraadmin\Controllers;
 
@@ -165,7 +159,7 @@ class ModuleController extends Controller
         }
         
         // Delete Admin Routes
-        if(LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
+        if(LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
             $file_admin_routes = base_path("/routes/admin_routes.php");
         } else {
             $file_admin_routes = base_path("/app/Http/admin_routes.php");
