@@ -33,7 +33,7 @@ class LAFormMaker
 				$required = $required2;
 			}
 			$field_type = ModuleFieldTypes::find($field_type);
-			$out = '<div class="form-inline">';
+			$out = '<div class="form-group">';
 			$required_ast = "";
 			if (!isset($params['class'])) {
 				$params['class'] = $class;
