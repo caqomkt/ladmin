@@ -140,7 +140,7 @@ class LAFormMaker
 					// ############### Remaining
 					$dval = $default_val;
 					if (($default_val != "") && ($default_val != "0000-00-00 00:00:00")) {
-						$dval = date("d/m/Y h:i A", strtotime($default_val));
+						$dval = date("d/m/Y H:i", strtotime($default_val));
 					}
 					$out .= "<div class='input-group datetime'>";
 					$out .= Form::text($field_name, $dval, $params);
@@ -330,7 +330,7 @@ class LAFormMaker
 				case 'Multiselect':
 					$out .= '<label for="' . $field_name . '">' . $label . $required_ast . ' :</label>';
 					unset($params['data-rule-maxlength']);
-					$params['data-placeholder'] = "Select multiple " . str_plural($label);
+					$params['data-placeholder'] = "Selecione " . str_plural($label);
 					unset($params['placeholder']);
 					$params['multiple'] = "true";
 					$params['rel'] = "select2";
@@ -590,25 +590,25 @@ class LAFormMaker
 			switch ($field_type->name) {
 				case 'Address':
 					if ($value != "") {
-						$value = $value . '<a target="_blank" class="pull-right btn btn-xs btn-primary btn-circle" href="http://maps.google.com/?q=' . $value . '" data-toggle="tooltip" data-placement="left" title="Veja no mapa"><i class="fa fa-map-marker"></i></a>';
+						$value = $value . '<a target="_blank" class="pull-right btn btn-xs btn-primary btn-circle" href="http://maps.google.com/?q=' . $value . '" data-toggle="tooltip" data-placement="left" title="Veja no mapa"><i class="fa fa-map-marker"></i> Ver mapa</a>';
 					}
 					break;
 				case 'Checkbox':
 					if ($value == 0) {
-						$value = "<div class='label label-danger'>False</div>";
+						$value = "<div class='label label-danger'>Não realizado</div>";
 					} else {
-						$value = "<div class='label label-success'>True</div>";
+						$value = "<div class='label label-success'>Realizado</div>";
 					}
 					break;
 				case 'Currency':
 					break;
 				case 'Date':
 					$dt = strtotime($value);
-					$value = date("d M Y", $dt);
+					$value = date("d/m/Y", $dt);
 					break;
 				case 'Datetime':
 					$dt = strtotime($value);
-					$value = date("d M Y, h:i A", $dt);
+					$value = date("d/m/Y | H:i", $dt);
 					break;
 				case 'Decimal':
 					break;
