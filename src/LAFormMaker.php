@@ -33,7 +33,7 @@ class LAFormMaker
 				$required = $required2;
 			}
 			$field_type = ModuleFieldTypes::find($field_type);
-			$out = '<div class="form-group">';
+			$out = '<div class="form-group row">';
 			$required_ast = "";
 			if (!isset($params['class'])) {
 				$params['class'] = $class;
@@ -584,7 +584,7 @@ class LAFormMaker
 			if (isset($module->row)) {
 				$row = $module->row;
 			}
-			$out = '<div class="form-group">';
+			$out = '<div class="form-group row">';
 			$out .= '<label for="' . $field_name . '" class="col-md-2">' . $label . ' :</label>';
 			$value = $row->$field_name;
 			switch ($field_type->name) {
