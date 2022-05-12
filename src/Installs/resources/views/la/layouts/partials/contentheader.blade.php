@@ -1,19 +1,26 @@
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
     <h1>
         @yield('contentheader_title', 'Page Header here')
         <small>@yield('contentheader_description')</small>
     </h1>
+    </div> <div class="col-sm-6">
     @hasSection('headerElems')
-        <span class="headerElems">
+   
         @yield('headerElems')
-        </span>
+        
     @else 
         @hasSection('section')
-        <ol class="breadcrumb">
-            <li><a href="@yield('section_url')"><i class="fa fa-dashboard"></i> @yield('section')</a></li>
-            @hasSection('sub_section')<li class="active"> @yield('sub_section') </li>@endif
+        <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="@yield('section_url')"><i class="fa fa-dashboard"></i> @yield('section')</a></li>
+            @hasSection('sub_section')<li class="breadcrumb-item active"> @yield('sub_section') </li>@endif
         </ol>
         @endif
     @endif
-</section>
+    </div>
+    </div>
+  </div>
+</div>

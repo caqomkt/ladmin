@@ -4,7 +4,8 @@
 @section('htmlheader')
 	@include('la.layouts.partials.htmlheader')
 @show
-<body class="{{ LAConfigs::getByKey('skin') }} {{ LAConfigs::getByKey('layout') }} @if(LAConfigs::getByKey('layout') == 'sidebar-mini') sidebar-collapse @endif" bsurl="{{ url('') }}" adminRoute="{{ config('laraadmin.adminRoute') }}">
+
+<body  style="height: auto;" class="{{ LAConfigs::getByKey('skin') }} {{ LAConfigs::getByKey('layout') }} @if(LAConfigs::getByKey('layout') == 'sidebar-mini') sidebar-collapse @endif" bsurl="{{ url('') }}" adminRoute="{{ config('laraadmin.adminRoute') }}">
 <div class="wrapper">
 
 	@include('la.layouts.partials.mainheader')
@@ -22,8 +23,11 @@
 		
 		<!-- Main content -->
 		<section class="content {{ $no_padding or '' }}">
+<div class="container-fluid">
 			<!-- Your Page Content Here -->
 			@yield('main-content')
+			</div>
+
 		</section><!-- /.content -->
 
 		@if(LAConfigs::getByKey('layout') == 'layout-top-nav') </div> @endif
