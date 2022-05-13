@@ -124,7 +124,7 @@ class LAInstall extends Command
                 }
 
                 // AppServiceProvider - https://laravel-news.com/laravel-5-4-key-too-long-error
-                if (LAHelper::laravel_ver() == 5.4) {
+                if (LAHelper::laravel_ver() == 5.6) {
                     $this->copyFile($from . "/app/Providers/AppServiceProvider.php", $to . "/app/Providers/AppServiceProvider.php");
                 }
 
