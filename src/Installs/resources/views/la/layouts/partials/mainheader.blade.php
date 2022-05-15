@@ -1,8 +1,8 @@
-<!-- Main Header -->
+
 <header class="main-header">
 
 	@if(LAConfigs::getByKey('layout') != 'layout-top-nav')
-	<!-- Logo -->
+	
 	<a href="{{ url(config('laraadmin.adminRoute')) }}" class="logo">
 		<!-- mini logo for sidebar mini 50x50 pixels -->
 		<span class="logo-mini"><b>{{ LAConfigs::getByKey('sitename_short') }}</b></span>

@@ -1,3 +1,3 @@
 {{-- resources/views/emails/password.blade.php --}}
  
-Click here to reset your password: <a href="{{ url('password/reset/'.$token) }}">{{ url('password/reset/'.$token) }}</a>
+Clique aqui para redefinir sua senha: <a href="{{ url('password/reset/'.$token) }}">{{ url('password/reset/'.$token) }}</a>

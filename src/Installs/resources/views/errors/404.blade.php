@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Page / Record not found.</title>
+        <title>Página não encontrada.</title>
 
         <link href="https://fonts.googleapis.com/css?family=Roboto:200,400" rel="stylesheet" type="text/css">
 		<link href="{{ asset('la-assets/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
@@ -49,17 +49,17 @@
             <div class="content">
 				<i class="fa fa-search" style="font-size:120px;color:#FF5959;margin-bottom:30px;"></i>
                 @if(isset($record_name) && isset($record_id))
-					<div class="title">{{ $record_name }} with id {{ $record_id }} not found</div>
+					<div class="title">{{ $record_name }} {{ $record_id }} não está disponível!</div>
 				@else
-					<div class="title">Page not found</div>
+					<div class="title">Página não encontrada</div>
 				@endif
-				
+				<div><strong>Em caso de dúvidas envie um e-mail para financeiro@caqo.com.br</strong></div><br>
 				@if(Auth::guest())
-					<a href="{{ url('/') }}">Homepage</a> | 
-					<a href="javascript:history.back()">Go Back</a>
+					<a href="{{ url('/') }}">Página inicial</a> | 
+					<a href="javascript:history.back()">Voltar</a>
 				@else
 					<a href="{{ url(config('laraadmin.adminRoute')) }}">Dashboard.</a> | 
-					<a href="javascript:history.back()">Go Back</a>
+					<a href="javascript:history.back()">Voltar</a>
 				@endif
             </div>
         </div>
