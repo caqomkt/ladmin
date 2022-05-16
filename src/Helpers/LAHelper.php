@@ -282,14 +282,14 @@ class LAHelper
 		$subviewSign = "";
 		if(count($childrens)) {
 			$treeview = " class=\"nav-item has-treeview\"";
-			$subviewSign = '<i class="fa fa-angle-left pull-right"></i>';
+			$subviewSign = '<i class="fa fa-angle-left right"></i>';
 		}
 		$active_str = '';
 		if($active) {
 			$active_str = 'class="active"';
 		}
 		
-		$str = '<li'.$treeview.' '.$active_str.'><a class="nav-link" href="'.url(config("laraadmin.adminRoute") . '/' . $menu->url ) .'"><i class="nav-icon fa '.$menu->icon.'"></i> <p>'.LAHelper::real_module_name($menu->name).'</p> '.$subviewSign.'</a>';
+		$str = '<li'.$treeview.' '.$active_str.'><a class="nav-link" href="'.url(config("laraadmin.adminRoute") . '/' . $menu->url ) .'"><i class="nav-icon fa '.$menu->icon.'"></i> <p>'.LAHelper::real_module_name($menu->name).' '.$subviewSign.'</p></a>';
 		
 		if(count($childrens)) {
 			$str .= '<ul class="nav nav-treeview">';
