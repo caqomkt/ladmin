@@ -277,20 +277,23 @@ use Dwij\Laraadmin\Models\ModuleFields;
 						<?php }	?>
 					</div>
 					<div class="form-group">
-						<label for="field_type">UI Type:</label>
+						<label for="field_type">Tipo de dado:</label>
 						{{ Form::select("field_type", $ftypes, null, ['class'=>'form-control', 'required' => 'required']) }}
 					</div>
 					<div id="unique_val">
 						<div class="form-group">
 							<label for="unique">Unique:</label>
 							{{ Form::checkbox("unique", "unique", false, []) }}
-							<div class="Switch Round Off" style="vertical-align:top;margin-left:10px;"><div class="Toggle"></div></div>
+							<div class="Switch Round Off" style="vertical-align:top;margin-left:10px;">
+							<div class="Toggle">
+							</div>
+							</div>
 						</div>
 					</div>	
 					<div id="default_val">
 						<div class="form-group">
-							<label for="defaultvalue">Default Value :</label>
-							{{ Form::text("defaultvalue", null, ['class'=>'form-control', 'placeholder'=>'Default Value']) }}
+							<label for="defaultvalue">Valor padrão:</label>
+							{{ Form::text("defaultvalue", null, ['class'=>'form-control', 'placeholder'=>'Valor padrão']) }}
 						</div>
 					</div>
 					<div id="length_div">
