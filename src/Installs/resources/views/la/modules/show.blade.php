@@ -307,7 +307,7 @@ use Dwij\Laraadmin\Models\ModuleFields;
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="required">Required:</label>
+						<label for="required">Obrigatório?</label>
 						{{ Form::checkbox("required", "required", false, []) }}
 						<div class="Switch Round Off" style="vertical-align:top;margin-left:10px;"><div class="Toggle"></div></div>
 					</div>
