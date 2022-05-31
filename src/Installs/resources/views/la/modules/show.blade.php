@@ -309,12 +309,16 @@ use Dwij\Laraadmin\Models\ModuleFields;
 					<div class="form-group">
 						<label for="required">Obrigatório?</label>
 						{{ Form::checkbox("required", "required", false, []) }}
-						<div class="Switch Round Off" style="vertical-align:top;margin-left:10px;"><div class="Toggle"></div></div>
+						<div class="Switch Round Off" style="vertical-align:top;margin-left:10px;">
+						<div class="Toggle"></div>
+						</div>
 					</div>
 					<div class="form-group">
 						<label for="listing_col">Show in Index Listing:</label>
 						{{ Form::checkbox("listing_col", "listing_col", false, []) }}
-						<div class="Switch Round Off" style="vertical-align:top;margin-left:10px;"><div class="Toggle"></div></div>
+						<div class="Switch Round Off" style="vertical-align:top;margin-left:10px;">
+						<div class="Toggle"></div>
+						</div>
 					</div>
 					<!--
 					<div class="form-group">
