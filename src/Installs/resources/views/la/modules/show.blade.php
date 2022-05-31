@@ -298,12 +298,12 @@ use Dwij\Laraadmin\Models\ModuleFields;
 					</div>
 					<div id="length_div">
 						<div class="form-group">
-							<label for="minlength">Minimum :</label>
-							{{ Form::number("minlength", null, ['class'=>'form-control', 'placeholder'=>'Minimum Value']) }}
+							<label for="minlength">Mínimo :</label>
+							{{ Form::number("minlength", null, ['class'=>'form-control', 'placeholder'=>'Valor mínimo']) }}
 						</div>
 						<div class="form-group">
-							<label for="maxlength">Maximum :</label>
-							{{ Form::number("maxlength", null, ['class'=>'form-control', 'placeholder'=>'Maximum Value']) }}
+							<label for="maxlength">Máximo:</label>
+							{{ Form::number("maxlength", null, ['class'=>'form-control', 'placeholder'=>'Valor máximo']) }}
 						</div>
 					</div>
 					<div class="form-group">
