@@ -1,27 +1,28 @@
 @extends('la.layouts.app')
-
-@section('htmlheader_title', 'Module View')
-
+@section('htmlheader_title', 'Módulos')
 <?php
 use Dwij\Laraadmin\Models\Module;
 use Dwij\Laraadmin\Models\ModuleFields;
 ?>
-
 @section('main-content')
 <div id="page-content" class="profile2">
 	@if(isset($module->is_gen) && $module->is_gen)
-	<div class="bg-success clearfix">
-	@else
-	<div class="bg-danger clearfix">
-	@endif
-		<div class="col-md-4">
-			<div class="row">
+	<div class="row p-2 bg-secondary">
+		@else
+		<div class="row p-2 bg-danger">
+			@endif
+			<div class="col-md-4">
+				<div class="row">
 				<div class="col-md-3">
 					<!--<img class="profile-image" src="{{ asset('/img/avatar5.png') }}" alt="">-->
 					<div class="profile-icon text-primary"><i class="fa {{$module->fa_icon}}"></i></div>
 				</div>
 				<div class="col-md-9">
-					<a class="text-white" href="{{ url(config('laraadmin.adminRoute') . '/'.$module->name_db) }}"><h4 data-toggle="tooltip" data-placement="left" title="Open {{ $module->model }} Module" class="name">{{ $module->label }}</h4></a>
+					<a class="text-white" href="{{ url(config('laraadmin.adminRoute') . '/'.$module->name_db) }}">
+					<h4 data-toggle="tooltip" data-placement="left" title="Open {{ $module->model }} Module" class="name">
+					{{ $module->label }}
+					</h4>
+					</a>
 					<div class="row stats">
 						<div class="col-md-12">{{ Module::itemCount($module->name) }} Items</div>
 					</div>
@@ -30,7 +31,8 @@ use Dwij\Laraadmin\Models\ModuleFields;
 			</div>
 		</div>
 		<div class="col-md-3">
-			<div class="dats1" data-toggle="tooltip" data-placement="left" title="Controller"><i class="fa fa-anchor"></i> {{ $module->controller }}</div>
+			<h5>Detalhes do módulo</h5>
+				<div class="dats1" data-toggle="tooltip" data-placement="left" title="Controller"><i class="fa fa-anchor"></i> {{ $module->controller }}</div>
 			<div class="dats1" data-toggle="tooltip" data-placement="left" title="Model"><i class="fa fa-database"></i> {{ $module->model }}</div>
 			<div class="dats1" data-toggle="tooltip" data-placement="left" title="View Column Name"><i class="fa fa-eye"></i>
 				@if($module->view_col!="")
@@ -40,7 +42,6 @@ use Dwij\Laraadmin\Models\ModuleFields;
 				@endif
 			</div>
 		</div>
-		
 		<div class="col-md-4">
 			@if($module->view_col != "")
 				@if(isset($module->is_gen) && $module->is_gen)
@@ -48,45 +49,35 @@ use Dwij\Laraadmin\Models\ModuleFields;
 					<div class="dats1 text-center"><a data-toggle="tooltip" data-placement="left" title="Update Migration File" class="btn btn-sm btn-success" style="border-color:#FFF;" id="update_migr" href="#"><i class="fa fa-database"></i> Update Migration</a></div>
 				@else
 					<div class="dats1 text-center"><a data-toggle="tooltip" data-placement="left" title="Generate Migration + CRUD + Module" class="btn btn-sm btn-success" style="border-color:#FFF;" id="generate_migr_crud" href="#"><i class="fa fa-cube"></i> Generate Migration + CRUD</a></div>
-					
  					<div class="dats1 text-center"><a data-toggle="tooltip" data-placement="left" title="Generate Migration File" class="btn btn-sm btn-success" style="border-color:#FFF;" id="generate_migr" href="#"><i class="fa fa-database"></i> Generate Migration</a></div>
 				@endif
 			@else
 				<div class="dats1 text-center">To generate Migration or CRUD, set the view column using the <i class='fa fa-eye'></i> icon next to a column</div>
 			@endif
 		</div>
-		
 		<div class="col-md-1 actions">
 			<button module_name="{{ $module->name }}" module_id="{{ $module->id }}" class="btn btn-default btn-delete btn-xs delete_module"><i class="fa fa-times"></i></button>
 		</div>
 	</div>
-
 	<ul id="module-tabs" data-toggle="ajax-tab" class="nav nav-tabs profile" role="tablist">
-		<li class=""><a href="{{ url(config('laraadmin.adminRoute') . '/modules') }}" data-toggle="tooltip" data-placement="right" title="Back to Modules"> <i class="fa fa-chevron-left"></i>&nbsp;</a></li>
-		
+		<li class=""><a href="{{ url(config('laraadmin.adminRoute') . '/modules') }}" data-toggle="tooltip" data-placement="right" title="Voltar para lista">
+					<i class="fa fa-chevron-left"></i>Voltar</a></li>
 		<li class="tab-pane" id="fields">
 			<a id="tab_fields" role="tab" data-toggle="tab" class="tab_info" href="#fields" data-target="#tab-info"><i class="fa fa-bars"></i> Module Fields</a>
 		</li>
-		
 		<li class="tab-pane" id="access">
 			<a id="tab_access" role="tab" data-toggle="tab"  class="tab_info " href="#access" data-target="#tab-access"><i class="fa fa-key"></i> Access</a>
 		</li>
-		
 		<li class="tab-pane" id="sort">
 			<a id="tab_sort" role="tab" data-toggle="tab"  class="tab_info " href="#sort" data-target="#tab-sort"><i class="fa fa-sort"></i> Sort</a>
 		</li>
-		
 		<a data-toggle="modal" data-target="#AddFieldModal" class="btn btn-success btn-sm pull-right btn-add-field" style="margin-top:10px;margin-right:10px;">Add Field</a>
 	</ul>
-
 	<div class="tab-content">
 		<div role="tabpanel" class="tab-pane fade in" id="tab-info">
 			<div class="tab-content">
 				<div class="panel">
-					<!--<div class="panel-default panel-heading">
-						<h4>Module Fields</h4>
-					</div>-->
-					<div class="panel-body">
+					<div class="card-body">
 						<table id="dt_module_fields" class="table table-bordered" style="width:100% !important;">
 						<thead>
 						<tr class="success">
@@ -173,7 +164,6 @@ use Dwij\Laraadmin\Models\ModuleFields;
 					@foreach($roles as $role)
 						<tr class="tr-access-basic" role_id="{{ $role->id }}">
 							<td><input class="role_checkb" type="checkbox" name="module_{{ $role->id }}" id="module_{{ $role->id }}" checked="checked"> {{ $role->name }}</td>
-							
 							<td><input class="view_checkb" type="checkbox" name="module_view_{{$role->id}}" id="module_view_{{$role->id}}" <?php if($role->view == 1) { echo 'checked="checked"'; } ?> ></td>
 							<td><input class="create_checkb" type="checkbox" name="module_create_{{$role->id}}" id="module_create_{{$role->id}}" <?php if($role->create == 1) { echo 'checked="checked"'; } ?> ></td>
 							<td><input class="edit_checkb" type="checkbox" name="module_edit_{{$role->id}}" id="module_edit_{{$role->id}}" <?php if($role->edit == 1) { echo 'checked="checked"'; } ?> ></td>
@@ -220,7 +210,6 @@ use Dwij\Laraadmin\Models\ModuleFields;
 	</div>
 	</div>
 </div>
-
 <!-- module deletion confirmation  -->
 <div class="modal" id="module_delete_confirm">
 	<div class="modal-dialog">
@@ -248,7 +237,6 @@ use Dwij\Laraadmin\Models\ModuleFields;
 	</div>
 	<!-- /.modal-dialog -->
 </div>
-
 <div class="modal fade" id="AddFieldModal" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -264,12 +252,10 @@ use Dwij\Laraadmin\Models\ModuleFields;
 						<label for="label">Field Label :</label>
 						{{ Form::text("label", null, ['class'=>'form-control', 'placeholder'=>'Field Label', 'data-rule-minlength' => 2, 'data-rule-maxlength'=>20, 'required' => 'required']) }}
 					</div>
-					
 					<div class="form-group">
 						<label for="colname">Column Name :</label>
 						<?php
 						$columns = Schema::getColumnListing($module->name_db);
-						
 						$col_list = array();
 						foreach($columns as $col) {
 							// check if this column exists in Module
@@ -284,19 +270,16 @@ use Dwij\Laraadmin\Models\ModuleFields;
 								$col_list[$col] = $col." - ".$column->getType().' - '.$column->getLength().' - '.$default; 
 							}
 						}
-
 						if($module->is_gen == 0 && count($col_list) > 0) { ?>
 							{{ Form::select("colname", $col_list, $col_list, ['class'=>'form-control', 'required' => 'required']) }}
 						<?php } else { ?>
 							{{ Form::text("colname", null, ['class'=>'form-control', 'placeholder'=>'Column Name (lowercase)', 'data-rule-minlength' => 2, 'data-rule-maxlength'=>20, 'data-rule-banned-words' => 'true', 'required' => 'required']) }}
 						<?php }	?>
 					</div>
-					
 					<div class="form-group">
 						<label for="field_type">UI Type:</label>
 						{{ Form::select("field_type", $ftypes, null, ['class'=>'form-control', 'required' => 'required']) }}
 					</div>
-					
 					<div id="unique_val">
 						<div class="form-group">
 							<label for="unique">Unique:</label>
@@ -304,32 +287,27 @@ use Dwij\Laraadmin\Models\ModuleFields;
 							<div class="Switch Round Off" style="vertical-align:top;margin-left:10px;"><div class="Toggle"></div></div>
 						</div>
 					</div>	
-					
 					<div id="default_val">
 						<div class="form-group">
 							<label for="defaultvalue">Default Value :</label>
 							{{ Form::text("defaultvalue", null, ['class'=>'form-control', 'placeholder'=>'Default Value']) }}
 						</div>
 					</div>
-
 					<div id="length_div">
 						<div class="form-group">
 							<label for="minlength">Minimum :</label>
 							{{ Form::number("minlength", null, ['class'=>'form-control', 'placeholder'=>'Minimum Value']) }}
 						</div>
-						
 						<div class="form-group">
 							<label for="maxlength">Maximum :</label>
 							{{ Form::number("maxlength", null, ['class'=>'form-control', 'placeholder'=>'Maximum Value']) }}
 						</div>
 					</div>
-					
 					<div class="form-group">
 						<label for="required">Required:</label>
 						{{ Form::checkbox("required", "required", false, []) }}
 						<div class="Switch Round Off" style="vertical-align:top;margin-left:10px;"><div class="Toggle"></div></div>
 					</div>
-					
 					<div class="form-group">
 						<label for="listing_col">Show in Index Listing:</label>
 						{{ Form::checkbox("listing_col", "listing_col", false, []) }}
@@ -341,16 +319,14 @@ use Dwij\Laraadmin\Models\ModuleFields;
 						{{-- Form::text("popup_vals", null, ['class'=>'form-control', 'placeholder'=>'Popup Values (Only for Radio, Dropdown, Multiselect, Taginput)']) --}}
 					</div>
 					-->
-					
 					<div class="form-group values">
-						<label for="popup_vals">Values :</label>
+						<label for="popup_vals">Lista:</label>
 						<div class="radio" style="margin-bottom:20px;">
-							<label>{{ Form::radio("popup_value_type", "table", true) }} From Table</label>
-							<label>{{ Form::radio("popup_value_type", "list", false) }} From List</label>
+							<label>{{ Form::radio("popup_value_type", "table", true) }} De uma tabela</label>
+							<label>{{ Form::radio("popup_value_type", "list", false) }} De uma lista</label>
 						</div>
 						{{ Form::select("popup_vals_table", $tables, "", ['id'=>'popup_vals_table', 'class'=>'form-control', 'rel' => '']) }}
-						
-						<select id="popup_vals_list" class="form-control popup_vals_list" rel="taginput" multiple="1" data-placeholder="Add Multiple values (Press Enter to add)" name="popup_vals_list[]">
+						<select id="popup_vals_list" class="form-control popup_vals_list" rel="taginput" multiple="1" data-placeholder="Adicionar valores (Pressione enter para adicionar)" name="popup_vals_list[]">
 							@if(env('APP_ENV') == "testing")
 								<option>Bloomsbury</option>
 								<option>Marvel</option>
@@ -358,67 +334,112 @@ use Dwij\Laraadmin\Models\ModuleFields;
 							@endif
 						</select>
 					</div>
-					
 				</div>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				{!! Form::submit( 'Submit', ['class'=>'btn btn-success']) !!}
+			<div class="modal-footer justify-content-between">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+				{!! Form::submit( 'Criar campo', ['class'=>'btn btn-success']) !!}
 			</div>
 			{!! Form::close() !!}
 		</div>
 	</div>
 </div>
-
 @endsection
-
 @push('styles')
 <link rel="stylesheet" type="text/css" href="{{ asset('la-assets/plugins/datatables/datatables.min.css') }}"/>
 <link rel="stylesheet" type="text/css" href="{{ asset('la-assets/plugins/bootstrap-slider/slider.css') }}"/>
 <style>
-.btn-default{border-color:#D6D3D3}
-.slider .tooltip{display:none !important;}
-.slider.gray .slider-handle{background-color:#888;}
-.slider.orange .slider-handle{background-color:#FF9800;}
-.slider.green .slider-handle{background-color:#8BC34A;}
-
-.guide1{text-align: right;margin: 0px 15px 15px 0px;font-size:16px;}
-.guide1 .fa{font-size:22px;vertical-align:bottom;margin-left:17px;}
-.guide1 .fa.gray{color:#888;}
-.guide1 .fa.orange{color:#FF9800;}
-.guide1 .fa.green{color:#8BC34A;}
-
-.table-access{border:1px solid #CCC;}
-.table-access thead tr{background-color: #DDD;}
-.table-access thead tr th{border-bottom:1px solid #CCC;padding:10px 10px;text-align:center;}
-.table-access thead tr th:first-child{text-align:left;}
-.table-access input[type="checkbox"]{margin-right:5px;vertical-align:text-top;}
-.table-access > tbody > tr > td{border-bottom:1px solid #EEE !important;padding:10px 10px;text-align:center;}
-.table-access > tbody > tr > td:first-child {text-align:left;}
-
-.table-access .tr-access-adv {background:#b9b9b9;}
-.table-access .tr-access-adv .table{margin:0px;}
-.table-access .tr-access-adv > td{padding: 7px 6px;}
-.table-access .tr-access-adv .table-bordered td{padding:10px;}
-
-.ui-field{list-style: none;padding: 3px 7px;border: solid 1px #cccccc;border-radius: 3px;background: #f5f5f5;margin-bottom: 4px;}
-
+.btn-default {
+    border-color: #D6D3D3
+}
+.slider .tooltip {
+    display: none !important;
+}
+.slider.gray .slider-handle {
+    background-color: #888;
+}
+.slider.orange .slider-handle {
+    background-color: #FF9800;
+}
+.slider.green .slider-handle {
+    background-color: #8BC34A;
+}
+.guide1 {
+    text-align: right;
+    margin: 0px 15px 15px 0px;
+    font-size: 16px;
+}
+.guide1 .fa {
+    font-size: 22px;
+    vertical-align: bottom;
+    margin-left: 17px;
+}
+.guide1 .fa.gray {
+    color: #888;
+}
+.guide1 .fa.orange {
+    color: #FF9800;
+}
+.guide1 .fa.green {
+    color: #8BC34A;
+}
+.table-access {
+    border: 1px solid #CCC;
+}
+.table-access thead tr {
+    background-color: #DDD;
+}
+.table-access thead tr th {
+    border-bottom: 1px solid #CCC;
+    padding: 10px 10px;
+    text-align: center;
+}
+.table-access thead tr th:first-child {
+    text-align: left;
+}
+.table-access input[type="checkbox"] {
+    margin-right: 5px;
+    vertical-align: text-top;
+}
+.table-access>tbody>tr>td {
+    border-bottom: 1px solid #EEE !important;
+    padding: 10px 10px;
+    text-align: center;
+}
+.table-access>tbody>tr>td:first-child {
+    text-align: left;
+}
+.table-access .tr-access-adv {
+    background: #b9b9b9;
+}
+.table-access .tr-access-adv .table {
+    margin: 0px;
+}
+.table-access .tr-access-adv>td {
+    padding: 7px 6px;
+}
+.table-access .tr-access-adv .table-bordered td {
+    padding: 10px;
+}
+.ui-field {
+    list-style: none;
+    padding: 3px 7px;
+    border: solid 1px #cccccc;
+    border-radius: 3px;
+    background: #f5f5f5;
+    margin-bottom: 4px;
+}
 </style>
 @endpush
-
 @push('scripts')
 <script src="{{ asset('la-assets/plugins/datatables/datatables.min.js') }}"></script>
 <script src="{{ asset('la-assets/plugins/bootstrap-slider/bootstrap-slider.js') }}"></script>
 <script src="{{ asset('la-assets/plugins/jQueryUI/jquery-ui.js') }}"></script>
-
 <script>
-
 $(function () {
-	
 	$("select.popup_vals_list").show();
 	$("select.popup_vals_list").next().show();
 	$("select[name='popup_vals']").hide();
-
 	$('.delete_module').on("click", function () {
     	var module_id = $(this).attr('module_id');
 		var module_name = $(this).attr('module_name');
@@ -446,7 +467,6 @@ $(function () {
 			}
 		});
 	});
-	
 	function showValuesSection() {
 		var ft_val = $("select[name='field_type']").val();
 		if(ft_val == 7 || ft_val == 15 || ft_val == 18 || ft_val == 20) {
@@ -454,28 +474,23 @@ $(function () {
 		} else {
 			$(".form-group.values").hide();
 		}
-				
 		$('#length_div').removeClass("hide");
 		if(ft_val == 2 || ft_val == 4 || ft_val == 5 || ft_val == 7 || ft_val == 9 || ft_val == 11 || ft_val == 12 || ft_val == 15 || ft_val == 18 || ft_val == 21 || ft_val == 24 ) {
 			$('#length_div').addClass("hide");
 		}
-
 		$('#unique_val').removeClass("hide");
 		if(ft_val == 1 || ft_val == 2 || ft_val == 3 || ft_val == 7 || ft_val == 9 || ft_val == 11 || ft_val == 12 || ft_val == 15 || ft_val == 18 || ft_val == 20 || ft_val == 21 || ft_val == 24 ) {
 			$('#unique_val').addClass("hide");
 		}
-
 		$('#default_val').removeClass("hide");
 		if(ft_val == 11) {
 			$('#default_val').addClass("hide");
 		}
 	}
-
 	$("select[name='field_type']").on("change", function() {
 		showValuesSection();
 	});
 	showValuesSection();
-
 	function showValuesTypes() {
 		console.log($("input[name='popup_value_type']:checked").val());
 		if($("input[name='popup_value_type']:checked").val() == "list") {
@@ -488,12 +503,10 @@ $(function () {
 			$("select.popup_vals_list").next().hide();
 		}
 	}
-	
 	$("input[name='popup_value_type']").on("change", function() {
 		showValuesTypes();
 	});
 	showValuesTypes();
-
 	$("#sortable_module_fields").sortable({
 		update: function(event, ui) {
             // var index = ui.placeholder.index();
@@ -504,7 +517,6 @@ $(function () {
 					array.push(field_id);
 				}
 			});
-			
 			$.ajax({
 				url: "{{ url(config('laraadmin.adminRoute') . '/save_module_field_sort') }}/"+{{ $module->id }},
 				data : {'sort_array': array},
@@ -516,7 +528,6 @@ $(function () {
         },
 	});
     $("#sortable_module_fields").disableSelection();	
-	
 	$("#generate_migr").on("click", function() {
 		var $fa = $(this).find("i");
 		$fa.removeClass("fa-database");
@@ -568,7 +579,6 @@ $(function () {
 			}
 		});
 	});
-	
 	$("#generate_migr_crud").on("click", function() {
 		var $fa = $(this).find("i");
 		$fa.removeClass("fa-cube");
@@ -587,7 +597,10 @@ $(function () {
 		});
 	});
 	$("#dt_module_fields").DataTable({
-		"initComplete": function(settings, json) {
+"language": {
+				"url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Portuguese-Brasil.json"
+			},
+			"initComplete": function(settings, json) {
 			console.log( 'DataTables has finished its initialisation.' );
 			console.log("Win: "+$(window).height()+" header: "+$(".main-header").height());
 			$(".sidebar").slimscroll({
@@ -597,30 +610,21 @@ $(function () {
 			});
 		}
 	});
-	
 	$.validator.addMethod("data-rule-banned-words", function(value) {
 		return $.inArray(value, ['files']) == -1;
 	}, "Column name not allowed.");
-
 	$("#field-form").validate();
-		
 	/* ================== Tab Selection ================== */
-	
 	var $tabs = $('#module-tabs').tabs();
-	
 	var url = window.location.href;
 	var activeTab = url.substring(url.indexOf("#") + 1);
-	
 	if(!activeTab.includes("http") && activeTab.length > 1) {
 		$('#module-tabs #'+activeTab+' a').tab('show');
 	} else {
 		$('#module-tabs #fields a').tab('show');
 	}
-	
 	/* ================== Access Control ================== */
-	
 	$('.slider').slider();
-	
 	$(".slider.slider-horizontal").each(function(index) {
 		var field = $(this).next().attr("name");
 		var value = $(this).next().val();
@@ -643,7 +647,6 @@ $(function () {
 				break;
 		}
 	});
-	
 	$('.slider').bind('slideStop', function(event) {
 		if($(this).next().attr("name")) {
 			var field = $(this).next().attr("name");
@@ -664,7 +667,6 @@ $(function () {
 			}
 		}
 	});
-
 	$("#role_select_all,  #view_all").on("change", function() {
 		$(".role_checkb").prop('checked', this.checked);
 		$(".view_checkb").prop('checked', this.checked);
@@ -677,7 +679,6 @@ $(function () {
 		$("#edit_all").prop('checked', this.checked);
 		$("#delete_all").prop('checked', this.checked);		
 	});
-	
 	$("#create_all").on("change", function() {
 		$(".create_checkb").prop('checked', this.checked);
 		if($('#create_all').is(':checked')){
@@ -687,7 +688,6 @@ $(function () {
 			$("#view_all").prop('checked', this.checked);
 		}
 	});
-	
 	$("#edit_all").on("change", function() {
 		$(".edit_checkb").prop('checked', this.checked);
 		if($('#edit_all').is(':checked')){
@@ -697,7 +697,6 @@ $(function () {
 			$("#view_all").prop('checked', this.checked);
 		}
 	});
-	
 	$("#delete_all").on("change", function() {
 		$(".delete_checkb").prop('checked', this.checked);
 		if($('#delete_all').is(':checked')){
@@ -707,7 +706,6 @@ $(function () {
 			$("#view_all").prop('checked', this.checked);
 		}
 	});
-	
 	$(".hide_row").on("click", function() { 
 		var val = $(this).attr( "role_id" );
 		var $icon = $(".hide_row[role_id="+val+"] > i");
@@ -721,7 +719,6 @@ $(function () {
 			$icon.addClass('fa-chevron-down');
 		}
 	});
-
 	$('.Switch.Ajax').click(function() {
 		var state = "false";
 		if ($(this).hasClass('On')) {

@@ -53,7 +53,12 @@ class ModuleFields extends Model
             } else {
                 $field->unique = false;
             }
+            if($request->defaultvalue) {
             $field->defaultvalue = $request->defaultvalue;
+            }else
+            {
+                $field->defaultvalue = '';
+            }
             if($request->minlength == "") {
                 $request->minlength = 0;
             }
@@ -77,9 +82,7 @@ class ModuleFields extends Model
             }
             if($request->listing_col) {
                 $field->listing_col = true;
-            } else {
-                $field->listing_col = false;
-            }
+            } 
             if($request->field_type == 7 || $request->field_type == 15 || $request->field_type == 18 || $request->field_type == 20) {
                 if($request->popup_value_type == "table") {
                     $field->popup_vals = "@" . $request->popup_vals_table;
@@ -169,7 +172,12 @@ class ModuleFields extends Model
         } else {
             $field->unique = false;
         }
-        $field->defaultvalue = $request->defaultvalue;
+        if($request->defaultvalue) {
+            $field->defaultvalue = $request->defaultvalue;
+            }else
+            {
+                $field->defaultvalue = '';
+            }
         if($request->minlength == "") {
             $request->minlength = 0;
         }
@@ -193,10 +201,7 @@ class ModuleFields extends Model
         }
         if($request->listing_col) {
             $field->listing_col = true;
-        } else {
-            $field->listing_col = false;
-        }
-        
+        }     
         if($request->field_type == 7 || $request->field_type == 15 || $request->field_type == 18 || $request->field_type == 20) {
             if($request->popup_value_type == "table") {
                 $field->popup_vals = "@" . $request->popup_vals_table;
