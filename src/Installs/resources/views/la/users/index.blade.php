@@ -1,10 +1,10 @@
 @extends("la.layouts.app")
 
-@section("contentheader_title", "Users")
-@section("contentheader_description", "Users listing")
-@section("section", "Users")
-@section("sub_section", "Listing")
-@section("htmlheader_title", "Users Listing")
+@section("contentheader_title", "Usuários")
+@section("contentheader_description", "Lista de usuários")
+@section("section", "Usuários")
+@section("sub_section", "Lista")
+@section("htmlheader_title", "Lista de usuários")
 
 @section("headerElems")
 
@@ -22,17 +22,16 @@
     </div>
 @endif
 
-<div class="card card-success">
-	<div class="card-header">Preencha os dados abaixo</div>
+<div class="card">
 	<div class="card-body">
-		<table id="example1" class="table table-bordered">
+		<table id="example1" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info">
 		<thead>
 		<tr class="success">
 			@foreach( $listing_cols as $col )
 			<th>{{ $module->fields[$col]['label'] or ucfirst($col) }}</th>
 			@endforeach
 			@if($show_actions)
-			<th>Actions</th>
+					<th>Ações</th>
 			@endif
 		</tr>
 		</thead>
@@ -57,16 +56,10 @@ $(function () {
 		processing: true,
         serverSide: true,
         ajax: "{{ url(config('laraadmin.adminRoute') . '/user_dt_ajax') }}",
-		language: {
-			lengthMenu: "_MENU_",
-			search: "_INPUT_",
-			searchPlaceholder: "Search"
-		},
-		@if($show_actions)
-		columnDefs: [ { orderable: false, targets: [-1] }],
-		@endif
+			"language": {
+				"url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Portuguese-Brasil.json"
+			}
 	});
-	$("#user-add-form").validate({
 		
 	});
 });

@@ -1,14 +1,14 @@
 @extends("la.layouts.app")
 
 @section("contentheader_title", "Backups")
-@section("contentheader_description", "Backups listing")
+@section("contentheader_description", "Lista de Backups")
 @section("section", "Backups")
 @section("sub_section", "Listing")
-@section("htmlheader_title", "Backups Listing")
+@section("htmlheader_title", "Lista de Backups")
 
 @section("headerElems")
 @la_access("Backups", "create")
-	<button class="btn btn-success btn-sm pull-right" id="CreateBackup">Create Backup</button>
+	<button class="btn btn-success btn-sm pull-right" id="CreateBackup">Criar Backup</button>
 @endla_access
 @endsection
 
@@ -23,22 +23,25 @@
         </ul>
     </div>
 @endif
-
-<div class="card card-success">
+@if(session('confirmacao'))
+<div class="alert alert-success">
+	<p>{{session('confirmacao')}}</p>
+</div>
+@endif
+<div class="card">
 	<div class="card-body">
-		<table id="example1" class="table table-bordered">
+		<table id="example1" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info">
 		<thead>
 		<tr class="success">
 			@foreach( $listing_cols as $col )
 			<th>{{ $module->fields[$col]['label'] or ucfirst($col) }}</th>
 			@endforeach
 			@if($show_actions)
-			<th>Actions</th>
+			<th>Ações</th>
 			@endif
 		</tr>
 		</thead>
 		<tbody>
-			
 		</tbody>
 		</table>
 	</div>
@@ -58,10 +61,14 @@ $(function () {
 		processing: true,
         serverSide: true,
         ajax: "{{ url(config('laraadmin.adminRoute') . '/backup_dt_ajax') }}",
-		language: {
-			lengthMenu: "_MENU_",
-			search: "_INPUT_",
-			searchPlaceholder: "Search"
+		"language": {
+				"url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Portuguese-Brasil.json",
+				"decimal": ",",
+				"thousands": ".",
+				"lengthMenu": "Exibir _MENU_ records",
+				buttons: {
+					colvis: 'Ocultar colunas'
+				},
 		},
 		@if($show_actions)
 		columnDefs: [ { orderable: false, targets: [-1] }],
@@ -73,14 +80,14 @@ $(function () {
 			url: "{{ url(config('laraadmin.adminRoute') . '/create_backup_ajax') }}",
 			method: 'POST',
 			beforeSend: function() {
-				$("#CreateBackup").html('<i class="fa fa-refresh fa-spin"></i> Creating Backup...');
+				$("#CreateBackup").html('<i class="fa fa-refresh fa-spin"></i> Criando Backup...');
 			},
 			headers: {
 		    	'X-CSRF-Token': $('input[name="_token"]').val()
     		},
 			success: function( data ) {
 				if(data.status == "success") {
-					$("#CreateBackup").html('<i class="fa fa-check"></i> Backup Created');
+					$("#CreateBackup").html('<i class="fa fa-check"></i> Backup Criado!');
 					$('body').pgNotification({
 						style: 'circle',
 						title: 'Backup Creation',
@@ -97,7 +104,7 @@ $(function () {
 					$("#CreateBackup").html('Create Backup');
 					$('body').pgNotification({
 						style: 'circle',
-						title: 'Backup creation failed',
+						title: 'Falha ao criar Backup',
 						message: data.message,
 						position: "top-right",
 						timeout: 0,

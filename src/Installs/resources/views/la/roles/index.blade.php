@@ -1,14 +1,14 @@
 @extends("la.layouts.app")
 
-@section("contentheader_title", "Roles")
-@section("contentheader_description", "roles listing")
+@section("contentheader_title", "Funções")
+@section("contentheader_description", "Lista de funções")
 @section("section", "Roles")
 @section("sub_section", "Listing")
-@section("htmlheader_title", "Roles Listing")
+@section("htmlheader_title", "Lista de funções")
 
 @section("headerElems")
 @la_access("Roles", "create")
-	<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Add Role</button>
+<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Adicionar função</button>
 @endla_access
 @endsection
 

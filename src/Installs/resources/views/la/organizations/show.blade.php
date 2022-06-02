@@ -1,13 +1,10 @@
 @extends('la.layouts.app')
-
 @section('htmlheader_title')
-	Organization View
+Organization View
 @endsection
-
-
 @section('main-content')
 <div id="page-content" class="profile2">
-	<div class="bg-primary clearfix">
+	<div class="row p-2 bg-secondary">
 		<div class="col-md-4">
 			<div class="row">
 				<div class="col-md-3">
@@ -16,17 +13,19 @@
 				</div>
 				<div class="col-md-9">
 					<h4 class="name">{{ $organization->$view_col }}</h4>
-					<div class="row stats">
+					<div class="row">
 						<div class="col-md-4"><i class="fa fa-facebook"></i> 234</div>
 						<div class="col-md-4"><i class="fa fa-twitter"></i> 12</div>
 						<div class="col-md-4"><i class="fa fa-instagram"></i> 89</div>
 					</div>
-					<p class="desc">Test Description in one line</p>
+					<p class="desc">Descrição</p>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-3">
-			<div class="dats1"><div class="label2">Admin</div></div>
+			<div class="dats1">
+				<div class="label2">Admin</div>
+			</div>
 			<div class="dats1"><i class="fa fa-envelope-o"></i> superadmin@gmail.com</div>
 			<div class="dats1"><i class="fa fa-map-marker"></i> Pune, India</div>
 		</div>
@@ -82,37 +81,35 @@
 		</div>
 		<div class="col-md-1 actions">
 			@la_access("Organizations", "edit")
-				<a href="{{ url(config('laraadmin.adminRoute') . '/organizations/'.$organization->id.'/edit') }}" class="btn btn-xs btn-edit btn-default"><i class="fa fa-pencil"></i></a><br>
+			<a href="{{ url(config('laraadmin.adminRoute') . '/organizations/'.$organization->id.'/edit') }}" class="btn btn-xs btn-edit btn-default"><i class="fa fa-pencil"></i></a><br>
 			@endla_access
-			
 			@la_access("Organizations", "delete")
-				{{ Form::open(['route' => [config('laraadmin.adminRoute') . '.organizations.destroy', $organization->id], 'method' => 'delete', 'style'=>'display:inline']) }}
-					<button class="btn btn-default btn-delete btn-xs" type="submit"><i class="fa fa-times"></i></button>
-				{{ Form::close() }}
+			{{ Form::open(['route' => [config('laraadmin.adminRoute') . '.organizations.destroy', $organization->id], 'method' => 'delete', 'style'=>'display:inline']) }}
+			<button class="btn btn-default btn-delete btn-xs" type="submit"><i class="fa fa-times"></i></button>
+			{{ Form::close() }}
 			@endla_access
 		</div>
 	</div>
-
 	<ul data-toggle="ajax-tab" class="nav nav-tabs profile" role="tablist">
-		<li class=""><a href="{{ url(config('laraadmin.adminRoute') . '/organizations') }}" data-toggle="tooltip" data-placement="right" title="Back to Organizations"><i class="fa fa-chevron-left"></i></a></li>
-		<li class="active"><a role="tab" data-toggle="tab" class="active" href="#tab-general-info" data-target="#tab-info"><i class="fa fa-bars"></i> General Info</a></li>
+		<li class=""><a href="{{ url(config('laraadmin.adminRoute') . '/organizations') }}" data-toggle="tooltip" data-placement="right" title="Voltar para lista">
+				<i class="fa fa-chevron-left"></i>Voltar</a></li>
+		<li class="active"><a class="nav-link active" data-toggle="tab" href="#tab-general-info" role="tab" aria-controls="tab-general-info" aria-selected="true"><i class="fa fa-bars"></i> General Info</a></li>
 		<li class=""><a role="tab" data-toggle="tab" href="#tab-timeline" data-target="#tab-timeline"><i class="fa fa-clock-o"></i> Timeline</a></li>
 	</ul>
-
 	<div class="tab-content">
-		<div role="tabpanel" class="tab-pane active fade in" id="tab-info">
+		<div class="tab-pane fade show active" id="tab-general-info" role="tabpanel" aria-labelledby="tab-general-infotab">
 			<div class="tab-content">
 				<div class="panel infolist">
-					<div class="panel-default panel-heading">
-						<h4>General Info</h4>
+					<div class="card-default card-heading">
+						<h4>Informações</h4>
 					</div>
-					<div class="panel-body">
+					<div class="card-body">
 						@la_display($module, 'name')
 						@la_display($module, 'email')
 						@la_display($module, 'phone')
 						@la_display($module, 'website')
 						@la_display($module, 'assigned_to')
-						@la_display($module, 'connected_since')
+						@la_display($module, 'connect_since')
 						@la_display($module, 'address')
 						@la_display($module, 'city')
 						@la_display($module, 'description')
@@ -133,56 +130,48 @@
 				<!-- /.timeline-label -->
 				<!-- timeline item -->
 				<li>
-				<i class="fa fa-envelope bg-blue"></i>
-
-				<div class="timeline-item">
-					<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-
-					<h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-
-					<div class="timeline-body">
-					Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-					weebly ning heekya handango imeem plugg dopplr jibjab, movity
-					jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-					quora plaxo ideeli hulu weebly balihoo...
+					<i class="fa fa-envelope bg-blue"></i>
+					<div class="timeline-item">
+						<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+						<h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+						<div class="timeline-body">
+							Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+							weebly ning heekya handango imeem plugg dopplr jibjab, movity
+							jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
+							quora plaxo ideeli hulu weebly balihoo...
+						</div>
+						<div class="timeline-footer">
+							<a class="btn btn-primary btn-xs">Read more</a>
+							<a class="btn btn-danger btn-xs">Delete</a>
+						</div>
 					</div>
-					<div class="timeline-footer">
-					<a class="btn btn-primary btn-xs">Read more</a>
-					<a class="btn btn-danger btn-xs">Delete</a>
-					</div>
-				</div>
 				</li>
 				<!-- END timeline item -->
 				<!-- timeline item -->
 				<li>
-				<i class="fa fa-user bg-aqua"></i>
-
-				<div class="timeline-item">
-					<span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
-
-					<h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
-					</h3>
-				</div>
+					<i class="fa fa-user bg-aqua"></i>
+					<div class="timeline-item">
+						<span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
+						<h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
+						</h3>
+					</div>
 				</li>
 				<!-- END timeline item -->
 				<!-- timeline item -->
 				<li>
-				<i class="fa fa-comments bg-yellow"></i>
-
-				<div class="timeline-item">
-					<span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-
-					<h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-
-					<div class="timeline-body">
-					Take me to your leader!
-					Switzerland is small and neutral!
-					We are more like Germany, ambitious and misunderstood!
+					<i class="fa fa-comments bg-yellow"></i>
+					<div class="timeline-item">
+						<span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
+						<h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
+						<div class="timeline-body">
+							Take me to your leader!
+							Switzerland is small and neutral!
+							We are more like Germany, ambitious and misunderstood!
+						</div>
+						<div class="timeline-footer">
+							<a class="btn btn-warning btn-flat btn-xs">View comment</a>
+						</div>
 					</div>
-					<div class="timeline-footer">
-					<a class="btn btn-warning btn-flat btn-xs">View comment</a>
-					</div>
-				</div>
 				</li>
 				<!-- END timeline item -->
 				<!-- timeline time label -->
@@ -194,31 +183,27 @@
 				<!-- /.timeline-label -->
 				<!-- timeline item -->
 				<li>
-				<i class="fa fa-camera bg-purple"></i>
-
-				<div class="timeline-item">
-					<span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
-
-					<h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-
-					<div class="timeline-body">
-					<img src="http://placehold.it/150x100" alt="..." class="margin">
-					<img src="http://placehold.it/150x100" alt="..." class="margin">
-					<img src="http://placehold.it/150x100" alt="..." class="margin">
-					<img src="http://placehold.it/150x100" alt="..." class="margin">
+					<i class="fa fa-camera bg-purple"></i>
+					<div class="timeline-item">
+						<span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
+						<h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
+						<div class="timeline-body">
+							<img src="{{ asset('la-assets/img/user2-160x160.jpg') }}" alt="..." class="margin">
+							<img src="{{ asset('la-assets/img/user2-160x160.jpg') }}" alt="..." class="margin">
+							<img src="{{ asset('la-assets/img/user2-160x160.jpg') }}" alt="..." class="margin">
+							<img src="{{ asset('la-assets/img/user2-160x160.jpg') }}" alt="..." class="margin">
+						</div>
 					</div>
-				</div>
 				</li>
 				<!-- END timeline item -->
 				<li>
-				<i class="fa fa-clock-o bg-gray"></i>
+					<i class="fa fa-clock-o bg-gray"></i>
 				</li>
 			</ul>
 			<!--<div class="text-center p30"><i class="fa fa-list-alt" style="font-size: 100px;"></i> <br> No posts to show</div>-->
 		</div>
-		
 	</div>
-	</div>
-	</div>
+</div>
+</div>
 </div>
 @endsection

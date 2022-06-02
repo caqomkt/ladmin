@@ -15,11 +15,11 @@ use Dwij\Laraadmin\Models\ModuleFields;
 <div class="row">
 <div class="col-md-3">
 	<!--<img class="profile-image" src="{{ asset('/img/avatar5.png') }}" alt="">-->
-	<div class="profile-icon text-primary"><i class="fa {{$module->fa_icon}}"></i></div>
+<i class="fa {{$module->fa_icon}}"></i>
 </div>
 <div class="col-md-9">
 	<a class="text-white" href="{{ url(config('laraadmin.adminRoute') . '/'.$module->name_db) }}">
-	<h4 data-toggle="tooltip" data-placement="left" title="Abrir {{ $module->model }} Module" class="name">
+<h4 data-toggle="tooltip" data-placement="left" title="Ver módulo: {{ $module->model }}" class="name">
 	{{ $module->label }}
 	</h4>
 	</a>
@@ -36,7 +36,7 @@ use Dwij\Laraadmin\Models\ModuleFields;
 <h5>Detalhes do módulo</h5>
 <div class="dats1" data-toggle="tooltip" data-placement="left" title="Controller"><i class="fa fa-anchor"></i> {{ $module->controller }}</div>
 <div class="dats1" data-toggle="tooltip" data-placement="left" title="Model"><i class="fa fa-database"></i> {{ $module->model }}</div>
-<div class="dats1" data-toggle="tooltip" data-placement="left" title="View Column Name"><i class="fa fa-eye"></i>
+<div class="dats1" data-toggle="tooltip" data-placement="left" title="Coluna de visualização"><i class="fa fa-eye"></i>
 @if($module->view_col!="")
 	{{$module->view_col}}
 @else
@@ -47,14 +47,14 @@ use Dwij\Laraadmin\Models\ModuleFields;
 <div class="col-md-4">
 @if($module->view_col != "")
 @if(isset($module->is_gen) && $module->is_gen)
-	<div class="dats1 text-center"><a data-toggle="tooltip" data-placement="left" title="Update Module" class="btn btn-sm btn-success" style="border-color:#FFF;" id="generate_update" href="#"><i class="fa fa-refresh"></i> Update Module</a></div>
-	<div class="dats1 text-center"><a data-toggle="tooltip" data-placement="left" title="Update Migration File" class="btn btn-sm btn-success" style="border-color:#FFF;" id="update_migr" href="#"><i class="fa fa-database"></i> Update Migration</a></div>
+<div class="dats1 text-center"><a data-toggle="tooltip" data-placement="left" title="Update Module" class="btn btn-sm btn-success" style="border-color:#FFF;" id="generate_update" href="#"><i class="fa fa-refresh"></i> Atualizar Módulo</a></div><br>
+<div class="dats1 text-center"><a data-toggle="tooltip" data-placement="left" title="Update Migration File" class="btn btn-sm btn-success" style="border-color:#FFF;" id="update_migr" href="#"><i class="fa fa-database"></i> Atualizar Migration</a></div>
 @else
-	<div class="dats1 text-center"><a data-toggle="tooltip" data-placement="left" title="Generate Migration + CRUD + Module" class="btn btn-sm btn-success" style="border-color:#FFF;" id="generate_migr_crud" href="#"><i class="fa fa-cube"></i> Generate Migration + CRUD</a></div>
-	<div class="dats1 text-center"><a data-toggle="tooltip" data-placement="left" title="Generate Migration File" class="btn btn-sm btn-success" style="border-color:#FFF;" id="generate_migr" href="#"><i class="fa fa-database"></i> Generate Migration</a></div>
+<div class="dats1 text-center"><a data-toggle="tooltip" data-placement="left" title="Generate Migration + CRUD + Module" class="btn btn-sm btn-success" style="border-color:#FFF;" id="generate_migr_crud" href="#"><i class="fa fa-cube"></i> Gerar Migration + CRUD</a></div><br>
+<div class="dats1 text-center"><a data-toggle="tooltip" data-placement="left" title="Generate Migration File" class="btn btn-sm btn-success" style="border-color:#FFF;" id="generate_migr" href="#"><i class="fa fa-database"></i> Gerar Migration</a></div>
 @endif
 @else
-<div class="dats1 text-center">To generate Migration or CRUD, set the view column using the <i class='fa fa-eye'></i> icon next to a column</div>
+<div class="dats1 text-center">Para gerar a Migration ou CRUD, escolha a View Collumn usando o botão <i class='fa fa-eye'></i></div>
 @endif
 </div>
 <div class="col-md-1 actions">
@@ -65,23 +65,39 @@ use Dwij\Laraadmin\Models\ModuleFields;
 <li class="">
 <a class="nav-link" href="{{ url(config('laraadmin.adminRoute') . '/modules') }}" data-toggle="tooltip" data-placement="right" title="Voltar para lista">
 	<i class="fa fa-chevron-left"></i>Voltar</a></li>
-<li class="tab-pane" id="fields">
-<a id="tab_fields" role="tab" data-toggle="tab" class="tab_info" href="#fields" data-target="#tab-info">
-<i class="fa fa-bars"></i> Module Fields</a>
+<li class="active">
+<a class="nav-link active" data-toggle="tab" href="#tab-fields" role="tab" aria-controls="tab-fields" aria-selected="true">
+<i class="fa fa-bars"></i> Campos do módulo
+</a>
 </li>
-<li class="tab-pane" id="access">
-<a id="tab_access" role="tab" data-toggle="tab"  class="tab_info " href="#access" data-target="#tab-access">
-<i class="fa fa-key"></i> Access</a>
+<li class="">
+<a id="tab_access" role="tab" data-toggle="tab" class="nav-link" href="#access" data-target="#tab-access">
+<i class="fa fa-key"></i> Permissões
+</a>
 </li>
-<li class="tab-pane" id="sort">
-<a id="tab_sort" role="tab" data-toggle="tab"  class="tab_info " href="#sort" data-target="#tab-sort"><i class="fa fa-sort"></i> Sort</a>
+<li class="">
+<a class="nav-link" role="tab" data-toggle="tab" href="#tab-sort" data-target="#tab-sort">
+<i class="fa fa-sort"></i> Ordenação
+</a>
+</li>
+<li class="">
+<span class="nav-link">
+|
+</span>
+</li>
+<li class="">
+<a class="nav-link bg-success" data-toggle="modal" data-target="#AddFieldModal" onclick="return alert('Atenção!\nDeseja criar um campo neste módulo?')">Adicionar campo</a>
 </li>
 <a data-toggle="modal" data-target="#AddFieldModal" class="btn btn-success btn-sm pull-right btn-add-field" style="margin-top:10px;margin-right:10px;">Add Field</a>
 </ul>
 <div class="tab-content">
-<div role="tabpanel" class="tab-pane fade in" id="tab-info">
-<div class="tab-content">
-<div class="panel">
+<div class="tab-pane fade show active" id="tab-fields" role="tabpanel" aria-labelledby="tab-fields">
+<section class="content">
+<div class="card">
+<div class="card-header">
+	Campos do módulo
+</div>
+<small>
 	<div class="card-body">
 		<table id="dt_module_fields" class="table table-bordered">
 		<thead>

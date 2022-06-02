@@ -1,14 +1,14 @@
 @extends("la.layouts.app")
 
-@section("contentheader_title", "Employees")
-@section("contentheader_description", "Employees listing")
-@section("section", "Employees")
+@section("contentheader_title", "Equipe")
+@section("contentheader_description", "Lista")
+@section("section", "Equipe")
 @section("sub_section", "Listing")
-@section("htmlheader_title", "Employees Listing")
+@section("htmlheader_title", "Lista")
 
 @section("headerElems")
 @la_access("Employees", "create")
-	<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Add Employee</button>
+<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Adicionar profissional</button>
 @endla_access
 @endsection
 
@@ -24,17 +24,17 @@
     </div>
 @endif
 
-<div class="card card-success">
-	<div class="card-header">Preencha os dados abaixo</div>
+<div class="card">
+	
 	<div class="card-body">
-		<table id="example1" class="table table-bordered">
+		<table id="example1" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info">
 		<thead>
 		<tr class="success">
 			@foreach( $listing_cols as $col )
 			<th>{{ $module->fields[$col]['label'] or ucfirst($col) }}</th>
 			@endforeach
 			@if($show_actions)
-			<th>Actions</th>
+					<th>Ações</th>
 			@endif
 		</tr>
 		</thead>
@@ -50,8 +50,9 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
+				
+				<h4 class="modal-title" id="myModalLabel">Adicionar Funcionário</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel">Add Employee</h4>
 			</div>
 			{!! Form::open(['action' => 'LA\EmployeesController@store', 'id' => 'employee-add-form']) !!}
 			<div class="modal-body">
@@ -111,18 +112,15 @@ $(function () {
 		processing: true,
         serverSide: true,
         ajax: "{{ url(config('laraadmin.adminRoute') . '/employee_dt_ajax') }}",
+
 		language: {
-			lengthMenu: "_MENU_",
-			search: "_INPUT_",
-			searchPlaceholder: "Search"
+					"url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Portuguese-Brasil.json"
 		},
 		@if($show_actions)
 		columnDefs: [ { orderable: false, targets: [-1] }],
 		@endif
 	});
-	$("#employee-add-form").validate({
-		
-	});
 });
 </script>
 @endpush
+

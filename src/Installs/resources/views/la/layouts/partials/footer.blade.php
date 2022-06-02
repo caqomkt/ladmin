@@ -1,8 +1,9 @@
 @if(!isset($no_padding))
 <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-        Powered by <a href="http://dwijitsolutions.com">Dwij IT Solutions</a>
+    <div class="float-right d-none d-sm-inline">
+        Desenvolvido por CAQO Marketing
     </div>
-    <strong>Copyright &copy; 2016</strong>
+    <strong>Copyright &copy; 2022</strong>
 </footer>
+<div id="sidebar-overlay"></div>
 @endif

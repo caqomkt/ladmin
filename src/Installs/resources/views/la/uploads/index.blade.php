@@ -1,14 +1,14 @@
 @extends("la.layouts.app")
 
 @section("contentheader_title", "Uploads")
-@section("contentheader_description", "Uploaded images & files")
+@section("contentheader_description", "Imagens e arquivos carregados")
 @section("section", "Uploads")
 @section("sub_section", "Listing")
-@section("htmlheader_title", "Uploaded images & files")
+@section("htmlheader_title", "Imagens e arquivos carregados")
 
 @section("headerElems")
 @la_access("Uploads", "create")
-	<button id="AddNewUploads" class="btn btn-success btn-sm pull-right">Add New</button>
+	<button id="AddNewUploads" class="btn btn-success btn-sm pull-right">Adicionar Novo</button>
 @endla_access
 @endsection
 
@@ -27,11 +27,10 @@
 <form action="{{ url(config('laraadmin.adminRoute') . '/upload_files') }}" id="fm_dropzone_main" enctype="multipart/form-data" method="POST">
     {{ csrf_field() }}
     <a id="closeDZ1"><i class="fa fa-times"></i></a>
-    <div class="dz-message"><i class="fa fa-cloud-upload"></i><br>Drop files here to upload</div>
+    <div class="dz-message"><i class="fa fa-cloud-upload"></i><br>Arraste os aquivos aqui para enviá-los</div>
 </form>
 
-<div class="card card-success">
-	<div class="card-header">Preencha os dados abaixo</div>
+<div class="card">
 	<div class="card-body">
 		<ul class="files_container">
 
@@ -48,7 +47,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
                 <!--<button type="button" class="next"><i class="fa fa-chevron-right"></i></button>
                 <button type="button" class="prev"><i class="fa fa-chevron-left"></i></button>-->
-				<h4 class="modal-title" id="myModalLabel">File: </h4>
+				<h4 class="modal-title" id="myModalLabel">Arquivo: </h4>
 			</div>
 			<div class="modal-body p0">
                     <div class="row m0">
@@ -61,8 +60,8 @@
                             {!! Form::open(['class' => 'file-info-form']) !!}
                                 <input type="hidden" name="file_id" value="0">
                                 <div class="form-group">
-                                    <label for="filename">File Name</label>
-                                    <input class="form-control" placeholder="File Name" name="filename" type="text" @if(!config('laraadmin.uploads.allow_filename_change') || !Module::hasFieldAccess("Uploads", "name", "write")) readonly @endif value="">
+                                    <label for="filename">Nome do arquivo</label>
+                                    <input class="form-control" placeholder="Nome do arquivo" name="filename" type="text" @if(!config('laraadmin.uploads.allow_filename_change') || !Module::hasFieldAccess("Uploads", "name", "write")) readonly @endif value="">
                                 </div>
                                 <div class="form-group">
                                     <label for="url">URL</label>
@@ -70,11 +69,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="caption">Label</label>
-                                    <input class="form-control" placeholder="Caption" name="caption" type="text" value="" @if(!Module::hasFieldAccess("Uploads", "caption", "write")) readonly @endif>
+                                    <input class="form-control" placeholder="Legenda" name="caption" type="text" value="" @if(!Module::hasFieldAccess("Uploads", "caption", "write")) readonly @endif>
                                 </div>
                                 @if(!config('laraadmin.uploads.private_uploads'))
                                     <div class="form-group">
-                                        <label for="public">Is Public ?</label>
+                                        <label for="public">Público ?</label>
                                         {{ Form::checkbox("public", "public", false, []) }}
                                         <div class="Switch Ajax Round On" style="vertical-align:top;margin-left:10px;"><div class="Toggle"></div></div>
                                     </div>
@@ -86,9 +85,9 @@
 			<div class="modal-footer justify-content-between">
 				<a class="btn btn-success" id="downFileBtn" href="">Download</a>
 				@la_access("Uploads", "delete")
-                <button type="button" class="btn btn-danger" id="delFileBtn">Delete</button>
+                <button type="button" class="btn btn-danger" id="delFileBtn">Excluir</button>
 				@endla_access
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
 			</div>
 		</div>
 	</div>
@@ -251,7 +250,7 @@ function loadUploadedFiles() {
                     $("ul.files_container").append(li);
                 }
             } else {
-                $("ul.files_container").html("<div class='text-center text-danger' style='margin-top:40px;'>No Files</div>");
+                $("ul.files_container").html("<div class='text-center text-danger' style='margin-top:40px;'>Sem arquivos</div>");
             }
         }
     });
