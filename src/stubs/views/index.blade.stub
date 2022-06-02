@@ -24,9 +24,9 @@
     </div>
 @endif
 
-<div class="box box-success">
-    <!--<div class="box-header"></div>-->
-    <div class="box-body">
+<div class="card card-success">
+    <!--<div class="card-header"></div>-->
+    <div class="card-body">
         <table id="example1" class="table table-bordered">
         <thead>
         <tr class="success">
@@ -55,7 +55,7 @@
             </div>
             {!! Form::open(['action' => 'LA\__controller_class_name__@store', 'id' => '__singular_var__-add-form']) !!}
             <div class="modal-body">
-                <div class="box-body">
+                <div class="card-body">
                     @la_form($module)
                     
                     {{--

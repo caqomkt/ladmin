@@ -17,9 +17,9 @@ use Dwij\Laraadmin\Models\Module;
 
 @section("main-content")
 
-<div class="box box-success">
-	<!--<div class="box-header"></div>-->
-	<div class="box-body">
+<div class="card card-success">
+	<div class="card-header">Preencha os dados abaixo</div>
+	<div class="card-body">
 		<table id="dt_modules" class="table table-bordered">
 		<thead>
 		<tr class="success">
@@ -52,7 +52,7 @@ use Dwij\Laraadmin\Models\Module;
 </div>
 
 <div class="modal fade" id="AddExistModal" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -60,7 +60,7 @@ use Dwij\Laraadmin\Models\Module;
 			</div>
 			{!! Form::open(['route' => config('laraadmin.adminRoute') . '.modules.store', 'id' => 'module-add-form']) !!}
 			<div class="modal-body">
-				<div class="box-body">
+				<div class="card-body">
 					<!--<div class="form-group">
 						<label for="name">Module Name :</label>
 						{{ Form::text("name", null, ['class'=>'form-control', 'placeholder'=>'Module Name', 'data-rule-minlength' => 2, 'data-rule-maxlength'=>20, 'required' => 'required']) }}
@@ -88,7 +88,7 @@ use Dwij\Laraadmin\Models\Module;
 					</div>
 				</div>
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer justify-content-between">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				{!! Form::submit( 'Submit', ['class'=>'btn btn-success']) !!}
 			</div>
@@ -98,7 +98,7 @@ use Dwij\Laraadmin\Models\Module;
 </div>
 
 <div class="modal fade" id="AddModal" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -106,7 +106,7 @@ use Dwij\Laraadmin\Models\Module;
 			</div>
 			{!! Form::open(['route' => config('laraadmin.adminRoute') . '.modules.store', 'id' => 'module-add-form']) !!}
 			<div class="modal-body">
-				<div class="box-body">
+				<div class="card-body">
 					<div class="form-group">
 						<label for="name">Module Name :</label>
 						{{ Form::text("name", null, ['class'=>'form-control', 'placeholder'=>'Module Name', 'data-rule-minlength' => 2, 'data-rule-maxlength'=>20, 'required' => 'required']) }}
@@ -120,7 +120,7 @@ use Dwij\Laraadmin\Models\Module;
 					</div>
 				</div>
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer justify-content-between">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				{!! Form::submit( 'Submit', ['class'=>'btn btn-success']) !!}
 			</div>
@@ -145,7 +145,7 @@ use Dwij\Laraadmin\Models\Module;
 				<div id="moduleDeleteFiles"></div>
 				<p class="text-danger">Note: Migration file will not be deleted but modified.</p>
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer justify-content-between">
 				{{ Form::open(['route' => [config('laraadmin.adminRoute') . '.modules.destroy', 0], 'id' => 'module_del_form', 'method' => 'delete', 'style'=>'display:inline']) }}
 					<button class="btn btn-danger btn-delete pull-left" type="submit">Yes</button>
 				{{ Form::close() }}
@@ -159,7 +159,7 @@ use Dwij\Laraadmin\Models\Module;
 
 <!-- module update confirmation  -->
 <div class="modal" id="module_update">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -168,7 +168,7 @@ use Dwij\Laraadmin\Models\Module;
 			<form id="module-update-form" role="form" action="{{ url('module_edit_submit') }}" class="smart-form" novalidate="novalidate" method="post">
                 {{ csrf_field() }}
 				<div class="modal-body">
-					<div class="box-body">
+					<div class="card-body">
 						<div class="form-group">
 							<label for="name">Module Name :</label>
 							<input type="text"  class="form-control module_label_edit" placeholder="Module Name" name="Module Name" value=""/>
@@ -182,7 +182,7 @@ use Dwij\Laraadmin\Models\Module;
 						</div>
 					</div>
 				</div>
-				<div class="modal-footer">
+				<div class="modal-footer justify-content-between">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<button type="button" class="btn btn-success save_edit_module" data-dismiss="modal">Save</button>
 				</div>

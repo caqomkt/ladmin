@@ -16,9 +16,9 @@ use Dwij\Laraadmin\Models\Module;
 
 @section("main-content")
 
-<div class="box box-success menus">
-	<!--<div class="box-header"></div>-->
-	<div class="box-body">
+<div class="card card-success menus">
+	<div class="card-header">Preencha os dados abaixo</div>
+	<div class="card-body">
 		<div class="row">
 			<div class="col-md-4 col-lg-4">
 				<div class="nav-tabs-custom">
@@ -73,7 +73,7 @@ use Dwij\Laraadmin\Models\Module;
 </div>
 
 <div class="modal fade" id="EditModal" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -82,7 +82,7 @@ use Dwij\Laraadmin\Models\Module;
 			{!! Form::open(['action' => ['\Dwij\Laraadmin\Controllers\MenuController@update', 1], 'id' => 'menu-edit-form']) !!}
 			<input name="_method" type="hidden" value="PUT">
 			<div class="modal-body">
-				<div class="box-body">
+				<div class="card-body">
                     <input type="hidden" name="type" value="custom">
 					<div class="form-group">
 						<label for="url" style="font-weight:normal;">URL</label>
@@ -101,7 +101,7 @@ use Dwij\Laraadmin\Models\Module;
 					</div>
 				</div>
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer justify-content-between">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				{!! Form::submit( 'Submit', ['class'=>'btn btn-success']) !!}
 			</div>

@@ -30,9 +30,9 @@
     <div class="dz-message"><i class="fa fa-cloud-upload"></i><br>Drop files here to upload</div>
 </form>
 
-<div class="box box-success">
-	<!--<div class="box-header"></div>-->
-	<div class="box-body">
+<div class="card card-success">
+	<div class="card-header">Preencha os dados abaixo</div>
+	<div class="card-body">
 		<ul class="files_container">
 
         </ul>
@@ -83,7 +83,7 @@
                         </div>
                     </div><!--.row-->
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer justify-content-between">
 				<a class="btn btn-success" id="downFileBtn" href="">Download</a>
 				@la_access("Uploads", "delete")
                 <button type="button" class="btn btn-danger" id="delFileBtn">Delete</button>

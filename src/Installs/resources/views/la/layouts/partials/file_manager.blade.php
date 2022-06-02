@@ -3,7 +3,7 @@
 <div class="modal fade" id="fm" role="dialog" aria-labelledby="fileManagerLabel">
 	<input type="hidden" id="image_selecter_origin" value="">
 	<input type="hidden" id="image_selecter_origin_type" value="">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

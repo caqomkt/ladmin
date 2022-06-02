@@ -24,9 +24,8 @@
     </div>
 @endif
 
-<div class="box box-success">
-	<!--<div class="box-header"></div>-->
-	<div class="box-body">
+<div class="card card-success">
+	<div class="card-body">
 		<table id="example1" class="table table-bordered">
 		<thead>
 		<tr class="success">

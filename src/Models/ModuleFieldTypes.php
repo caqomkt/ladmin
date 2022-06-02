@@ -13,9 +13,7 @@ class ModuleFieldTypes extends Model
         "name"
     ];
     
-    protected $hidden = [
-    
-    ];
+    protected $hidden = [];
     
     // ModuleFieldTypes::getFTypes()
     public static function getFTypes()

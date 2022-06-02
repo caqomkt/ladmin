@@ -22,12 +22,12 @@
 @endif
 <form action="{{route(config('laraadmin.adminRoute').'.la_configs.store')}}" method="POST">
 	<!-- general form elements disabled -->
-	<div class="box box-warning">
-		<div class="box-header with-border">
-			<h3 class="box-title">GUI Settings</h3>
+	<div class="card card-warning">
+		<div class="card-header with-border">
+			<h3 class="card-title">GUI Settings</h3>
 		</div>
 		<!-- /.box-header -->
-		<div class="box-body">
+		<div class="card-body">
 			{{ csrf_field() }}
 			<!-- text input -->
 			<div class="form-group">
@@ -107,7 +107,7 @@
 				<input type="text" class="form-control" placeholder="To send emails to others via SMTP" maxlength="100" name="default_email" value="{{$configs->default_email}}">
 			</div>
 		</div><!-- /.box-body -->
-		<div class="box-footer">
+		<div class="card-footer">
 			<button type="submit" class="btn btn-primary">Save</button>
 		</div><!-- /.box-footer -->
 	</div><!-- /.box -->

@@ -1,10 +1,7 @@
 @extends('la.layouts.app')
-
 @section('htmlheader_title')
-	Department View
+Detalhes do departamento
 @endsection
-
-
 @section('main-content')
 <div id="page-content" class="profile2">
 	<div class="bg-primary clearfix">
@@ -26,7 +23,9 @@
 			</div>
 		</div>
 		<div class="col-md-3">
-			<div class="dats1"><div class="label2">Admin</div></div>
+			<div class="dats1">
+			<div class="label2">Admin			</div>
+			</div>
 			<div class="dats1"><i class="fa fa-envelope-o"></i> superadmin@gmail.com</div>
 			<div class="dats1"><i class="fa fa-map-marker"></i> Pune, India</div>
 		</div>
@@ -94,7 +93,11 @@
 	</div>
 
 	<ul data-toggle="ajax-tab" class="nav nav-tabs profile" role="tablist">
-		<li class=""><a href="{{ url(config('laraadmin.adminRoute') . '/departments') }}" data-toggle="tooltip" data-placement="right" title="Back to Departments"><i class="fa fa-chevron-left"></i></a></li>
+		<li class="">
+		<a href="{{ url(config('laraadmin.adminRoute') . '/departments') }}" data-toggle="tooltip" data-placement="right" title="Voltar para lista">
+		<i class="fa fa-chevron-left"></i>Voltar
+		</a>
+		</li>
 		<li class="active"><a role="tab" data-toggle="tab" class="active" href="#tab-general-info" data-target="#tab-info"><i class="fa fa-bars"></i> General Info</a></li>
 		<li class=""><a role="tab" data-toggle="tab" href="#tab-timeline" data-target="#tab-timeline"><i class="fa fa-clock-o"></i> Timeline</a></li>
 	</ul>
@@ -103,10 +106,10 @@
 		<div role="tabpanel" class="tab-pane active fade in" id="tab-info">
 			<div class="tab-content">
 				<div class="panel infolist">
-					<div class="panel-default panel-heading">
+					<div class="card-default card-heading">
 						<h4>General Info</h4>
 					</div>
-					<div class="panel-body">
+					<div class="card-body">
 						@la_display($module, 'name')
 						@la_display($module, 'tags')
 						@la_display($module, 'color')

@@ -1,38 +1,30 @@
 @extends("la.layouts.app")
-
 @section("contentheader_title")
-	<a href="{{ url(config('laraadmin.adminRoute') . '/organizations') }}">Organization</a> :
+<a href="{{ url(config('laraadmin.adminRoute') . '/organizations') }}">Organization</a> :
 @endsection
 @section("contentheader_description", $organization->$view_col)
 @section("section", "Organizations")
 @section("section_url", url(config('laraadmin.adminRoute') . '/organizations'))
 @section("sub_section", "Edit")
-
-@section("htmlheader_title", "Organizations Edit : ".$organization->$view_col)
-
+@section("htmlheader_title", "Editando Organização: ".$organization->$view_col)
 @section("main-content")
-
 @if (count($errors) > 0)
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+<div class="alert alert-danger">
+	<ul>
+		@foreach ($errors->all() as $error)
+		<li>{{ $error }}</li>
+		@endforeach
+	</ul>
+</div>
 @endif
-
-<div class="box">
-	<div class="box-header">
-		
+<div class="card">
+	<div class="card-header">
+		Preencha os dados abaixo
 	</div>
-	<div class="box-body">
-		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
-				{!! Form::model($organization, ['route' => [config('laraadmin.adminRoute') . '.organizations.update', $organization->id ], 'method'=>'PUT', 'id' => 'organization-edit-form']) !!}
-					@la_form($module)
-					
-					{{--
+	<div class="card-body">
+		{!! Form::model($organization, ['route' => [config('laraadmin.adminRoute') . '.organizations.update', $organization->id ], 'method'=>'PUT', 'id' => 'organization-edit-form']) !!}
+		@la_form($module)
+		{{--
 					@la_input($module, 'name')
 					@la_input($module, 'email')
 					@la_input($module, 'phone')
@@ -45,24 +37,13 @@
 					@la_input($module, 'profile_image')
 					@la_input($module, 'profile')
 					--}}
-                    <br>
-					<div class="form-group">
-						{!! Form::submit( 'Update', ['class'=>'btn btn-success']) !!} <a href="{{ url(config('laraadmin.adminRoute') . '/organizations') }}" class="btn btn-default pull-right">Cancel</a>
-					</div>
-				{!! Form::close() !!}
-			</div>
+		<br>
+		<div class="form-group">
+			{!! Form::submit( 'Atualizar', ['class'=>'btn btn-success']) !!} <a href="{{ url(config('laraadmin.adminRoute') . '/organizations') }}" class="btn btn-default pull-right">Cancelar</a>
 		</div>
+		{!! Form::close() !!}
 	</div>
 </div>
-
 @endsection
-
 @push('scripts')
-<script>
-$(function () {
-	$("#organization-edit-form").validate({
-		
-	});
-});
-</script>
 @endpush

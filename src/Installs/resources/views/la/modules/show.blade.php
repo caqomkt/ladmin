@@ -19,14 +19,16 @@ use Dwij\Laraadmin\Models\ModuleFields;
 </div>
 <div class="col-md-9">
 	<a class="text-white" href="{{ url(config('laraadmin.adminRoute') . '/'.$module->name_db) }}">
-	<h4 data-toggle="tooltip" data-placement="left" title="Open {{ $module->model }} Module" class="name">
+	<h4 data-toggle="tooltip" data-placement="left" title="Abrir {{ $module->model }} Module" class="name">
 	{{ $module->label }}
 	</h4>
 	</a>
 	<div class="row stats">
-		<div class="col-md-12">{{ Module::itemCount($module->name) }} Items</div>
+		<div class="col-md-12">{{ Module::itemCount($module->name) }} registros</div>
 	</div>
-	<p class="desc">@if(isset($module->is_gen) && $module->is_gen) <div class="label2 success">Module Generated</div> @else <div class="label2 danger" style="border:solid 1px #FFF;">Module not Generated</div> @endif</p>
+	<p class="desc">
+	@if(isset($module->is_gen) && $module->is_gen) 
+	<div class="label2 success">Módulo gerado</div> @else <div class="label2 danger" style="border:solid 1px #FFF;">Module not Generated</div> @endif</p>
 </div>
 </div>
 </div>
@@ -60,13 +62,16 @@ use Dwij\Laraadmin\Models\ModuleFields;
 </div>
 </div>
 <ul id="module-tabs" data-toggle="ajax-tab" class="nav nav-tabs profile" role="tablist">
-<li class=""><a href="{{ url(config('laraadmin.adminRoute') . '/modules') }}" data-toggle="tooltip" data-placement="right" title="Voltar para lista">
+<li class="">
+<a class="nav-link" href="{{ url(config('laraadmin.adminRoute') . '/modules') }}" data-toggle="tooltip" data-placement="right" title="Voltar para lista">
 	<i class="fa fa-chevron-left"></i>Voltar</a></li>
 <li class="tab-pane" id="fields">
-<a id="tab_fields" role="tab" data-toggle="tab" class="tab_info" href="#fields" data-target="#tab-info"><i class="fa fa-bars"></i> Module Fields</a>
+<a id="tab_fields" role="tab" data-toggle="tab" class="tab_info" href="#fields" data-target="#tab-info">
+<i class="fa fa-bars"></i> Module Fields</a>
 </li>
 <li class="tab-pane" id="access">
-<a id="tab_access" role="tab" data-toggle="tab"  class="tab_info " href="#access" data-target="#tab-access"><i class="fa fa-key"></i> Access</a>
+<a id="tab_access" role="tab" data-toggle="tab"  class="tab_info " href="#access" data-target="#tab-access">
+<i class="fa fa-key"></i> Access</a>
 </li>
 <li class="tab-pane" id="sort">
 <a id="tab_sort" role="tab" data-toggle="tab"  class="tab_info " href="#sort" data-target="#tab-sort"><i class="fa fa-sort"></i> Sort</a>
@@ -130,6 +135,7 @@ use Dwij\Laraadmin\Models\ModuleFields;
 		</tbody>
 		</table>
 	</div>
+</small>
 </div>
 </div>
 </div>
@@ -143,31 +149,33 @@ use Dwij\Laraadmin\Models\ModuleFields;
 <table class="table table-bordered dataTable no-footer table-access">
 	<thead>
 		<tr class="blockHeader">
-			<th>
-					<input class="alignTop" type="checkbox" id="role_select_all">&nbsp; Perfis
-				</th>
-				<th>
-					<input type="checkbox" id="view_all">&nbsp; Visualizar
-				</th>
-				<th>
-					<input type="checkbox" id="create_all">&nbsp; Criar
-				</th>
-				<th>
-					<input type="checkbox" id="edit_all">&nbsp; Editar
-				</th>
-				<th>
-					<input class="alignTop" type="checkbox" id="delete_all">&nbsp; Deletar
-				</th>
+			<th><input class="alignTop" type="checkbox" id="role_select_all">&nbsp; Perfis</th>
+				<th><input type="checkbox" id="view_all">&nbsp; Visualizar</th>
+				<th><input type="checkbox" id="create_all">&nbsp; Criar</th>
+				<th><input type="checkbox" id="edit_all">&nbsp; Editar</th>
+				<th><input class="alignTop" type="checkbox" id="delete_all">&nbsp; Deletar</th>
 				<th>Permissões por campo</th>
 			</tr>
 	</thead>
 	@foreach($roles as $role)
 		<tr class="tr-access-basic" role_id="{{ $role->id }}">
 			<td><input class="role_checkb" type="checkbox" name="module_{{ $role->id }}" id="module_{{ $role->id }}" checked="checked"> {{ $role->name }}</td>
-			<td><input class="view_checkb" type="checkbox" name="module_view_{{$role->id}}" id="module_view_{{$role->id}}" <?php if($role->view == 1) { echo 'checked="checked"'; } ?> ></td>
-			<td><input class="create_checkb" type="checkbox" name="module_create_{{$role->id}}" id="module_create_{{$role->id}}" <?php if($role->create == 1) { echo 'checked="checked"'; } ?> ></td>
-			<td><input class="edit_checkb" type="checkbox" name="module_edit_{{$role->id}}" id="module_edit_{{$role->id}}" <?php if($role->edit == 1) { echo 'checked="checked"'; } ?> ></td>
-			<td><input class="delete_checkb" type="checkbox" name="module_delete_{{$role->id}}" id="module_delete_{{$role->id}}" <?php if($role->delete == 1) { echo 'checked="checked"'; } ?> ></td>
+			<td>
+			<input class="view_checkb" type="checkbox" name="module_view_{{$role->id}}" id="module_view_{{$role->id}}" <?php if($role->view == 1) { 
+			echo 'checked="checked"'; 
+			} ?> ></td>
+			<td>
+			<input class="create_checkb" type="checkbox" name="module_create_{{$role->id}}" id="module_create_{{$role->id}}" <?php if($role->create == 1) { 
+			echo 'checked="checked"'; 
+			} ?> ></td>
+			<td>
+			<input class="edit_checkb" type="checkbox" name="module_edit_{{$role->id}}" id="module_edit_{{$role->id}}" <?php if($role->edit == 1) { 
+			echo 'checked="checked"'; 
+			} ?> ></td>
+			<td>
+			<input class="delete_checkb" type="checkbox" name="module_delete_{{$role->id}}" id="module_delete_{{$role->id}}" <?php if($role->delete == 1) { 
+			echo 'checked="checked"'; 
+			} ?> ></td>
 			<td>
 				<a role_id="{{ $role->id }}" class="toggle-adv-access btn btn-default btn-sm hide_row"><i class="fa fa-chevron-down"></i></a>
 			</td>
@@ -178,7 +186,8 @@ use Dwij\Laraadmin\Models\ModuleFields;
 				@foreach (array_chunk($module->fields, 3, true) as $fields)
 					<tr>
 						@foreach ($fields as $field)
-							<td><div class="col-md-3"><input type="text" name="{{ $field['colname'] }}_{{ $role->id }}" value="{{ $role->fields[$field['id']]['access'] }}" data-slider-value="{{ $role->fields[$field['id']]['access'] }}" class="slider form-control" data-slider-min="0" data-slider-max="2" data-slider-step="1" data-slider-orientation="horizontal"  data-slider-id="{{ $field['colname'] }}_{{ $role->id }}"></div> {{ $field['label'] }} </td>
+						<td>
+						<div class="col-md-3"><input type="text" name="{{ $field['colname'] }}_{{ $role->id }}" value="{{ $role->fields[$field['id']]['access'] }}" data-slider-value="{{ $role->fields[$field['id']]['access'] }}" class="slider form-control" data-slider-min="0" data-slider-max="2" data-slider-step="1" data-slider-orientation="horizontal"  data-slider-id="{{ $field['colname'] }}_{{ $role->id }}"></div> {{ $field['label'] }} </td>
 						@endforeach
 					</tr>
 				@endforeach

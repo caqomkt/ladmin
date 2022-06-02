@@ -24,9 +24,9 @@
     </div>
 @endif
 
-<div class="box box-success">
-	<!--<div class="box-header"></div>-->
-	<div class="box-body">
+<div class="card card-success">
+	<div class="card-header">Preencha os dados abaixo</div>
+	<div class="card-body">
 		<table id="example1" class="table table-bordered">
 		<thead>
 		<tr class="success">
@@ -47,7 +47,7 @@
 
 @la_access("Roles", "create")
 <div class="modal fade" id="AddModal" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -55,7 +55,7 @@
 			</div>
 			{!! Form::open(['action' => 'LA\RolesController@store', 'id' => 'role-add-form']) !!}
 			<div class="modal-body">
-				<div class="box-body">
+				<div class="card-body">
                     @la_input($module, 'name', null, null, "form-control text-uppercase", ["placeholder" => "Role Name in CAPITAL LETTERS with '_' to JOIN e.g. 'SUPER_ADMIN'"])
 					@la_input($module, 'display_name')
 					@la_input($module, 'description')
@@ -63,7 +63,7 @@
 					@la_input($module, 'dept')
 				</div>
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer justify-content-between">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				{!! Form::submit( 'Submit', ['class'=>'btn btn-success']) !!}
 			</div>

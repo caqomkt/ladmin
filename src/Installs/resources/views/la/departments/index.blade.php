@@ -24,9 +24,9 @@
     </div>
 @endif
 
-<div class="box box-success">
-	<!--<div class="box-header"></div>-->
-	<div class="box-body">
+<div class="card card-success">
+	<div class="card-header">Preencha os dados abaixo</div>
+	<div class="card-body">
 		<table id="example1" class="table table-bordered">
 		<thead>
 		<tr class="success">
@@ -47,15 +47,15 @@
 
 @la_access("Departments", "create")
 <div class="modal fade" id="AddModal" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="myModalLabel">Add Department</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
 			{!! Form::open(['action' => 'LA\DepartmentsController@store', 'id' => 'department-add-form']) !!}
 			<div class="modal-body">
-				<div class="box-body">
+				<div class="card-body">
                     @la_form($module)
 					
 					{{--
@@ -65,7 +65,7 @@
 					--}}
 				</div>
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer justify-content-between">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				{!! Form::submit( 'Submit', ['class'=>'btn btn-success']) !!}
 			</div>

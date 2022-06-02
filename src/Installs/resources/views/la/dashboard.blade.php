@@ -82,18 +82,18 @@
               </div><!-- /.nav-tabs-custom -->
 
               <!-- Chat box -->
-              <div class="box box-success">
-                <div class="box-header">
+              <div class="card card-success">
+                <div class="card-header">
                   <i class="fa fa-comments-o"></i>
-                  <h3 class="box-title">Chat</h3>
-                  <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
+                  <h3 class="card-title">Chat</h3>
+                  <div class="card-tools pull-right" data-toggle="tooltip" title="Status">
                     <div class="btn-group" data-toggle="btn-toggle" >
                       <button type="button" class="btn btn-default btn-sm active"><i class="fa fa-square text-green"></i></button>
                       <button type="button" class="btn btn-default btn-sm"><i class="fa fa-square text-red"></i></button>
                     </div>
                   </div>
                 </div>
-                <div class="box-body chat" id="chat-box">
+                <div class="card-body chat" id="chat-box">
                   <!-- chat item -->
                   <div class="item">
                     <img src="{{asset('/la-assets/img/user4-128x128.jpg')}}" alt="user image" class="online">
@@ -143,7 +143,7 @@
                     </p>
                   </div><!-- /.item -->
                 </div><!-- /.chat -->
-                <div class="box-footer">
+                <div class="card-footer">
                   <div class="input-group">
                     <input class="form-control" placeholder="Type message...">
                     <div class="input-group-btn">
@@ -154,11 +154,11 @@
               </div><!-- /.box (chat box) -->
 
               <!-- TO DO List -->
-              <div class="box box-primary">
-                <div class="box-header">
+              <div class="card card-primary">
+                <div class="card-header">
                   <i class="ion ion-clipboard"></i>
-                  <h3 class="box-title">To Do List</h3>
-                  <div class="box-tools pull-right">
+                  <h3 class="card-title">To Do List</h3>
+                  <div class="card-tools pull-right">
                     <ul class="pagination pagination-sm inline">
                       <li><a href="#">&laquo;</a></li>
                       <li><a href="#">1</a></li>
@@ -168,7 +168,7 @@
                     </ul>
                   </div>
                 </div><!-- /.box-header -->
-                <div class="box-body">
+                <div class="card-body">
                   <ul class="todo-list">
                     <li>
                       <!-- drag handle -->
@@ -255,22 +255,22 @@
                     </li>
                   </ul>
                 </div><!-- /.box-body -->
-                <div class="box-footer clearfix no-border">
+                <div class="card-footer clearfix no-border">
                   <button class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
                 </div>
               </div><!-- /.box -->
 
               <!-- quick email widget -->
-              <div class="box box-info">
-                <div class="box-header">
+              <div class="card card-info">
+                <div class="card-header">
                   <i class="fa fa-envelope"></i>
-                  <h3 class="box-title">Quick Email</h3>
+                  <h3 class="card-title">Quick Email</h3>
                   <!-- tools box -->
                   <div class="pull-right box-tools">
                     <button class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
                   </div><!-- /. tools -->
                 </div>
-                <div class="box-body">
+                <div class="card-body">
                   <form action="#" method="post">
                     <div class="form-group">
                       <input type="email" class="form-control" name="emailto" placeholder="Email to:">
@@ -283,7 +283,7 @@
                     </div>
                   </form>
                 </div>
-                <div class="box-footer clearfix">
+                <div class="card-footer clearfix">
                   <button class="pull-right btn btn-default" id="sendEmail">Send <i class="fa fa-arrow-circle-right"></i></button>
                 </div>
               </div>
@@ -293,8 +293,8 @@
             <section class="col-lg-5 connectedSortable">
 
               <!-- Map box -->
-              <div class="box box-solid bg-light-blue-gradient">
-                <div class="box-header">
+              <div class="card card-solid bg-light-blue-gradient">
+                <div class="card-header">
                   <!-- tools box -->
                   <div class="pull-right box-tools">
                     <button class="btn btn-primary btn-sm daterange pull-right" data-toggle="tooltip" title="Date range"><i class="fa fa-calendar"></i></button>
@@ -302,14 +302,14 @@
                   </div><!-- /. tools -->
 
                   <i class="fa fa-map-marker"></i>
-                  <h3 class="box-title">
+                  <h3 class="card-title">
                     Visitors
                   </h3>
                 </div>
-                <div class="box-body">
+                <div class="card-body">
                   <div id="world-map" style="height: 250px; width: 100%;"></div>
                 </div><!-- /.box-body-->
-                <div class="box-footer no-border">
+                <div class="card-footer no-border">
                   <div class="row">
                     <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
                       <div id="sparkline-1"></div>
@@ -329,19 +329,19 @@
               <!-- /.box -->
 
               <!-- solid sales graph -->
-              <div class="box box-solid bg-teal-gradient">
-                <div class="box-header">
+              <div class="card card-solid bg-teal-gradient">
+                <div class="card-header">
                   <i class="fa fa-th"></i>
-                  <h3 class="box-title">Sales Graph</h3>
-                  <div class="box-tools pull-right">
+                  <h3 class="card-title">Sales Graph</h3>
+                  <div class="card-tools pull-right">
                     <button class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     <button class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
                   </div>
                 </div>
-                <div class="box-body border-radius-none">
+                <div class="card-body border-radius-none">
                   <div class="chart" id="line-chart" style="height: 250px;"></div>
                 </div><!-- /.box-body -->
-                <div class="box-footer no-border">
+                <div class="card-footer no-border">
                   <div class="row">
                     <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
                       <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60" data-fgColor="#39CCCC">
@@ -360,10 +360,10 @@
               </div><!-- /.box -->
 
               <!-- Calendar -->
-              <div class="box box-solid bg-green-gradient">
-                <div class="box-header">
+              <div class="card card-solid bg-green-gradient">
+                <div class="card-header">
                   <i class="fa fa-calendar"></i>
-                  <h3 class="box-title">Calendar</h3>
+                  <h3 class="card-title">Calendar</h3>
                   <!-- tools box -->
                   <div class="pull-right box-tools">
                     <!-- button with a dropdown -->
@@ -380,11 +380,11 @@
                     <button class="btn btn-success btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
                   </div><!-- /. tools -->
                 </div><!-- /.box-header -->
-                <div class="box-body no-padding">
+                <div class="card-body no-padding">
                   <!--The calendar -->
                   <div id="calendar" style="width: 100%"></div>
                 </div><!-- /.box-body -->
-                <div class="box-footer text-black">
+                <div class="card-footer text-black">
                   <div class="row">
                     <div class="col-sm-6">
                       <!-- Progress bars -->

@@ -16,7 +16,10 @@
 				<div class="col-md-9">
 					<h4 class="name">{{ $employee->$view_col }}</h4>
 					<div class="row stats">
-						<div class="col-md-6 stat"><div class="label2" data-toggle="tooltip" data-placement="top" title="Designation">{{ $employee->designation }}</div></div>
+						<div class="col-md-6 stat">
+						<div class="label2" data-toggle="tooltip" data-placement="top" title="Designation">{{ $employee->designation }}
+						</div>
+						</div>
 						<div class="col-md-6 stat"><i class="fa fa-map-marker"></i> {{ $employee->city or "NA" }}</div>
 					</div>
 					<p class="desc">{{ substr($employee->about, 0, 33) }}@if(strlen($employee->about) > 33)...@endif</p>
@@ -58,7 +61,8 @@
 	</div>
 
 	<ul data-toggle="ajax-tab" class="nav nav-tabs profile" role="tablist">
-		<li class=""><a href="{{ url(config('laraadmin.adminRoute') . '/employees') }}" data-toggle="tooltip" data-placement="right" title="Back to Employees"><i class="fa fa-chevron-left"></i></a></li>
+		<li class=""><a href="{{ url(config('laraadmin.adminRoute') . '/employees') }}" data-toggle="tooltip" data-placement="right" title="Voltar para lista">
+				<i class="fa fa-chevron-left"></i>Voltar</a></li>
 		<li class="active"><a role="tab" data-toggle="tab" class="active" href="#tab-info" data-target="#tab-info"><i class="fa fa-bars"></i> General Info</a></li>
 		<li class=""><a role="tab" data-toggle="tab" href="#tab-timeline" data-target="#tab-timeline"><i class="fa fa-clock-o"></i> Timeline</a></li>
 		@if($employee->id == Auth::user()->id || Entrust::hasRole("SUPER_ADMIN"))
@@ -70,10 +74,10 @@
 		<div role="tabpanel" class="tab-pane active fade in" id="tab-info">
 			<div class="tab-content">
 				<div class="panel infolist">
-					<div class="panel-default panel-heading">
-						<h4>General Info</h4>
+					<div class="card-default card-heading">
+						<h4>Informações gerais</h4>
 					</div>
-					<div class="panel-body">
+					<div class="card-body">
 						@la_display($module, 'name')
 						@la_display($module, 'designation')
 						@la_display($module, 'gender')
@@ -193,10 +197,10 @@
 				<form action="{{ url(config('laraadmin.adminRoute') . '/change_password/'.$employee->id) }}" id="password-reset-form" class="general-form dashed-row white" method="post" accept-charset="utf-8">
 					{{ csrf_field() }}
 					<div class="panel">
-						<div class="panel-default panel-heading">
+						<div class="card-default card-heading">
 							<h4>Account settings</h4>
 						</div>
-						<div class="panel-body">
+						<div class="card-body">
 							@if (count($errors) > 0)
 								<div class="alert alert-danger">
 									<ul>
@@ -222,7 +226,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="panel-footer">
+						<div class="card-footer">
 							<button type="submit" class="btn btn-primary"><span class="fa fa-check-circle"></span> Change Password</button>
 						</div>
 					</div>

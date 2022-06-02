@@ -33,16 +33,6 @@ Route::group([
     Route::post(config('laraadmin.adminRoute') . '/module_update', 'ModuleController@update');
     Route::post(config('laraadmin.adminRoute') . '/module_field_listing_show', 'FieldController@module_field_listing_show_ajax');
 
-    /* ================== Code Editor ================== */
-    Route::get(config('laraadmin.adminRoute') . '/lacodeeditor', function () {
-        if (file_exists(resource_path("views/la/editor/index.blade.php"))) {
-            return redirect(config('laraadmin.adminRoute') . '/laeditor');
-        } else {
-            // show install code editor page
-            return View('la.editor.install');
-        }
-    });
-
     /* ================== Menu Editor ================== */
     Route::resource(config('laraadmin.adminRoute') . '/la_menus', 'MenuController');
     Route::post(config('laraadmin.adminRoute') . '/la_menus/update_hierarchy', 'MenuController@update_hierarchy');

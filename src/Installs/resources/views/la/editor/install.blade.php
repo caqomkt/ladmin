@@ -8,11 +8,11 @@
 
 @section('main-content')
 
-<div class="box">
-	<div class="box-header">
+<div class="card">
+	<div class="card-header">
 		
 	</div>
-	<div class="box-body">
+	<div class="card-body">
 		<p>LaraAdmin Code Editor does not comes inbuilt now. You can get it by following commands.</p>
 		<pre><code>composer require dwij/laeditor</code></pre>
 		<p>This will download the editor package. Not install editor by following command:</p>
