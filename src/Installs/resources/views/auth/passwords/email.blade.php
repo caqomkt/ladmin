@@ -33,12 +33,12 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-2">
-                    </div><!-- /.col -->
+                    </div>
                     <div class="col-xs-8">
                         <button type="submit" class="btn btn-primary btn-block btn-flat">Link para redefinição de senha</button>
-                    </div><!-- /.col -->
+                    </div>
                     <div class="col-xs-2">
-                    </div><!-- /.col -->
+                    </div>
                 </div>
             </form>
             <a href="{{ url('/login') }}">Acessar</a><br>

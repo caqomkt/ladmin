@@ -50,10 +50,10 @@
                                 <input type="checkbox"> I agree to the terms
                             </label>
                         </div>
-                    </div><!-- /.col -->
+                    </div>
                     <div class="col-xs-4">
                         <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
-                    </div><!-- /.col -->
+                    </div>
                 </div>
             </form>
 

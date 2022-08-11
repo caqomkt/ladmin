@@ -47,10 +47,10 @@ Log in
 
 
                             </div>
-                        </div><!-- /.col -->
+                        </div>
                         <div class="col-6">
                             <button type="submit" class="btn btn-primary btn-block btn-flat">Acessar o sistema</button>
-                        </div><!-- /.col -->
+                        </div>
                     </div>
                 </form>
 
