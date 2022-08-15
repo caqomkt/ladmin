@@ -1,14 +1,14 @@
 @extends("la.layouts.app")
 
-@section("contentheader_title", "Funções")
-@section("contentheader_description", "Lista de funções")
+@section("contentheader_title", "Funï¿½ï¿½es")
+@section("contentheader_description", "Lista de funï¿½ï¿½es")
 @section("section", "Roles")
 @section("sub_section", "Listing")
-@section("htmlheader_title", "Lista de funções")
+@section("htmlheader_title", "Lista de funï¿½ï¿½es")
 
 @section("headerElems")
 @la_access("Roles", "create")
-<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Adicionar função</button>
+<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Adicionar funï¿½ï¿½o</button>
 @endla_access
 @endsection
 
@@ -76,11 +76,11 @@
 @endsection
 
 @push('styles')
-<link rel="stylesheet" type="text/css" href="{{ asset('la-assets/plugins/datatables/datatables.min.css') }}"/>
+
 @endpush
 
 @push('scripts')
-<script src="{{ asset('la-assets/plugins/datatables/datatables.min.js') }}"></script>
+
 <script>
 $(function () {
 	$("#example1").DataTable({

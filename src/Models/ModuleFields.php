@@ -25,10 +25,8 @@ class ModuleFields extends Model
         "colname", "label", "module", "field_type", "unique", "defaultvalue", "minlength", "maxlength", "required", "listing_col", "popup_vals"
     ];
     
-    protected $hidden = [
-    
-    ];
-    
+    protected $hidden = [];
+
     /**
      * Create Module Field by $request
      * Method used in "Module Manager" via FieldController
@@ -55,8 +53,7 @@ class ModuleFields extends Model
             }
             if($request->defaultvalue) {
             $field->defaultvalue = $request->defaultvalue;
-            }else
-            {
+            }else {
                 $field->defaultvalue = '';
             }
             if($request->minlength == "") {
@@ -174,8 +171,7 @@ class ModuleFields extends Model
         }
         if($request->defaultvalue) {
             $field->defaultvalue = $request->defaultvalue;
-            }else
-            {
+            }else {
                 $field->defaultvalue = '';
             }
         if($request->minlength == "") {

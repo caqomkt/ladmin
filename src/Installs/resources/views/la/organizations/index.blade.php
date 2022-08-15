@@ -1,12 +1,12 @@
 @extends("la.layouts.app")
-@section("contentheader_title", "Organizações")
-@section("contentheader_description", "Lista de organizações")
+@section("contentheader_title", "OrganizAÃ§Ãµes")
+@section("contentheader_description", "Lista de organizAÃ§Ãµes")
 @section("section", "Organizations")
 @section("sub_section", "Listing")
-@section("htmlheader_title", "Lista de organizações")
+@section("htmlheader_title", "Lista de organizAÃ§Ãµes")
 @section("headerElems")
 @la_access("Organizations", "create")
-<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Adicionar Organização</button>
+<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Adicionar Organizaï¿½ï¿½o</button>
 @endla_access
 @endsection
 @section("main-content")
@@ -28,7 +28,7 @@
 			<th>{{ $module->fields[$col]['label'] or ucfirst($col) }}</th>
 			@endforeach
 			@if($show_actions)
-					<th>Ações</th>
+					<th>AÃ§Ãµes</th>
 			@endif
 		</tr>
 		</thead>
@@ -43,7 +43,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				
-				<h4 class="modal-title" id="myModalLabel">Adicionar Organização</h4>
+				<h4 class="modal-title" id="myModalLabel">Adicionar Organizaï¿½ï¿½o</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
 			{!! Form::open(['action' => 'LA\OrganizationsController@store', 'id' => 'organization-add-form']) !!}
@@ -76,10 +76,10 @@
 @endla_access
 @endsection
 @push('styles')
-<link rel="stylesheet" type="text/css" href="{{ asset('la-assets/plugins/datatables/datatables.min.css') }}"/>
+
 @endpush
 @push('scripts')
-<script src="{{ asset('la-assets/plugins/datatables/datatables.min.js') }}"></script>
+
 <script>
 $(function () {
 	$("#example1").DataTable({

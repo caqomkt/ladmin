@@ -25,7 +25,7 @@
 @endif
 @if(session('confirmacao'))
 <div class="alert alert-success">
-	<p>{{session('confirmacao')}}</p>
+	{{session('confirmacao')}}
 </div>
 @endif
 <div class="card">
@@ -50,11 +50,9 @@
 @endsection
 
 @push('styles')
-<link rel="stylesheet" type="text/css" href="{{ asset('la-assets/plugins/datatables/datatables.min.css') }}"/>
 @endpush
 
 @push('scripts')
-<script src="{{ asset('la-assets/plugins/datatables/datatables.min.js') }}"></script>
 <script>
 $(function () {
 	$("#example1").DataTable({

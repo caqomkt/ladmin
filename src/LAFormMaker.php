@@ -306,8 +306,10 @@ class LAFormMaker
 				case 'Integer':
 					$out .= '<label for="' . $field_name . '">' . $label . $required_ast . ' :</label>';
 					unset($params['data-rule-maxlength']);
-					if ($default_val == null) {
+					if ($default_val != null) {
 						$default_val = $defaultvalue;
+					}elseif ($default_val == 0) {
+						$default_val = 0;
 					}
 					// Override the edit value
 					if (isset($row) && isset($row->$field_name)) {
@@ -603,14 +605,19 @@ class LAFormMaker
 				case 'Currency':
 					break;
 				case 'Date':
+					if (($value != "") && ($value != "0000-00-00")) {
 					$dt = strtotime($value);
 					$value = date("d/m/Y", $dt);
+					} else {
+						$value = '<span class="badge badge-danger">Sem data</span>';
+					}
 					break;
 				case 'Datetime':
 					$dt = strtotime($value);
 					$value = date("d/m/Y | H:i", $dt);
 					break;
 				case 'Decimal':
+                    $value = number_format($value, 2, ',', '.');
 					break;
 				case 'Dropdown':
 					$values = LAFormMaker::process_values($fieldObj['popup_vals']);
@@ -618,7 +625,7 @@ class LAFormMaker
 						if ($value != 0) {
 							$moduleVal = Module::getByTable(str_replace("@", "", $fieldObj['popup_vals']));
 							if (isset($moduleVal->id)) {
-								$value = "<a href='" . url(config("laraadmin.adminRoute") . "/" . $moduleVal->name_db . "/" . $value) . "' class='label label-primary'>" . $values[$value] . "</a> ";
+								$value = "<a href='" . url(config("laraadmin.adminRoute") . "/" . $moduleVal->name_db . "/" . $value) . "' class='label label-primary'>" . $values[$value] . " &nbsp;&nbsp;<span class='badge badge-secondary'>clique para ver detalhes</span></a> ";
 							} else {
 								$value = "<a class='label label-primary'>" . $values[$value] . "</a> ";
 							}

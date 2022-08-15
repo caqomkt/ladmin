@@ -21,7 +21,7 @@
 @endif
 @if(session('confirmacao'))
 <div class="alert alert-success">
-	<p>{{session('confirmacao')}}</p>
+	{{session('confirmacao')}}
 </div>
 @endif
 <div class="card">
@@ -33,7 +33,7 @@
 			<th>{{ $module->fields[$col]['label'] or ucfirst($col) }}</th>
 			@endforeach
 			@if($show_actions)
-					<th>Ações</th>
+					<th>AÃ§Ãµes</th>
 			@endif
 		</tr>
 		</thead>
@@ -74,10 +74,10 @@
 @endla_access
 @endsection
 @push('styles')
-<link rel="stylesheet" type="text/css" href="{{ asset('la-assets/plugins/datatables/datatables.min.css') }}"/>
+
 @endpush
 @push('scripts')
-<script src="{{ asset('la-assets/plugins/datatables/datatables.min.js') }}"></script>
+
 <script>
 $(function () {
 	$("#example1").DataTable({

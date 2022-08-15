@@ -61,7 +61,7 @@
                 <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div><!-- ./col -->
-          </div><!-- /.row -->
+          </div>
           <!-- Main row -->
           <div class="row">
             <!-- Left col -->
@@ -258,7 +258,7 @@
                 <div class="card-footer clearfix no-border">
                   <button class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
                 </div>
-              </div><!-- /.box -->
+              </div>
 
               <!-- quick email widget -->
               <div class="card card-info">
@@ -323,10 +323,10 @@
                       <div id="sparkline-3"></div>
                       <div class="knob-label">Exists</div>
                     </div><!-- ./col -->
-                  </div><!-- /.row -->
+                  </div>
                 </div>
               </div>
-              <!-- /.box -->
+              
 
               <!-- solid sales graph -->
               <div class="card card-solid bg-teal-gradient">
@@ -355,9 +355,9 @@
                       <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60" data-fgColor="#39CCCC">
                       <div class="knob-label">In-Store</div>
                     </div><!-- ./col -->
-                  </div><!-- /.row -->
+                  </div>
                 </div><!-- /.box-footer -->
-              </div><!-- /.box -->
+              </div>
 
               <!-- Calendar -->
               <div class="card card-solid bg-green-gradient">
@@ -403,7 +403,7 @@
                       <div class="progress xs">
                         <div class="progress-bar progress-bar-green" style="width: 70%;"></div>
                       </div>
-                    </div><!-- /.col -->
+                    </div>
                     <div class="col-sm-6">
                       <div class="clearfix">
                         <span class="pull-left">Task #3</span>
@@ -420,12 +420,12 @@
                       <div class="progress xs">
                         <div class="progress-bar progress-bar-green" style="width: 40%;"></div>
                       </div>
-                    </div><!-- /.col -->
-                  </div><!-- /.row -->
+                    </div>
+                  </div>
                 </div>
-              </div><!-- /.box -->
+              </div>
 
-            </section><!-- right col -->
+            </section>
           </div><!-- /.row (main row) -->
 
         </section><!-- /.content -->

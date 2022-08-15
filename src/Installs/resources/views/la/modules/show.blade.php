@@ -378,7 +378,7 @@ use Dwij\Laraadmin\Models\ModuleFields;
 </div>
 @endsection
 @push('styles')
-<link rel="stylesheet" type="text/css" href="{{ asset('la-assets/plugins/datatables/datatables.min.css') }}"/>
+
 <link rel="stylesheet" type="text/css" href="{{ asset('la-assets/plugins/bootstrap-slider/slider.css') }}"/>
 <style>
 .btn-default {
@@ -464,7 +464,7 @@ margin-bottom: 4px;
 </style>
 @endpush
 @push('scripts')
-<script src="{{ asset('la-assets/plugins/datatables/datatables.min.js') }}"></script>
+
 <script src="{{ asset('la-assets/plugins/bootstrap-slider/bootstrap-slider.js') }}"></script>
 <script src="{{ asset('la-assets/plugins/jQueryUI/jquery-ui.js') }}"></script>
 <script>

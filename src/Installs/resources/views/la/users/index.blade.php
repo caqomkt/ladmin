@@ -1,10 +1,10 @@
 @extends("la.layouts.app")
 
-@section("contentheader_title", "Usuários")
-@section("contentheader_description", "Lista de usuários")
-@section("section", "Usuários")
+@section("contentheader_title", "Usuï¿½rios")
+@section("contentheader_description", "Lista de usuï¿½rios")
+@section("section", "Usuï¿½rios")
 @section("sub_section", "Lista")
-@section("htmlheader_title", "Lista de usuários")
+@section("htmlheader_title", "Lista de usuï¿½rios")
 
 @section("headerElems")
 
@@ -31,7 +31,7 @@
 			<th>{{ $module->fields[$col]['label'] or ucfirst($col) }}</th>
 			@endforeach
 			@if($show_actions)
-					<th>Ações</th>
+					<th>AÃ§Ãµes</th>
 			@endif
 		</tr>
 		</thead>
@@ -45,11 +45,11 @@
 @endsection
 
 @push('styles')
-<link rel="stylesheet" type="text/css" href="{{ asset('la-assets/plugins/datatables/datatables.min.css') }}"/>
+
 @endpush
 
 @push('scripts')
-<script src="{{ asset('la-assets/plugins/datatables/datatables.min.js') }}"></script>
+
 <script>
 $(function () {
 	$("#example1").DataTable({

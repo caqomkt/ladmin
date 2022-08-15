@@ -1,11 +1,11 @@
 @extends("la.layouts.app")
-@section("contentheader_title", "Permissões")
-@section("contentheader_description", "Lista de permissões")
+@section("contentheader_title", "Permissï¿½es")
+@section("contentheader_description", "Lista de permissï¿½es")
 @section("section", "Permissions")
-@section("sub_section", "Listing")Permissões")
+@section("sub_section", "Listing")Permissï¿½es")
 @section("headerElems")
 @la_access("Permissions", "create")
-	<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Adicionar Permissão</button>
+	<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Adicionar Permissï¿½o</button>
 @endla_access
 @endsection
 @section("main-content")
@@ -28,7 +28,7 @@
 			<th>{{ $module->fields[$col]['label'] or ucfirst($col) }}</th>
 			@endforeach
 			@if($show_actions)
-			<th>Ações</th>
+			<th>AÃ§Ãµes</th>
 			@endif
 		</tr>
 		</thead>
@@ -43,7 +43,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel">Adicionar Permissão</h4>
+				<h4 class="modal-title" id="myModalLabel">Adicionar Permissï¿½o</h4>
 			</div>
 			{!! Form::open(['action' => 'LA\PermissionsController@store', 'id' => 'permission-add-form']) !!}
 			<div class="modal-body">
@@ -67,10 +67,10 @@
 @endla_access
 @endsection
 @push('styles')
-<link rel="stylesheet" type="text/css" href="{{ asset('la-assets/plugins/datatables/datatables.min.css') }}"/>
+
 @endpush
 @push('scripts')
-<script src="{{ asset('la-assets/plugins/datatables/datatables.min.js') }}"></script>
+
 <script>
 $(function () {
 	$("#example1").DataTable({
