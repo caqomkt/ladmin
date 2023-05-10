@@ -1,10 +1,10 @@
 @extends("la.layouts.app")
 
-@section("contentheader_title", "Usu�rios")
-@section("contentheader_description", "Lista de usu�rios")
-@section("section", "Usu�rios")
+@section("contentheader_title", "Usuários")
+@section("contentheader_description", "Lista de Usuários")
+@section("section", "Usuários")
 @section("sub_section", "Lista")
-@section("htmlheader_title", "Lista de usu�rios")
+@section("htmlheader_title", "Lista de Usuários")
 
 @section("headerElems")
 
@@ -45,11 +45,9 @@
 @endsection
 
 @push('styles')
-
 @endpush
 
 @push('scripts')
-
 <script>
 $(function () {
 	$("#example1").DataTable({
@@ -62,6 +60,5 @@ $(function () {
 	});
 		
 	});
-});
 </script>
 @endpush

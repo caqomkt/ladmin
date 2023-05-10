@@ -15,7 +15,7 @@
 						<div class="fm_folder_selector">
 							<form action="{{ url(config('laraadmin.adminRoute') . '/upload_files')}}" id="fm_dropzone" enctype="multipart/form-data" method="POST">
 								{{ csrf_field() }}
-								<div class="dz-message"><i class="fa fa-cloud-upload"></i><br>Drop files here to upload</div>
+								<div class="dz-message"><i class="fa fa-cloud-upload"></i><br>Arraste os arquivos para carregar no sistema</div>
 								
 								@if(!config('laraadmin.uploads.private_uploads'))
 									<label class="fm_folder_title">Is Public ?</label>

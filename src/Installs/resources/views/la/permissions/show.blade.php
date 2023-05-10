@@ -1,7 +1,7 @@
 @extends('la.layouts.app')
 
 @section('htmlheader_title')
-	Permission View
+Permission View
 @endsection
 
 
@@ -84,13 +84,13 @@
 		</div>
 		<div class="col-md-1 actions">
 			@la_access("Permissions", "edit")
-				<a href="{{ url(config('laraadmin.adminRoute') . '/permissions/'.$permission->id.'/edit') }}" class="btn btn-xs btn-edit btn-default"><i class="fa fa-pencil"></i></a><br>
+			<a href="{{ url(config('laraadmin.adminRoute') . '/permissions/'.$permission->id.'/edit') }}" class="btn btn-xs btn-edit btn-default"><i class="fa fa-pencil"></i></a><br>
 			@endla_access
-			
+
 			@la_access("Permissions", "delete")
-				{{ Form::open(['route' => [config('laraadmin.adminRoute') . '.permissions.destroy', $permission->id], 'method' => 'delete', 'style'=>'display:inline']) }}
-					<button class="btn btn-default btn-delete btn-xs" type="submit"><i class="fa fa-times"></i></button>
-				{{ Form::close() }}
+			{{ Form::open(['route' => [config('laraadmin.adminRoute') . '.permissions.destroy', $permission->id], 'method' => 'delete', 'style'=>'display:inline']) }}
+			<button class="btn btn-default btn-delete btn-xs" type="submit"><i class="fa fa-times"></i></button>
+			{{ Form::close() }}
 			@endla_access
 		</div>
 	</div>
@@ -123,28 +123,28 @@
 		<div role="tabpanel" class="tab-pane fade in p20 bg-white" id="tab-access">
 			<div class="tab-content">
 				<div class="panel infolist">
-					<form action="{{ url('/admin/save_permissions/'.$permission->id) }}"  method="post">
-					<input type="hidden" name="_token" value="{{ csrf_token() }}">
+					<form action="{{ url('/admin/save_permissions/'.$permission->id) }}" method="post">
+						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<div class="card-default card-heading">
 							<h4>Permissões para funções</h4>
 						</div>
 						<div class="card-body">
 							@foreach ($roles as $role)
-								<div class="form-group">
-									<label for="ratings_innovation" class="col-md-2">{{ $role->display_name }} :</label>
-									<div class="col-md-10 fvalue star_class">
-										<?php
-										$query = DB::table('permission_role')->where('permission_id', $permission->id)->where('role_id', $role->id);
-										?>
-										@if($query->count() > 0)
-											<input type="checkbox" name="permi_role_{{ $role->id }}" value="1" checked>
-										@else
-											<input type="checkbox" name="permi_role_{{ $role->id }}" value="1">
-										@endif
-									</div>
+							<div class="form-group">
+								<label for="ratings_innovation" class="col-md-2">{{ $role->display_name }} :</label>
+								<div class="col-md-10 fvalue star_class">
+									<?php
+									$query = DB::table('permission_role')->where('permission_id', $permission->id)->where('role_id', $role->id);
+									?>
+									@if($query->count() > 0)
+									<input type="checkbox" name="permi_role_{{ $role->id }}" value="1" checked>
+									@else
+									<input type="checkbox" name="permi_role_{{ $role->id }}" value="1">
+									@endif
 								</div>
+							</div>
 							@endforeach
-							
+
 							<div class="form-group">
 								<label for="ratings_innovation" class="col-md-2"></label>
 								<div class="col-md-10 fvalue star_class">
@@ -158,7 +158,7 @@
 		</div>
 		@endrole
 	</div>
-	</div>
-	</div>
+</div>
+</div>
 </div>
 @endsection

@@ -1,7 +1,7 @@
 @extends("la.layouts.app")
 @section("htmlheader_title", "Editando: ".$department->$view_col)
 @section("section_url", url(config('laraadmin.adminRoute') . '/departments'))
-@section("section", "Departmentos")
+@section("section", "Departamentos")
 @section("sub_section", "Editar")
 @section("contentheader_title")
 <a href="{{ url(config('laraadmin.adminRoute') . '/departments') }}">Setores</a> :

@@ -5,8 +5,8 @@
 @section("contentheader_description", $__singular_var__->$view_col)
 @section("section", "__module_name_2__")
 @section("section_url", url(config('laraadmin.adminRoute') . '/__db_table_name__'))
-@section("sub_section", "Edit")
-@section("htmlheader_title", "__module_name_2__ Edit : ".$__singular_var__->$view_col)
+@section("sub_section", "Editar")
+@section("htmlheader_title", "Editar __module_name_2__: ".$__singular_var__->$view_col)
 @section("main-content")
 @if (count($errors) > 0)
 <div class="alert alert-danger">
@@ -22,6 +22,7 @@
         Preencha as informações abaixo
     </div>
     <div class="card-body">
+    	<div class="container">
         {!! Form::model($__singular_var__, ['route' => [config('laraadmin.adminRoute') . '.__db_table_name__.update', $__singular_var__->id ], 'method'=>'PUT', 'id' => '__singular_var__-edit-form']) !!}
         @la_form($module)
         {{--
@@ -29,11 +30,15 @@
                     --}}
         <br>
         <div class="form-group">
-            {!! Form::submit( 'Update', ['class'=>'btn btn-success']) !!} <a href="{{ url(config('laraadmin.adminRoute') . '/__db_table_name__') }}" class="btn btn-default pull-right">Cancel</a>
+        <button onclick="return confirm('Deseja sair sem salvar?')" class="btn btn-default">
+        <a href="{{ url(config('laraadmin.adminRoute') . '/__db_table_name__') }}">Cancelar</a>
+        </button>
+            {!! Form::submit( 'Salvar', ['class'=>'btn bg-gradient-success pull-right']) !!} 
         </div>
         {!! Form::close() !!}
     </div>
 </div>
+	</div>
 @endsection
 @push('scripts')
 @endpush

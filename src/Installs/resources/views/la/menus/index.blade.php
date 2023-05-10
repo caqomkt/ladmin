@@ -17,7 +17,7 @@ use Dwij\Laraadmin\Models\Module;
 @section("main-content")
 
 <div class="card card-success menus">
-	<div class="card-header">Preencha os dados abaixo</div>
+	<!--<div class="card-header"></div>-->
 	<div class="card-body">
 		<div class="row">
 			<div class="col-md-4 col-lg-4">
@@ -76,8 +76,9 @@ use Dwij\Laraadmin\Models\Module;
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				
 				<h4 class="modal-title" id="myModalLabel">Edit Menu Item</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
 			{!! Form::open(['action' => ['\Dwij\Laraadmin\Controllers\MenuController@update', 1], 'id' => 'menu-edit-form']) !!}
 			<input name="_method" type="hidden" value="PUT">
@@ -147,7 +148,7 @@ $(function () {
 		var url = $("#menu-edit-form").attr("action");
 		index = url.lastIndexOf("/");
 		url2 = url.substring(0, index+1)+info.id;
-		// console.log(url2);
+		
 		$("#menu-edit-form").attr("action", url2)
 		$("#EditModal input[name=url]").val(info.url);
 		$("#EditModal input[name=name]").val(info.name);

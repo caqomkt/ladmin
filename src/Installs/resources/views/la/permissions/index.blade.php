@@ -1,11 +1,11 @@
 @extends("la.layouts.app")
-@section("contentheader_title", "Permiss�es")
-@section("contentheader_description", "Lista de permiss�es")
+@section("contentheader_title", "Permissões")
+@section("contentheader_description", "Lista de permissões")
 @section("section", "Permissions")
-@section("sub_section", "Listing")Permiss�es")
+@section("sub_section", "Listing")Permissões")
 @section("headerElems")
 @la_access("Permissions", "create")
-	<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Adicionar Permiss�o</button>
+	<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Adicionar Permissão</button>
 @endla_access
 @endsection
 @section("main-content")
@@ -42,8 +42,8 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
+<h4 class="modal-title" id="myModalLabel">Adicionar Permissão</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel">Adicionar Permiss�o</h4>
 			</div>
 			{!! Form::open(['action' => 'LA\PermissionsController@store', 'id' => 'permission-add-form']) !!}
 			<div class="modal-body">
@@ -67,10 +67,8 @@
 @endla_access
 @endsection
 @push('styles')
-
 @endpush
 @push('scripts')
-
 <script>
 $(function () {
 	$("#example1").DataTable({

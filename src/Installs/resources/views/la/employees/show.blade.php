@@ -1,7 +1,7 @@
 @extends('la.layouts.app')
 
 @section('htmlheader_title')
-	Employee View
+Employee View
 @endsection
 
 
@@ -17,8 +17,8 @@
 					<h4 class="name">{{ $employee->$view_col }}</h4>
 					<div class="row stats">
 						<div class="col-md-6 stat">
-						<div class="label2" data-toggle="tooltip" data-placement="top" title="Designation">{{ $employee->designation }}
-						</div>
+							<div class="label2" data-toggle="tooltip" data-placement="top" title="Designation">{{ $employee->designation }}
+							</div>
 						</div>
 						<div class="col-md-6 stat"><i class="fa fa-map-marker"></i> {{ $employee->city or "NA" }}</div>
 					</div>
@@ -45,17 +45,17 @@
 				<a class="face" data-toggle="tooltip" data-placement="top" title="John Doe"><img src="{{ asset('la-assets/img/user6-128x128.jpg') }}" alt=""><i class="status-online"></i></a>
 				<a class="face" data-toggle="tooltip" data-placement="top" title="John Doe"><img src="{{ asset('la-assets/img/user7-128x128.jpg') }}" alt=""></a>
 			</div>
-			
+
 		</div>
 		<div class="col-md-1 actions">
 			@la_access("Employees", "edit")
-				<a href="{{ url(config('laraadmin.adminRoute') . '/employees/'.$employee->id.'/edit') }}" class="btn btn-xs btn-edit btn-default"><i class="fa fa-pencil"></i></a><br>
+			<a href="{{ url(config('laraadmin.adminRoute') . '/employees/'.$employee->id.'/edit') }}" class="btn btn-xs btn-edit btn-default"><i class="fa fa-pencil"></i></a><br>
 			@endla_access
-			
+
 			@la_access("Employees", "delete")
-				{{ Form::open(['route' => [config('laraadmin.adminRoute') . '.employees.destroy', $employee->id], 'method' => 'delete', 'style'=>'display:inline']) }}
-					<button class="btn btn-default btn-delete btn-xs" type="submit"><i class="fa fa-times"></i></button>
-				{{ Form::close() }}
+			{{ Form::open(['route' => [config('laraadmin.adminRoute') . '.employees.destroy', $employee->id], 'method' => 'delete', 'style'=>'display:inline']) }}
+			<button class="btn btn-default btn-delete btn-xs" type="submit"><i class="fa fa-times"></i></button>
+			{{ Form::close() }}
 			@endla_access
 		</div>
 	</div>
@@ -66,7 +66,7 @@
 		<li class="active"><a role="tab" data-toggle="tab" class="active" href="#tab-info" data-target="#tab-info"><i class="fa fa-bars"></i> General Info</a></li>
 		<li class=""><a role="tab" data-toggle="tab" href="#tab-timeline" data-target="#tab-timeline"><i class="fa fa-clock-o"></i> Timeline</a></li>
 		@if($employee->id == Auth::user()->id || Entrust::hasRole("SUPER_ADMIN"))
-			<li class=""><a role="tab" data-toggle="tab" href="#tab-account-settings" data-target="#tab-account-settings"><i class="fa fa-key"></i> Account settings</a></li>
+		<li class=""><a role="tab" data-toggle="tab" href="#tab-account-settings" data-target="#tab-account-settings"><i class="fa fa-key"></i> Account settings</a></li>
 		@endif
 	</ul>
 
@@ -107,56 +107,56 @@
 				<!-- /.timeline-label -->
 				<!-- timeline item -->
 				<li>
-				<i class="fa fa-envelope bg-blue"></i>
+					<i class="fa fa-envelope bg-blue"></i>
 
-				<div class="timeline-item">
-					<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+					<div class="timeline-item">
+						<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
 
-					<h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+						<h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
 
-					<div class="timeline-body">
-					Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-					weebly ning heekya handango imeem plugg dopplr jibjab, movity
-					jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-					quora plaxo ideeli hulu weebly balihoo...
+						<div class="timeline-body">
+							Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+							weebly ning heekya handango imeem plugg dopplr jibjab, movity
+							jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
+							quora plaxo ideeli hulu weebly balihoo...
+						</div>
+						<div class="timeline-footer">
+							<a class="btn btn-primary btn-xs">Read more</a>
+							<a class="btn btn-danger btn-xs">Delete</a>
+						</div>
 					</div>
-					<div class="timeline-footer">
-					<a class="btn btn-primary btn-xs">Read more</a>
-					<a class="btn btn-danger btn-xs">Delete</a>
-					</div>
-				</div>
 				</li>
 				<!-- END timeline item -->
 				<!-- timeline item -->
 				<li>
-				<i class="fa fa-user bg-aqua"></i>
+					<i class="fa fa-user bg-aqua"></i>
 
-				<div class="timeline-item">
-					<span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
+					<div class="timeline-item">
+						<span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
 
-					<h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
-					</h3>
-				</div>
+						<h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
+						</h3>
+					</div>
 				</li>
 				<!-- END timeline item -->
 				<!-- timeline item -->
 				<li>
-				<i class="fa fa-comments bg-yellow"></i>
+					<i class="fa fa-comments bg-yellow"></i>
 
-				<div class="timeline-item">
-					<span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
+					<div class="timeline-item">
+						<span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
 
-					<h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
+						<h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
 
-					<div class="timeline-body">
-					Take me to your leader!
-					Switzerland is small and neutral!
-					We are more like Germany, ambitious and misunderstood!
+						<div class="timeline-body">
+							Take me to your leader!
+							Switzerland is small and neutral!
+							We are more like Germany, ambitious and misunderstood!
+						</div>
+						<div class="timeline-footer">
+							<a class="btn btn-warning btn-flat btn-xs">View comment</a>
+						</div>
 					</div>
-					<div class="timeline-footer">
-					<a class="btn btn-warning btn-flat btn-xs">View comment</a>
-					</div>
-				</div>
 				</li>
 				<!-- END timeline item -->
 				<!-- timeline time label -->
@@ -168,29 +168,29 @@
 				<!-- /.timeline-label -->
 				<!-- timeline item -->
 				<li>
-				<i class="fa fa-camera bg-purple"></i>
+					<i class="fa fa-camera bg-purple"></i>
 
-				<div class="timeline-item">
-					<span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
+					<div class="timeline-item">
+						<span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
 
-					<h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
+						<h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
 
-					<div class="timeline-body">
-					<img src="http://placehold.it/150x100" alt="..." class="margin">
-					<img src="http://placehold.it/150x100" alt="..." class="margin">
-					<img src="http://placehold.it/150x100" alt="..." class="margin">
-					<img src="http://placehold.it/150x100" alt="..." class="margin">
+						<div class="timeline-body">
+							<img src="http://placehold.it/150x100" alt="..." class="margin">
+							<img src="http://placehold.it/150x100" alt="..." class="margin">
+							<img src="http://placehold.it/150x100" alt="..." class="margin">
+							<img src="http://placehold.it/150x100" alt="..." class="margin">
+						</div>
 					</div>
-				</div>
 				</li>
 				<!-- END timeline item -->
 				<li>
-				<i class="fa fa-clock-o bg-gray"></i>
+					<i class="fa fa-clock-o bg-gray"></i>
 				</li>
 			</ul>
 			<!--<div class="text-center p30"><i class="fa fa-list-alt" style="font-size: 100px;"></i> <br> No posts to show</div>-->
 		</div>
-		
+
 		@if($employee->id == Auth::user()->id || Entrust::hasRole("SUPER_ADMIN"))
 		<div role="tabpanel" class="tab-pane fade" id="tab-account-settings">
 			<div class="tab-content">
@@ -202,16 +202,16 @@
 						</div>
 						<div class="card-body">
 							@if (count($errors) > 0)
-								<div class="alert alert-danger">
-									<ul>
-										@foreach ($errors->all() as $error)
-											<li>{{ $error }}</li>
-										@endforeach
-									</ul>
-								</div>
+							<div class="alert alert-danger">
+								<ul>
+									@foreach ($errors->all() as $error)
+									<li>{{ $error }}</li>
+									@endforeach
+								</ul>
+							</div>
 							@endif
 							@if(Session::has('success_message'))
-								<p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('success_message') }}</p>
+							<p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('success_message') }}</p>
 							@endif
 							<div class="form-group">
 								<label for="password" class=" col-md-2">Password</label>
@@ -235,19 +235,19 @@
 		</div>
 		@endif
 	</div>
-	</div>
-	</div>
+</div>
+</div>
 </div>
 @endsection
 
 @push('scripts')
 <script>
-$(function () {
-	@if($employee->id == Auth::user()->id || Entrust::hasRole("SUPER_ADMIN"))
-	$('#password-reset-form').validate({
-		
+	$(function() {
+		@if($employee - > id == Auth::user() - > id || Entrust::hasRole("SUPER_ADMIN"))
+		$('#password-reset-form').validate({
+
+		});
+		@endif
 	});
-	@endif
-});
 </script>
 @endpush

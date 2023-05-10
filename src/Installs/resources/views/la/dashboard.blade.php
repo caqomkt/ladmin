@@ -1,8 +1,8 @@
 @extends('la.layouts.app')
 
-@section('htmlheader_title') Dashboard @endsection
-@section('contentheader_title') Dashboard @endsection
-@section('contentheader_description') Organization Overview @endsection
+@section('htmlheader_title') Painel @endsection
+@section('contentheader_title') Painel @endsection
+@section('contentheader_description') Visão geral @endsection
 
 @section('main-content')
 <!-- Main content -->
@@ -426,9 +426,9 @@
               </div>
 
             </section>
-          </div><!-- /.row (main row) -->
+          </div>
 
-        </section><!-- /.content -->
+        </section>
 @endsection
 
 @push('styles')

@@ -37,11 +37,11 @@
 			<th>{{ $module->fields[$col]['label'] or ucfirst($col) }}</th>
 			@endforeach
 			@if($show_actions)
-			<th>Ações</th>
+			<th>AÃ§Ãµes</th>
 			@endif
 		</tr>
 		</thead>
-		<tbody>
+		<tbody>	
 		</tbody>
 		</table>
 	</div>
@@ -65,7 +65,7 @@ $(function () {
 				"thousands": ".",
 				"lengthMenu": "Exibir _MENU_ records",
 				buttons: {
-					colvis: 'Ocultar colunas'
+					colvis: '<i class="fa fa-eye"></i> colunas'
 				},
 		},
 		@if($show_actions)

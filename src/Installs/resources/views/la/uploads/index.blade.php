@@ -27,7 +27,7 @@
 <form action="{{ url(config('laraadmin.adminRoute') . '/upload_files') }}" id="fm_dropzone_main" enctype="multipart/form-data" method="POST">
     {{ csrf_field() }}
     <a id="closeDZ1"><i class="fa fa-times"></i></a>
-    <div class="dz-message"><i class="fa fa-cloud-upload"></i><br>Arraste os aquivos aqui para enviá-los</div>
+    <div class="dz-message"><i class="fa fa-cloud-upload"></i><br>Arraste os aquivos aqui para enviÃ¡-los</div>
 </form>
 
 <div class="card">
@@ -43,17 +43,16 @@
 	<div class="modal-dialog" role="document" style="width:90%;">
 		<div class="modal-content">
 			<div class="modal-header">
-				
+				<h4 class="modal-title" id="myModalLabel">Arquivo: </h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
                 <!--<button type="button" class="next"><i class="fa fa-chevron-right"></i></button>
                 <button type="button" class="prev"><i class="fa fa-chevron-left"></i></button>-->
-				<h4 class="modal-title" id="myModalLabel">Arquivo: </h4>
 			</div>
 			<div class="modal-body p0">
                     <div class="row m0">
                         <div class="col-xs-8 col-sm-8 col-md-8">
                             <div class="fileObject">
-                                
+
                             </div>
                         </div>
                         <div class="col-xs-4 col-sm-4 col-md-4">
@@ -73,7 +72,7 @@
                                 </div>
                                 @if(!config('laraadmin.uploads.private_uploads'))
                                     <div class="form-group">
-                                        <label for="public">Público ?</label>
+                                        <label for="public">PÃºblico ?</label>
                                         {{ Form::checkbox("public", "public", false, []) }}
                                         <div class="Switch Ajax Round On" style="vertical-align:top;margin-left:10px;"><div class="Toggle"></div></div>
                                     </div>
@@ -128,7 +127,7 @@ $(function () {
         $("#fm_dropzone_main").slideUp();
     });
 	@endla_access
-	
+
     $("body").on("click", "ul.files_container .fm_file_sel", function() {
         var upload = $(this).attr("upload");
         upload = JSON.parse(upload);
@@ -139,7 +138,7 @@ $(function () {
         $(".file-info-form input[name=url]").val(bsurl+'/files/'+upload.hash+'/'+upload.name);
         $(".file-info-form input[name=caption]").val(upload.caption);
         $("#EditFileModal #downFileBtn").attr("href", bsurl+'/files/'+upload.hash+'/'+upload.name+"?download");
-        
+
 
         @if(!config('laraadmin.uploads.private_uploads'))
         if(upload.public == "1") {
@@ -181,10 +180,10 @@ $(function () {
                 loadUploadedFiles();
             }
         });
-        
+
     });
     @endif
-	
+
 	@la_field_access("Uploads", "caption", "write")
     $(".file-info-form input[name=caption]").on("blur", function() {
         // TODO: Update Caption
@@ -199,7 +198,7 @@ $(function () {
         });
     });
 	@endla_field_access
-	
+
     @if(config('laraadmin.uploads.allow_filename_change') && Module::hasFieldAccess("Uploads", "name", "write"))
     $(".file-info-form input[name=filename]").on("blur", function() {
         // TODO: Change Filename
@@ -231,7 +230,7 @@ $(function () {
         }
     });
 	@endla_access
-	
+
     loadUploadedFiles();
 });
 function loadUploadedFiles() {

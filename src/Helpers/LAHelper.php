@@ -306,12 +306,12 @@ class LAHelper
 	public static function print_menu_topnav($menu, $active = false) {
 		$childrens = \Dwij\Laraadmin\Models\Menu::where("parent", $menu->id)->orderBy('hierarchy', 'asc')->get();
 
-		$treeview = "";
-		$treeview2 = "";
+		$treeview = " class=\"nav-item\"";
+		$treeview2 = ' class="dropdown-item" ';
 		$subviewSign = "";
 		if(count($childrens)) {
-			$treeview = " class=\"dropdown\"";
-			$treeview2 = " class=\"dropdown-toggle\" data-toggle=\"dropdown\"";
+			$treeview = ' class="nav-item dropdown" ';
+			$treeview2 = ' href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle" ';
 			$subviewSign = ' <span class="caret"></span>';
 		}
 		$active_str = '';
@@ -319,7 +319,7 @@ class LAHelper
 			$active_str = 'class="active"';
 		}
 		
-		$str = '<li '.$treeview.''.$active_str.'><a '.$treeview2.' href="'.url(config("laraadmin.adminRoute") . '/' . $menu->url ) .'">'.LAHelper::real_module_name($menu->name).$subviewSign.'</a>';
+		$str = '<li '.$treeview.''.$active_str.'><a '.$treeview2.' href="'.url(config("laraadmin.adminRoute") . '/' . $menu->url ) .'"><i class=" fa '.$menu->icon.'"></i> '.LAHelper::real_module_name($menu->name).$subviewSign.'</a>';
 		
 		if(count($childrens)) {
 			$str .= '<ul class="dropdown-menu" role="menu">';

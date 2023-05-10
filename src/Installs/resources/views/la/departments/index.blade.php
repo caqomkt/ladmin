@@ -1,12 +1,12 @@
 @extends("la.layouts.app")
-@section("contentheader_title", "Departmentos")
+@section("contentheader_title", "Departamentos")
 @section("contentheader_description", "Lista de setores")
 @section("section", "Setores")
 @section("sub_section", "Listing")
 @section("htmlheader_title", "Lista de setores")
 @section("headerElems")
 @la_access("Departments", "create")
-<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Adicionar Departmento</button>
+<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Adicionar Departamento</button>
 @endla_access
 @endsection
 @section("main-content")
@@ -47,8 +47,8 @@
 <div class="modal fade" id="AddModal" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title" id="myModalLabel">Adicionar Departmento</h4>
+			<div class="modal-header">	
+				<h4 class="modal-title" id="myModalLabel">Adicionar Departamento</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
 			{!! Form::open(['action' => 'LA\DepartmentsController@store', 'id' => 'department-add-form']) !!}
@@ -74,10 +74,8 @@
 @endla_access
 @endsection
 @push('styles')
-
 @endpush
 @push('scripts')
-
 <script>
 $(function () {
 	$("#example1").DataTable({

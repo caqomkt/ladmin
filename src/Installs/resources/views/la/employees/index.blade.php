@@ -34,7 +34,7 @@
 			<th>{{ $module->fields[$col]['label'] or ucfirst($col) }}</th>
 			@endforeach
 			@if($show_actions)
-					<th>Ações</th>
+					<th>AÃ§Ãµes</th>
 			@endif
 		</tr>
 		</thead>
@@ -51,7 +51,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				
-				<h4 class="modal-title" id="myModalLabel">Adicionar Funcionário</h4>
+				<h4 class="modal-title" id="myModalLabel">Adicionar FuncionÃ¡rio</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
 			{!! Form::open(['action' => 'LA\EmployeesController@store', 'id' => 'employee-add-form']) !!}
@@ -101,11 +101,9 @@
 @endsection
 
 @push('styles')
-
 @endpush
 
 @push('scripts')
-
 <script>
 $(function () {
 	$("#example1").DataTable({

@@ -24,7 +24,7 @@
 	<!-- general form elements disabled -->
 	<div class="card card-warning">
 		<div class="card-header with-border">
-			<p class="text-danger card-title">ATEN��O: N�o altere estas configurAções!</p>
+			<p class="text-danger card-title">ATENÇÃO: Não altere estas configurações!</p>
 		</div>
 		<!-- /.card-header -->
 		<div class="card-body">
@@ -53,13 +53,13 @@
 			<div class="row">
 				<div class="col-2">
 			<div class="form-group">
-						<label>Abrevia��o</label>
+						<label>Abreviação</label>
 				<input type="text" class="form-control" placeholder="LA" maxlength="2" name="sitename_short" value="{{$configs->sitename_short}}">
 			</div>
 				</div>
 				<div class="col-10">
 			<div class="form-group">
-						<label>Descri��o do site</label>
+						<label>Descrição do site</label>
 				<input type="text" class="form-control" placeholder="Description in 140 Characters" maxlength="140" name="site_description" value="{{$configs->site_description}}">
 			</div>
 				</div>
@@ -75,25 +75,25 @@
 				<div class="checkbox">
 					<label>
 						<input type="checkbox" name="show_messages" @if($configs->show_messages) checked @endif>
-						Mostrar �cone de mensagens
+						Mostrar ícone de mensagens
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
 						<input type="checkbox" name="show_notifications" @if($configs->show_notifications) checked @endif>
-						Mostrar �cone de notificAções
+						Mostrar ícone de notificações
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
 						<input type="checkbox" name="show_tasks" @if($configs->show_tasks) checked @endif>
-						Mostrar �cone de tarefas
+						Mostrar ícone de atividades
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
 						<input type="checkbox" name="show_rightsidebar" @if($configs->show_rightsidebar) checked @endif>
-						Mostrar �cone da barra lateral direita
+						Mostrar ícone da barra lateral direita
 					</label>
 				</div>
 			</div>
@@ -121,23 +121,21 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label>Endere�o de e-mail padr�o</label>
+				<label>Endereço de e-mail padrão</label>
 				<input type="text" class="form-control" placeholder="To send emails to others via SMTP" maxlength="100" name="default_email" value="{{$configs->default_email}}">
 			</div>
 		</div><!-- /.box-body -->
 		<div class="card-footer">
 			<button type="submit" class="btn btn-primary">Salvar</button>
 		</div><!-- /.card-footer -->
-	</div><!-- /.card -->
+	</div>
 </form>
 
 @endsection
 
 @push('styles')
-
 @endpush
 
 @push('scripts')
-
 
 @endpush

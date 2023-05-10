@@ -1,19 +1,15 @@
 @extends("la.layouts.app")
-
 @section("contentheader_title", "__module_name_2__")
-@section("contentheader_description", "__module_name_2__ listing")
+@section("contentheader_description", "Listagem de __module_name_2__")
 @section("section", "__module_name_2__")
-@section("sub_section", "Listing")
-@section("htmlheader_title", "__module_name_2__ Listing")
-
+@section("sub_section", "Listagem")
+@section("htmlheader_title", "__module_name_2__")
 @section("headerElems")
 @la_access("__module_name__", "create")
-    <button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Add __singular_cap_var__</button>
+    <button class="btn bg-gradient-primary btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Adicionar __singular_cap_var__</button>
 @endla_access
 @endsection
-
 @section("main-content")
-
 @if (count($errors) > 0)
     <div class="alert alert-danger">
         <ul>
@@ -23,81 +19,120 @@
         </ul>
     </div>
 @endif
+@if (session('confirmacao'))
+<div class="alert alert-success">
+    {{ session('confirmacao') }}
+</div>
+@endif
 
-<div class="card card-success">
-    <!--<div class="card-header"></div>-->
-    <div class="card-body">
-        <table id="example1" class="table table-bordered">
+<div class="table-responsive">
+        <table id="example1" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info" style="width:100%">
         <thead>
         <tr class="success">
             @foreach( $listing_cols as $col )
             <th>{{ $module->fields[$col]['label'] or ucfirst($col) }}</th>
             @endforeach
             @if($show_actions)
-            <th>Actions</th>
+            <th>Ações</th>
             @endif
         </tr>
         </thead>
         <tbody>
-            
         </tbody>
         </table>
     </div>
-</div>
-
 @la_access("__module_name__", "create")
 <div class="modal fade" id="AddModal" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Adicionar __singular_cap_var__</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Add __singular_cap_var__</h4>
+                
             </div>
             {!! Form::open(['action' => 'LA\__controller_class_name__@store', 'id' => '__singular_var__-add-form']) !!}
             <div class="modal-body">
                 <div class="card-body">
                     @la_form($module)
-                    
                     {{--
                     __input_fields__
                     --}}
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                {!! Form::submit( 'Submit', ['class'=>'btn btn-success']) !!}
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                {!! Form::submit( 'Salvar', ['class'=>'btn bg-gradient-success']) !!}
             </div>
             {!! Form::close() !!}
         </div>
     </div>
 </div>
 @endla_access
-
 @endsection
-
 @push('styles')
-<link rel="stylesheet" type="text/css" href="{{ asset('la-assets/plugins/datatables/datatables.min.css') }}"/>
 @endpush
-
 @push('scripts')
-<script src="{{ asset('la-assets/plugins/datatables/datatables.min.js') }}"></script>
 <script>
 $(function () {
-    $("#example1").DataTable({
-        processing: true,
-        serverSide: true,
+    var table = $("#example1").DataTable({
+            processing: true,
+            responsive: true,
+            fixedHeader: {
+                header: true
+            },
+            "lengthMenu": [
+                [5, 15, 30, 50, -1],
+                [5, 15, 30, 50, "Todos"]
+            ],
         ajax: "{{ url(config('laraadmin.adminRoute') . '/__singular_var___dt_ajax') }}",
-        language: {
-            lengthMenu: "_MENU_",
-            search: "_INPUT_",
-            searchPlaceholder: "Search"
-        },
+        dom: "<'row'<'col-md-5'B><'col-md-3'l><'col-md-4'f>>" + "<'row'<'col-md-12'i>>" +
+                "<'row'<'col-md-12'tr>>" + "<'row'<'col-md-6'i><'col-md-6'p>>",
+            buttons: [{
+                    extend: 'colvis',
+                    className: 'btn-sm',
+                    columnText: function(dt, idx, title) {
+                        return (idx + 1) + ': ' + title;
+                    }
+                },
+                {
+                    extend: 'excel',
+                    text: '<i class="fa fa-file-excel-o"></i> Excel',
+                    className: 'btn-sm',
+                    exportOptions: {
+                        columns: [':visible :not(:last-child)'],
+                    },
+                },
+                {
+                    extend: 'print',
+                    text: '<i class="fa fa-print"></i> Imprimir',
+                    className: 'btn-sm',
+                    exportOptions: {
+                        columns: [':visible :not(:last-child)'],
+                    }
+                }
+            ],
+        "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Portuguese-Brasil.json",
+                "decimal": ",",
+                "thousands": ".",
+                "lengthMenu": "Exibir _MENU_ records",
+                buttons: {
+                    colvis: '<i class="fa fa-eye"></i> colunas'
+                },
+            },
+            "columnDefs": [{
         @if($show_actions)
-        columnDefs: [ { orderable: false, targets: [-1] }],
+        columnDefs: [
+        	{ 
+        		orderable: false, 
+        		targets: [-1] 
+        		}
+        	],
         @endif
+            }]
     });
+
     $("#__singular_var__-add-form").validate({
-        
     });
 });
 </script>

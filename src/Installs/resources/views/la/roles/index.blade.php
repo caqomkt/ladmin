@@ -1,14 +1,14 @@
 @extends("la.layouts.app")
 
-@section("contentheader_title", "Fun��es")
-@section("contentheader_description", "Lista de fun��es")
+@section("contentheader_title", "Funções")
+@section("contentheader_description", "Lista de funções")
 @section("section", "Roles")
 @section("sub_section", "Listing")
-@section("htmlheader_title", "Lista de fun��es")
+@section("htmlheader_title", "Lista de funções")
 
 @section("headerElems")
 @la_access("Roles", "create")
-<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Adicionar fun��o</button>
+<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Adicionar função</button>
 @endla_access
 @endsection
 
@@ -25,7 +25,7 @@
 @endif
 
 <div class="card card-success">
-	<div class="card-header">Preencha os dados abaixo</div>
+	<!--<div class="card-header"></div>-->
 	<div class="card-body">
 		<table id="example1" class="table table-bordered">
 		<thead>
@@ -39,7 +39,7 @@
 		</tr>
 		</thead>
 		<tbody>
-			
+
 		</tbody>
 		</table>
 	</div>
@@ -50,8 +50,9 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
 				<h4 class="modal-title" id="myModalLabel">Add Role</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
 			{!! Form::open(['action' => 'LA\RolesController@store', 'id' => 'role-add-form']) !!}
 			<div class="modal-body">
@@ -76,11 +77,9 @@
 @endsection
 
 @push('styles')
-
 @endpush
 
 @push('scripts')
-
 <script>
 $(function () {
 	$("#example1").DataTable({
@@ -97,7 +96,7 @@ $(function () {
 		@endif
 	});
 	$("#role-add-form").validate({
-		
+
 	});
 });
 </script>

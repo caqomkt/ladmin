@@ -74,7 +74,7 @@ class __controller_class_name__ extends Controller
             
             $insert_id = Module::insert("__module_name__", $request);
             
-            return redirect()->route(config('laraadmin.adminRoute') . '.__route_resource__.index');
+            return redirect()->route(config('laraadmin.adminRoute') . '.__route_resource__.index')->with('confirmacao', 'Registro inserido com sucesso!');
             
         } else {
             return redirect(config('laraadmin.adminRoute') . "/");
@@ -164,7 +164,7 @@ class __controller_class_name__ extends Controller
             
             $insert_id = Module::updateRow("__module_name__", $request, $id);
             
-            return redirect()->route(config('laraadmin.adminRoute') . '.__route_resource__.index');
+            return redirect()->route(config('laraadmin.adminRoute') . '.__route_resource__.index')->with('confirmacao', 'Registro atualizado com sucesso!');
             
         } else {
             return redirect(config('laraadmin.adminRoute') . "/");
@@ -183,7 +183,7 @@ class __controller_class_name__ extends Controller
             __model_name__::find($id)->delete();
             
             // Redirecting to index() method
-            return redirect()->route(config('laraadmin.adminRoute') . '.__route_resource__.index');
+            return redirect()->route(config('laraadmin.adminRoute') . '.__route_resource__.index')->with('confirmacao', 'Registro apagado com sucesso!');
         } else {
             return redirect(config('laraadmin.adminRoute') . "/");
         }

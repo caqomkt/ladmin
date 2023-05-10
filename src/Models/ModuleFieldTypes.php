@@ -3,6 +3,7 @@
 
 namespace Dwij\Laraadmin\Models;
 
+use Log;
 use Illuminate\Database\Eloquent\Model;
 
 class ModuleFieldTypes extends Model

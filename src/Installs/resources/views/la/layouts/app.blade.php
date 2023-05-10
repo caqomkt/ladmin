@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 
 @section('htmlheader')
 	@include('la.layouts.partials.htmlheader')
@@ -28,7 +28,7 @@
 			@yield('main-content')
 			</div>
 
-		</section><!-- /.content -->
+		</section>
 
 		@if(LAConfigs::getByKey('layout') == 'layout-top-nav') </div> @endif
 	</div><!-- /.content-wrapper -->

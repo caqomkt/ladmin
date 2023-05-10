@@ -31,8 +31,10 @@
 
         <!-- Sidebar Menu -->
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
-            <li class="nav-header">MÓDULOS</li>
-            <!-- Optionally, you can Adicionar icons to the links -->
+            <!-- 
+                <li class="nav-header">MÓDULOS</li>
+                Optionally, you can Adicionar icons to the links 
+            -->
             <li class="nav-item">
                 <a href="{{ url(config('laraadmin.adminRoute')) }}" class="nav-link"><i class='nav-icon fa fa-home'></i>
                     <p>Painel</p>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
     <meta charset="utf-8">
@@ -21,7 +21,7 @@
 
     <title>{{ LAConfigs::getByKey('sitename') }}</title>
 
-    <link href="{{ asset('/la-assets/favicon.ico') }}" rel="favicon">
+    <link href="{{ asset('la-assets/favicon.ico') }}" rel="favicon">
 
 
     <link href="{{ asset('la-assets/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />

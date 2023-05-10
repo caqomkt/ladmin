@@ -1,6 +1,7 @@
 @extends("la.layouts.app")
 
 <?php
+
 use Dwij\Laraadmin\Models\Module;
 ?>
 
@@ -18,21 +19,21 @@ use Dwij\Laraadmin\Models\Module;
 @section("main-content")
 
 <div class="card card-success">
-	<div class="card-header">Preencha os dados abaixo</div>
+	<!--<div class="card-header"></div>-->
 	<div class="card-body">
 		<table id="dt_modules" class="table table-bordered">
-		<thead>
-		<tr class="success">
-			<th>ID</th>
-			<th>Name</th>
-			<th>Table</th>
-			<th>Items</th>
-			<th>Actions</th>
-		</tr>
-		</thead>
-		<tbody>	
+			<thead>
+				<tr class="success">
+					<th>ID</th>
+					<th>Name</th>
+					<th>Table</th>
+					<th>Items</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
 
-			@foreach ($modules as $module)
+				@foreach ($modules as $module)
 				<tr>
 					<td>{{ $module->id }}</td>
 					<td><a href="{{ url(config('laraadmin.adminRoute') . '/modules/'.$module->id) }}">{{ $module->label }}</a></td>
@@ -45,8 +46,8 @@ use Dwij\Laraadmin\Models\Module;
 						<a module_name="{{ $module->name }}" module_id="{{ $module->id }}" class="btn btn-danger btn-xs delete_module" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-trash"></i></a>
 					</td>
 				</tr>
-			@endforeach
-		</tbody>
+				@endforeach
+			</tbody>
 		</table>
 	</div>
 </div>
@@ -55,8 +56,9 @@ use Dwij\Laraadmin\Models\Module;
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
 				<h4 class="modal-title" id="myModalLabel">Add Module Of Exist Table</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
 			{!! Form::open(['route' => config('laraadmin.adminRoute') . '.modules.store', 'id' => 'module-add-form']) !!}
 			<div class="modal-body">
@@ -64,15 +66,15 @@ use Dwij\Laraadmin\Models\Module;
 					<!--<div class="form-group">
 						<label for="name">Module Name :</label>
 						{{ Form::text("name", null, ['class'=>'form-control', 'placeholder'=>'Module Name', 'data-rule-minlength' => 2, 'data-rule-maxlength'=>20, 'required' => 'required']) }}
-					</div>-->				
+					</div>-->
 					<div class="form-group">
 						<label for="table">Table</label>
 						<?php
-						$default_val ='';
+						$default_val = '';
 						$table_module = array();
-						foreach($tables as $table) {
+						foreach ($tables as $table) {
 							$modItems = Module::where('name_db', $table)->first();
-							if(!isset($modItems)) {
+							if (!isset($modItems)) {
 								$table_module[$table] = $table;
 							}
 						}
@@ -82,7 +84,7 @@ use Dwij\Laraadmin\Models\Module;
 					<div class="form-group">
 						<label for="icon">Icon</label>
 						<div class="input-group">
-							<input class="form-control" placeholder="FontAwesome Icon" name="icon" type="text" value="fa-cube"  data-rule-minlength="1" required>
+							<input class="form-control" placeholder="FontAwesome Icon" name="icon" type="text" value="fa-cube" data-rule-minlength="1" required>
 							<span class="input-group-addon"></span>
 						</div>
 					</div>
@@ -101,8 +103,9 @@ use Dwij\Laraadmin\Models\Module;
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
 				<h4 class="modal-title" id="myModalLabel">Add Module</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
 			{!! Form::open(['route' => config('laraadmin.adminRoute') . '.modules.store', 'id' => 'module-add-form']) !!}
 			<div class="modal-body">
@@ -114,7 +117,7 @@ use Dwij\Laraadmin\Models\Module;
 					<div class="form-group">
 						<label for="icon">Icon</label>
 						<div class="input-group">
-							<input class="form-control" placeholder="FontAwesome Icon" name="icon" type="text" value="fa-cube"  data-rule-minlength="1" required>
+							<input class="form-control" placeholder="FontAwesome Icon" name="icon" type="text" value="fa-cube" data-rule-minlength="1" required>
 							<span class="input-group-addon"></span>
 						</div>
 					</div>
@@ -147,9 +150,9 @@ use Dwij\Laraadmin\Models\Module;
 			</div>
 			<div class="modal-footer justify-content-between">
 				{{ Form::open(['route' => [config('laraadmin.adminRoute') . '.modules.destroy', 0], 'id' => 'module_del_form', 'method' => 'delete', 'style'=>'display:inline']) }}
-					<button class="btn btn-danger btn-delete pull-left" type="submit">Yes</button>
+				<button class="btn btn-danger btn-delete pull-left" type="submit">Yes</button>
 				{{ Form::close() }}
-				<a data-dismiss="modal" class="btn btn-default pull-right" >No</a>				
+				<a data-dismiss="modal" class="btn btn-default pull-right">No</a>
 			</div>
 		</div>
 		<!-- /.modal-content -->
@@ -162,21 +165,22 @@ use Dwij\Laraadmin\Models\Module;
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				
 				<h4 class="modal-title" id="myModalLabel">Update Module</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
 			<form id="module-update-form" role="form" action="{{ url('module_edit_submit') }}" class="smart-form" novalidate="novalidate" method="post">
-                {{ csrf_field() }}
+				{{ csrf_field() }}
 				<div class="modal-body">
 					<div class="card-body">
 						<div class="form-group">
 							<label for="name">Module Name :</label>
-							<input type="text"  class="form-control module_label_edit" placeholder="Module Name" name="Module Name" value=""/>
+							<input type="text" class="form-control module_label_edit" placeholder="Module Name" name="Module Name" value="" />
 						</div>
 						<div class="form-group">
 							<label for="icon">Icon</label>
 							<div class="input-group">
-								<input type="text" class="form-control module_icon_edit"  placeholder="FontAwesome Icon" name="icon"  value=""  data-rule-minlength="1" required>
+								<input type="text" class="form-control module_icon_edit" placeholder="FontAwesome Icon" name="icon" value="" data-rule-minlength="1" required>
 								<span class="input-group-addon update-icon"></span>
 							</div>
 						</div>
@@ -194,72 +198,75 @@ use Dwij\Laraadmin\Models\Module;
 @endsection
 
 @push('styles')
-
 @endpush
 
 @push('scripts')
-
 <script src="{{ asset('la-assets/plugins/iconpicker/fontawesome-iconpicker.js') }}"></script>
 <script>
-$(function () {
-	$('.delete_module').on("click", function () {
-    	var module_id = $(this).attr('module_id');
-		var module_name = $(this).attr('module_name');
-		$("#moduleNameStr").html(module_name);
-		$url = $("#module_del_form").attr("action");
-		$("#module_del_form").attr("action", $url.replace("/0", "/"+module_id));
-		$("#module_delete_confirm").modal('show');
-		$.ajax({
-			url: "{{ url(config('laraadmin.adminRoute') . '/get_module_files/') }}/" + module_id,
-			type:"POST",
-			beforeSend: function() {
-				$("#moduleDeleteFiles").html('<center><i class="fa fa-refresh fa-spin"></i></center>');
-			},
-			headers: {
-		    	'X-CSRF-Token': '{{ csrf_token() }}'
-    		},
-			success: function(data) {
-				var files = data.files;
-				var filesList = "<ul>";
-				for ($i = 0; $i < files.length; $i++) { 
-					filesList += "<li>" + files[$i] + "</li>";
-				}
-				filesList += "</ul>";
-				$("#moduleDeleteFiles").html(filesList);
-			}
-		});
-	});
-
-	$('.update_module').on("click", function () {
-    	var module_id = $(this).attr('module_id');	 
-		var module_label = $(this).attr('module_label');
-		var module_icon = $(this).attr('module_icon');
-		$(".module_label_edit").val(module_label);
-		$(".module_icon_edit").val(module_icon);		
-		$("#module_update").modal('show');
-		$(".update-icon").html('<center><i class="fa '+module_icon+'"></i></center>');
-
-		$('.save_edit_module').on("click", function () {
-			var module_label = $(".module_label_edit").val();
-			var module_icon = $(".module_icon_edit").val();
+	$(function() {
+		$('.delete_module').on("click", function() {
+			var module_id = $(this).attr('module_id');
+			var module_name = $(this).attr('module_name');
+			$("#moduleNameStr").html(module_name);
+			$url = $("#module_del_form").attr("action");
+			$("#module_del_form").attr("action", $url.replace("/0", "/" + module_id));
+			$("#module_delete_confirm").modal('show');
 			$.ajax({
-				url: "{{ url(config('laraadmin.adminRoute') . '/module_update') }}",
-				type:"POST",
-				data : {'id':module_id,'label':module_label, 'icon':module_icon, '_token': '{{ csrf_token() }}' },
+				url: "{{ url(config('laraadmin.adminRoute') . '/get_module_files/') }}/" + module_id,
+				type: "POST",
+				beforeSend: function() {
+					$("#moduleDeleteFiles").html('<center><i class="fa fa-refresh fa-spin"></i></center>');
+				},
+				headers: {
+					'X-CSRF-Token': '{{ csrf_token() }}'
+				},
 				success: function(data) {
-					location.reload();
+					var files = data.files;
+					var filesList = "<ul>";
+					for ($i = 0; $i < files.length; $i++) {
+						filesList += "<li>" + files[$i] + "</li>";
+					}
+					filesList += "</ul>";
+					$("#moduleDeleteFiles").html(filesList);
 				}
 			});
 		});
+
+		$('.update_module').on("click", function() {
+			var module_id = $(this).attr('module_id');
+			var module_label = $(this).attr('module_label');
+			var module_icon = $(this).attr('module_icon');
+			$(".module_label_edit").val(module_label);
+			$(".module_icon_edit").val(module_icon);
+			$("#module_update").modal('show');
+			$(".update-icon").html('<center><i class="fa ' + module_icon + '"></i></center>');
+
+			$('.save_edit_module').on("click", function() {
+				var module_label = $(".module_label_edit").val();
+				var module_icon = $(".module_icon_edit").val();
+				$.ajax({
+					url: "{{ url(config('laraadmin.adminRoute') . '/module_update') }}",
+					type: "POST",
+					data: {
+						'id': module_id,
+						'label': module_label,
+						'icon': module_icon,
+						'_token': '{{ csrf_token() }}'
+					},
+					success: function(data) {
+						location.reload();
+					}
+				});
+			});
+		});
+
+		$('input[name=icon]').iconpicker();
+		$("#dt_modules").DataTable({
+
+		});
+		$("#module-add-form").validate({
+
+		});
 	});
-	
-	$('input[name=icon]').iconpicker();
-	$("#dt_modules").DataTable({
-		
-	});
-	$("#module-add-form").validate({
-		
-	});
-});
 </script>
 @endpush
