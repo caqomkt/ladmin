@@ -177,7 +177,7 @@ class LAFormMaker
 				case 'Dropdown':
 					$out .= '<label for="' . $field_name . '">' . $label . ': ' . $required_ast . ' </label>';
 					unset($params['data-rule-maxlength']);
-					$params['data-placeholder'] = $params['placeholder'];
+					$params['data-placeholder'] = "Selecione: uma opção";
 					unset($params['placeholder']);
 					$params['rel'] = "select2";
 					$params['class'] = "form-control select2 select2-hidden-accessible";
@@ -675,7 +675,7 @@ class LAFormMaker
 								$value = "<a class='label label-primary'>" . $values[$value] . "</a> ";
 							}
 						} else {
-							$value = "None";
+							$value = "Não selecionado";
 						}
 					}
 					break;
@@ -722,7 +722,7 @@ class LAFormMaker
 						}
 						$value = $uploads_html;
 					} else {
-						$value = 'No files found.';
+						$value = 'Sem arquivo(s)';
 					}
 					break;
 				case 'Float':
@@ -736,7 +736,7 @@ class LAFormMaker
 					if (isset($upload->id)) {
 						$value = '<a class="preview" target="_blank" href="' . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name) . '"><img src="' . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name . "?s=150") . '"></a>';
 					} else {
-						$value = 'Uplaoded image not found.';
+						$value = 'Sem imagem';
 					}
 					break;
 				case 'Integer':
