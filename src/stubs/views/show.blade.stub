@@ -27,6 +27,12 @@
                             aria-controls="tab-general-info" aria-selected="true">
                             <i class="fa fa-bars"></i> Cadastro</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" role="tab" data-toggle="tab" href="#tab-comentarios"
+                            data-target="#tab-comentarios">
+                            <i class="fa fa-comments"></i> Comentários
+                        </a>
+                    </li>
                     
                     
                     @la_access("__module_name__", "edit")
@@ -56,6 +62,48 @@
                     </section>
                 </div>
             
+                    <div class="tab-pane fade" id="tab-comentarios" role="tabpanel" aria-labelledby="tab-comentarios">
+                        <section class="content">
+                            <h4>Comentários <button class="btn btn-link" data-toggle="modal" data-target="#myModalLabel"><i
+                                        class="fa fa-plus"></i> Adicionar Comentário</button></h4>
+                            </p>
+                            @foreach ($comentarios as $com)
+                                <li>{{ date('d/m/Y à\s H:i', strtotime($com->dt_comentario)) }} -
+                                    <strong>{{ $com->func }}:</strong> {{ $com->comment }}
+                                </li>
+                            @endforeach
+                            <div class="modal fade" id="myModalLabel" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel">Adicionar Comentário</h4>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        </div>
+                                        {!! Form::open(['action' => 'LA\ComentariosController@store', 'id' => 'comentario-add-form']) !!}
+                                        <div class="modal-body">
+                                            <div class="card-body">
+                                                <div class="form-group row"><label for="comment">Comentário* :</label>
+                                                    <textarea class="form-control" placeholder="Insira Comentário" data-rule-maxlength="1000" cols="30" rows="3"
+                                                        name="comment" required></textarea>
+                                                </div>
+                                                <input type="hidden" name="registro" value="{{ $id_registro }}">
+                                                <input type="hidden" name="comment_user" value="{{ Auth::user()->id }}">
+                                                <input type="hidden" name="modulo" value="{{ $module->name }}">
+                                                <input type="hidden" name="voltar" value="{{ $module->name }}">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default"
+                                                data-dismiss="modal">Fechar</button>
+                                            {!! Form::submit('Salvar', ['class' => 'btn bg-gradient-success']) !!}
+                                        </div>
+                                        {!! Form::close() !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
     </div>
     </div>
     </div>
