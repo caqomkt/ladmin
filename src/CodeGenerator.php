@@ -9,6 +9,7 @@ use Dwij\Laraadmin\Models\Module;
 use Dwij\Laraadmin\Models\ModuleFieldTypes;
 use Dwij\Laraadmin\Helpers\LAHelper;
 use Dwij\Laraadmin\Models\Menu;
+use Illuminate\Support\Str;
 
 /**
  * Class CodeGenerator
@@ -226,7 +227,7 @@ class CodeGenerator
     {
         $filesystem = new Filesystem();
 
-        if (starts_with($table, "create_")) {
+        if (Str::startsWith($table, "create_")) {
             $tname = str_replace("create_", "", $table);
             $table = str_replace("_table", "", $tname);
         }
@@ -270,7 +271,7 @@ class CodeGenerator
                     }
                     $dvalue = "";
                     if ($field['defaultvalue'] != "") {
-                        if (starts_with($field['defaultvalue'], "[")) {
+                        if (Str::startsWith($field['defaultvalue'], "[")) {
                             $dvalue = $field['defaultvalue'];
                         } else {
                             $dvalue = '"' . $field['defaultvalue'] . '"';
@@ -290,7 +291,7 @@ class CodeGenerator
                     }
                     $values = "";
                     if ($field['popup_vals'] != "") {
-                        if (starts_with($field['popup_vals'], "[")) {
+                        if (Str::startsWith($field['popup_vals'], "[")) {
                             $values = $field['popup_vals'];
                         } else {
                             $values = '"' . $field['popup_vals'] . '"';
@@ -385,7 +386,7 @@ class CodeGenerator
         $config = array();
         $config = (object)$config;
 
-        if (starts_with($module, "create_")) {
+        if (Str::startsWith($module, "create_")) {
             $tname = str_replace("create_", "", $module);
             $module = str_replace("_table", "", $tname);
         }

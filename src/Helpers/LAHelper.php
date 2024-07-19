@@ -6,6 +6,7 @@ use DB;
 use Log;
 
 use Dwij\Laraadmin\Models\Module;
+use Illuminate\Support\Str;
 
 class LAHelper
 {
@@ -336,9 +337,9 @@ class LAHelper
 	public static function laravel_ver() {
 		$var = \App::VERSION();
 		
-		if(starts_with($var, "5.2")) {
+		if(Str::startsWith($var, "5.2")) {
 			return 5.2;
-		} else if(starts_with($var, "5.3")) {
+		} else if(Str::startsWith($var, "5.3")) {
 			return 5.3;
 		} else if(substr_count($var, ".") == 3) {
 			$var = substr($var, 0, strrpos($var, "."));

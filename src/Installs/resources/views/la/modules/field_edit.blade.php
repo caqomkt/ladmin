@@ -1,17 +1,17 @@
 @extends("la.layouts.app")
 
-@section("contentheader_title", "AlteraÁ„o de campo: ".$field->label)
-@section("contentheader_description", "MÛdulo: ".$module->model."")
-@section("section", "MÛdulo: ".$module->name)
+@section("contentheader_title", "Altera√ß√£o de campo: ".$field->label)
+@section("contentheader_description", "M√≥dulo: ".$module->model."")
+@section("section", "M√≥dulo: ".$module->name)
 @section("section_url", url(config('laraadmin.adminRoute') . '/modules/'.$module->id))
-@section("sub_section", "EdiÁ„o de campos")
+@section("sub_section", "Edi√ß√£o de campos")
 
 @section("htmlheader_title", "Editando o campo: ".$field->label)
 
 @section("main-content")
 <div class="card">
 	<div class="card-header">
-		Alterando o campo: <strong>{{$field->label}}</strong> do mÛdulo <strong>{{$module->model}}</strong>
+		Alterando o campo: <strong>{{$field->label}}</strong> do m√≥dulo <strong>{{$module->model}}</strong>
 	</div>
 	<div class="card-body">
 		<div class="row">
@@ -26,7 +26,7 @@
 					
 					<div class="form-group">
 						<label for="colname">ID:</label>
-						{{ Form::text("colname", null, ['class'=>'form-control', 'placeholder'=>'ID da coluna (Min˙sculo, sem espaÁos)', 'data-rule-minlength' => 2, 'data-rule-maxlength'=>20, 'data-rule-banned-words' => 'true', 'required' => 'required']) }}
+						{{ Form::text("colname", null, ['class'=>'form-control', 'placeholder'=>'ID da coluna (Min√∫sculo, sem espa√ßos)', 'data-rule-minlength' => 2, 'data-rule-maxlength'=>20, 'data-rule-banned-words' => 'true', 'required' => 'required']) }}
 				</div>
 					
 					<div class="form-group">
@@ -36,7 +36,7 @@
 					
 					<div id="unique_val">
 						<div class="form-group">
-						<label for="unique">⁄nico?</label>
+						<label for="unique">√önico?</label>
 							{{ Form::checkbox("unique", "unique") }}
 						<div class="Switch Round Off" style="vertical-align:top;margin-left:10px;">
 							<div class="Toggle"></div>
@@ -45,24 +45,24 @@
 					</div>
 
 					<div class="form-group">
-					<label for="defaultvalue">Valor padr„o:</label>
-					{{ Form::text("defaultvalue", null, ['class'=>'form-control', 'placeholder'=>'Valor padr„o']) }}
+					<label for="defaultvalue">Valor padr√£o:</label>
+					{{ Form::text("defaultvalue", null, ['class'=>'form-control', 'placeholder'=>'Valor padr√£o']) }}
 					</div>
 					
 					<div id="length_div">
 						<div class="form-group">
-							<label for="minlength">MÌnimo :</label>
-						{{ Form::number("minlength", null, ['class'=>'form-control', 'placeholder'=>'Valor padr„o']) }}
+							<label for="minlength">M√≠nimo :</label>
+						{{ Form::number("minlength", null, ['class'=>'form-control', 'placeholder'=>'Valor padr√£o']) }}
 						</div>
 						
 						<div class="form-group">
-							<label for="maxlength">M·ximo :</label>
-							{{ Form::number("maxlength", null, ['class'=>'form-control', 'placeholder'=>'Valor padr„o']) }}
+							<label for="maxlength">M√°ximo :</label>
+							{{ Form::number("maxlength", null, ['class'=>'form-control', 'placeholder'=>'Valor padr√£o']) }}
 						</div>
 					</div>
 					
 					<div class="form-group">
-						<label for="required">ObrigatÛrio?</label>
+						<label for="required">Obrigat√≥rio?</label>
 						{{ Form::checkbox("required", "required") }}
 					<div class="Switch Round Off" style="vertical-align:top;margin-left:10px;">
 						<div class="Toggle"></div>
@@ -79,17 +79,17 @@
 						$default_val = "";
 						$popup_value_type_table = false;
 						$popup_value_type_list = false;
-						if(starts_with($field->popup_vals, "@")) {
+						if(Str::startsWith($field->popup_vals, "@")) {
 							$popup_value_type_table = true;
 							$default_val = str_replace("@", "", $field->popup_vals);
-						} else if(starts_with($field->popup_vals, "[")) {
+						} else if(Str::startsWith($field->popup_vals, "[")) {
 							$popup_value_type_list = true;
 							$default_val = json_decode($field->popup_vals);
 						}
 						?>
 						<div class="radio" style="margin-bottom:20px;">
 							<label>{{ Form::radio("popup_value_type", "table", $popup_value_type_table) }} De uma tabela</label>
-						<label>{{ Form::radio("popup_value_type", "list", $popup_value_type_list) }} Lista de Ìtens</label>
+						<label>{{ Form::radio("popup_value_type", "list", $popup_value_type_list) }} Lista de itens</label>
 						</div>
 						{{ Form::select("popup_vals_table", $tables, $default_val, ['class'=>'form-control', 'rel' => '']) }}
 						

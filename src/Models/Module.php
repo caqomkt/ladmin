@@ -120,7 +120,7 @@ class Module extends Model
                     if(!isset($mod->id)) {
                         if($field->field_type == "Multiselect" || $field->field_type == "Taginput") {
 
-                            if(is_string($field->defaultvalue) && starts_with($field->defaultvalue, "[")) {
+                            if(is_string($field->defaultvalue) && Str::startsWith($field->defaultvalue, "[")) {
                                 $field->defaultvalue = json_decode($field->defaultvalue);
                             }
 
@@ -354,7 +354,7 @@ class Module extends Model
                     }
                 }
                 $popup_vals = json_decode($field->popup_vals);
-                if(starts_with($field->popup_vals, "@")) {
+                if(Str::startsWith($field->popup_vals, "@")) {
                     $foreign_table_name = str_replace("@", "", $field->popup_vals);
                     if($update) {
                         $var = $table->integer($field->colname)->nullable()->unsigned()->change();
@@ -437,7 +437,7 @@ class Module extends Model
                 } else {
                     $var = $table->string($field->colname, 256);
                 }
-                if(is_string($field->defaultvalue) && starts_with($field->defaultvalue, "[")) {
+                if(is_string($field->defaultvalue) && Str::startsWith($field->defaultvalue, "[")) {
                     $var->default($field->defaultvalue);
                 } else if(is_array($field->defaultvalue)) {
                     $var->default(json_encode($field->defaultvalue));
@@ -526,7 +526,7 @@ class Module extends Model
                 if(is_array($field->defaultvalue)) {
                     $field->defaultvalue = json_encode($field->defaultvalue);
                     $var->default($field->defaultvalue);
-                } else if(is_string($field->defaultvalue) && starts_with($field->defaultvalue, "[")) {
+                } else if(is_string($field->defaultvalue) && Str::startsWith($field->defaultvalue, "[")) {
                     $var->default($field->defaultvalue);
                 } else if($field->defaultvalue == "" || $field->defaultvalue == null) {
                     $var->default("[]");
@@ -604,7 +604,7 @@ class Module extends Model
                         break;
                     }
                 }
-                if(is_string($field->popup_vals) && starts_with($field->popup_vals, "@")) {
+                if(is_string($field->popup_vals) && Str::startsWith($field->popup_vals, "@")) {
                     if($update) {
                         $var = $table->integer($field->colname)->unsigned()->change();
                     } else {
@@ -665,7 +665,7 @@ class Module extends Model
                 } else {
                     $var = $table->string($field->colname, 1000)->nullable();
                 }
-                if(is_string($field->defaultvalue) && starts_with($field->defaultvalue, "[")) {
+                if(is_string($field->defaultvalue) && Str::startsWith($field->defaultvalue, "[")) {
                     $field->defaultvalue = json_decode($field->defaultvalue);
                 }
 
@@ -1149,9 +1149,9 @@ class Module extends Model
                         break;
                     case 'Dropdown':
                         if($request->{$field['colname']} == 0) {
-                            if(starts_with($field['popup_vals'], "@")) {
+                            if(Str::startsWith($field['popup_vals'], "@")) {
                                 $request->{$field['colname']} = DB::raw('NULL');
-                            } else if(starts_with($field['popup_vals'], "[")) {
+                            } else if(Str::startsWith($field['popup_vals'], "[")) {
                                 $request->{$field['colname']} = $request->{$field['colname']};
                             }
                         }
