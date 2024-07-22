@@ -113,7 +113,7 @@ Role View
 					</div>
 					<div class="card-body">
 						@la_display($module, 'name')
-						@la_display($module, 'display_name')
+						@la_display($module, 'guard_name')
 						@la_display($module, 'description')
 						@la_display($module, 'parent')
 						@la_display($module, 'dept')
@@ -124,7 +124,7 @@ Role View
 		@role("SUPER_ADMIN")
 		<div role="tabpanel" class="tab-pane fade in p20 bg-white" id="tab-access">
 			<div class="guide1">
-				<span class="pull-left">Module Accesses for {{ $role->display_name }} Role</span>
+				<span class="pull-left">Module Accesses for {{ $role->guard_name }} Role</span>
 				<i class="fa fa-circle gray"></i> Invisible <i class="fa fa-circle orange"></i> Read-Only <i class="fa fa-circle green"></i> Write
 			</div>
 			<form action="{{ url(config('laraadmin.adminRoute') . '/save_module_role_permissions/'.$role->id) }}" method="post">

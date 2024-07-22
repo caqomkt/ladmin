@@ -1,12 +1,12 @@
 @extends("la.layouts.app")
 @section("contentheader_title")
-<a href="{{ url(config('laraadmin.adminRoute') . '/permissions') }}">Permissıes</a> :
+<a href="{{ url(config('laraadmin.adminRoute') . '/permissions') }}">Permiss√µes</a> :
 @endsection
 @section("contentheader_description", $permission->$view_col)
 @section("section", "Permissions")
 @section("section_url", url(config('laraadmin.adminRoute') . '/permissions'))
 @section("sub_section", "Edit")
-@section("htmlheader_title", "Editando persmiss„o: ".$permission->$view_col)
+@section("htmlheader_title", "Editando persmiss√£o: ".$permission->$view_col)
 @section("main-content")
 @if (count($errors) > 0)
 <div class="alert alert-danger">
@@ -26,7 +26,7 @@
 		@la_form($module)
 		{{--
 					@la_input($module, 'name')
-					@la_input($module, 'display_name')
+					@la_input($module, 'guard_name')
 					@la_input($module, 'description')
 					--}}
 		<br>

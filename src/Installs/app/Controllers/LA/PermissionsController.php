@@ -21,7 +21,7 @@ class PermissionsController extends Controller
 {
     public $show_action = true;
     public $view_col = 'name';
-    public $listing_cols = ['id', 'name', 'display_name'];
+    public $listing_cols = ['id', 'name', 'guard_name'];
 
     /**
      * Display a listing of the Permissions.
@@ -69,7 +69,7 @@ class PermissionsController extends Controller
         if (Module::hasAccess("Permissions", "create")) {
             $rules = [
                 'name' => 'required|unique:permissions,name',
-                'display_name' => 'required'
+                'guard_name' => 'required'
             ];
             $validator = Validator::make($request->all(), $rules);
 
@@ -77,7 +77,7 @@ class PermissionsController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            Permission::create($request->only(['name', 'display_name']));
+            Permission::create($request->only(['name', 'guard_name']));
             return redirect()->route(config('laraadmin.adminRoute') . '.permissions.index');
         } else {
             return redirect(config('laraadmin.adminRoute')."/");
@@ -143,7 +143,7 @@ class PermissionsController extends Controller
         if (Module::hasAccess("Permissions", "edit")) {
             $rules = [
                 'name' => 'required|unique:permissions,name,' . $id,
-                'display_name' => 'required'
+                'guard_name' => 'required'
             ];
             $validator = Validator::make($request->all(), $rules);
 
@@ -152,7 +152,7 @@ class PermissionsController extends Controller
             }
 
             $permission = Permission::findById($id);
-            $permission->update($request->only(['name', 'display_name']));
+            $permission->update($request->only(['name', 'guard_name']));
             return redirect()->route(config('laraadmin.adminRoute') . '.permissions.index');
         } else {
             return redirect(config('laraadmin.adminRoute')."/");
