@@ -392,4 +392,11 @@ class LAHelper
 		$md = file_get_contents($from);
 		return $md;
 	}
+
+	public static function is_assoc_array($arr) {
+        if (!is_array($arr)) {
+            return false;
+        }
+        return array_keys($arr) !== range(0, count($arr) - 1);
+    }
 }
