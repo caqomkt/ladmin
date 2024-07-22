@@ -4,6 +4,7 @@ namespace Dwij\Laraadmin\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 use Illuminate\Database\Schema\Blueprint;
 use Exception;
 use Log;
