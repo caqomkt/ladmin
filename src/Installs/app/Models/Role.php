@@ -3,10 +3,10 @@
 
 namespace App;
 
-use Zizaco\Entrust\EntrustRole;
+use Spatie\Permission\Models\Role as SpatieRole;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Role extends EntrustRole
+class Role extends SpatieRole
 {
     use SoftDeletes;
 	

@@ -3,20 +3,20 @@
 
 namespace App;
 
-use Zizaco\Entrust\EntrustPermission;
+use Spatie\Permission\Models\Permission as SpatiePermission;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Permission extends EntrustPermission
+class Permission extends SpatiePermission
 {
     use SoftDeletes;
-	
-	protected $table = 'permissions';
-	
-	protected $hidden = [
+    
+    protected $table = 'permissions';
+    
+    protected $hidden = [
         
     ];
 
-	protected $guarded = [];
+    protected $guarded = [];
 
-	protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at'];
 }

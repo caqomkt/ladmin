@@ -43,14 +43,12 @@
 		<div class="form-group">
 			<label for="role">Role* :</label>
 			<select class="form-control" required="1" data-placeholder="Select Role" rel="select2" name="role">
-				<?php $roles = App\Role::all(); ?>
+				@php
+				$roles = Spatie\Permission\Models\Role::all(); // Utilizando o model do Spatie
+				@endphp
 				@foreach($roles as $role)
-				@if($role->id != 1 || Entrust::hasRole("SUPER_ADMIN"))
-				@if($user->hasRole($role->name))
-				<option value="{{ $role->id }}" selected>{{ $role->name }}</option>
-				@else
-				<option value="{{ $role->id }}">{{ $role->name }}</option>
-				@endif
+					@if($role->name != 'SUPER_ADMIN' || Auth::user()->hasRole('SUPER_ADMIN')) {{-- Checando role com Spatie --}}
+						<option value="{{ $role->id }}" {{ $employee->hasRole($role->name) ? 'selected' : '' }}>{{ $role->name }}</option>
 				@endif
 				@endforeach
 			</select>

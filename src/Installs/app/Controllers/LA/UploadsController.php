@@ -4,15 +4,16 @@ namespace App\Http\Controllers\LA;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response as FacadeResponse;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
 use Collective\Html\FormFacade as Form;
 
 use Dwij\Laraadmin\Models\Module;
 use Dwij\Laraadmin\Helpers\LAHelper;
-use Zizaco\Entrust\EntrustFacade as Entrust;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 use Auth;
 use DB;
@@ -38,12 +39,9 @@ class UploadsController extends Controller
 	 */
 	public function index()
 	{
-		$module = Module::get('Uploads');
-		
-		if(Module::hasAccess($module->id)) {
-			return View('la.uploads.index', [
-				'show_actions' => $this->show_action,
-				'module' => $module
+        if (Auth::user()->can('view_uploads')) {
+            return view('la.uploads.index', [
+                'show_actions' => $this->show_action
 			]);
 		} else {
             return redirect(config('laraadmin.adminRoute')."/");
@@ -67,12 +65,8 @@ class UploadsController extends Controller
             ]);
         }
 
-        if($upload->public == 1) {
-            $upload->public = true;
-        } else {
-            $upload->public = false;
-        }
-
+        if($upload->public || Auth::user()->can('view_uploads') || Auth::id() == $upload->user_id) {
+        
         // Validate if Image is Public
         if(!$upload->public && !isset(Auth::user()->id)) {
             return response()->json([
@@ -81,7 +75,6 @@ class UploadsController extends Controller
             ]);
         }
 
-        if($upload->public || Entrust::hasRole('SUPER_ADMIN') || Auth::user()->id == $upload->user_id) {
             
             $path = $upload->path;
 
@@ -96,13 +89,11 @@ class UploadsController extends Controller
                 }
                 $thumbpath = storage_path("thumbnails/".basename($upload->path)."-".$size."x".$size);
                 
-                if(File::exists($thumbpath)) {
-                    $path = $thumbpath;
-                } else {
+                if(!File::exists($thumbpath)) {
                     // Create Thumbnail
                     LAHelper::createThumbnail($upload->path, $thumbpath, $size, $size, "transparent");
-                    $path = $thumbpath;
                 }
+                $path = $thumbpath;
             }
 
             $file = File::get($path);
@@ -126,13 +117,14 @@ class UploadsController extends Controller
     }
 
     /**
-     * Upload fiels via DropZone.js
+     * Upload files via DropZone.js
      *
      * @return \Illuminate\Http\Response
      */
-    public function upload_files() {
+    public function upload_files()
+    {
         
-		if(Module::hasAccess("Uploads", "create")) {
+        if(Auth::user()->can('create_uploads')) {
 			$input = Input::all();
 			
 			if(Input::hasFile('file')) {
@@ -149,42 +141,23 @@ class UploadsController extends Controller
 				
 				// print_r($file);
 				
+				
 				$folder = storage_path('uploads');
 				$filename = $file->getClientOriginalName();
-	
 				$date_append = date("Y-m-d-His-");
-				$upload_success = Input::file('file')->move($folder, $date_append.$filename);
+                $upload_success = $file->move($folder, $date_append.$filename);
 				
 				if( $upload_success ) {
-	
-					// Get public preferences
-					// config("laraadmin.uploads.default_public")
-					$public = Input::get('public');
-					if(isset($public)) {
-						$public = true;
-					} else {
-						$public = false;
-					}
-	
+                    $public = Input::get('public') ? true : false;
 					$upload = Upload::create([
 						"name" => $filename,
 						"path" => $folder.DIRECTORY_SEPARATOR.$date_append.$filename,
 						"extension" => pathinfo($filename, PATHINFO_EXTENSION),
 						"caption" => "",
-						"hash" => "",
+                        "hash" => strtolower(str_random(20)),
 						"public" => $public,
-						"user_id" => Auth::user()->id
+                        "user_id" => Auth::id()
 					]);
-					// apply unique random hash to file
-					while(true) {
-						$hash = strtolower(str_random(20));
-						if(!Upload::where("hash", $hash)->count()) {
-							$upload->hash = $hash;
-							break;
-						}
-					}
-					$upload->save();
-	
 					return response()->json([
 						"status" => "success",
 						"upload" => $upload
@@ -201,7 +174,7 @@ class UploadsController extends Controller
 			return response()->json([
 				'status' => "failure",
 				'message' => "Unauthorized Access"
-			]);
+			], 400);
 		}
     }
 
@@ -216,7 +189,7 @@ class UploadsController extends Controller
 			$uploads = array();
 	
 			// print_r(Auth::user()->roles);
-			if(Entrust::hasRole('SUPER_ADMIN')) {
+			if (Auth::user()->can('view_uploads')) {
 				$uploads = Upload::all();
 			} else {
 				if(config('laraadmin.uploads.private_uploads')) {
@@ -271,7 +244,7 @@ class UploadsController extends Controller
 			
 			$upload = Upload::find($file_id);
 			if(isset($upload->id)) {
-				if($upload->user_id == Auth::user()->id || Entrust::hasRole('SUPER_ADMIN')) {
+				if($upload->user_id == Auth::user()->id || Auth::user()->can('edit_uploads')) {
 	
 					// Update Caption
 					$upload->caption = $caption;
@@ -314,7 +287,7 @@ class UploadsController extends Controller
 			
 			$upload = Upload::find($file_id);
 			if(isset($upload->id)) {
-				if($upload->user_id == Auth::user()->id || Entrust::hasRole('SUPER_ADMIN')) {
+				if($upload->user_id == Auth::user()->id || Auth::user()->can('edit_uploads')) {
 	
 					// Update Caption
 					$upload->name = $filename;
@@ -362,7 +335,7 @@ class UploadsController extends Controller
 			
 			$upload = Upload::find($file_id);
 			if(isset($upload->id)) {
-				if($upload->user_id == Auth::user()->id || Entrust::hasRole('SUPER_ADMIN')) {
+				if($upload->user_id == Auth::user()->id || Auth::user()->can('edit_uploads')) {
 	
 					// Update Caption
 					$upload->public = $public;
@@ -404,7 +377,7 @@ class UploadsController extends Controller
 			
 			$upload = Upload::find($file_id);
 			if(isset($upload->id)) {
-				if($upload->user_id == Auth::user()->id || Entrust::hasRole('SUPER_ADMIN')) {
+				if($upload->user_id == Auth::user()->id || Auth::user()->can('edit_uploads')) {
 	
 					// Update Caption
 					$upload->delete();
