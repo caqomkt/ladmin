@@ -358,7 +358,7 @@ class LAFormMaker
 				case 'Multiselect':
 					$out .= '<label for="' . $field_name . '">' . $label . ': ' . $required_ast . ' </label>';
 					unset($params['data-rule-maxlength']);
-					$params['data-placeholder'] = "Selecione " . str_plural($label);
+					$params['data-placeholder'] = "Selecione " . Str::plural($label);
 					unset($params['placeholder']);
 					$params['multiple'] = "";
 					$params['class'] = "select2 select2-hidden-accessible";
@@ -465,7 +465,7 @@ class LAFormMaker
 					}
 					$params['multiple'] = "true";
 					$params['rel'] = "taginput";
-					$params['data-placeholder'] = "Add multiple " . str_plural($label);
+					$params['data-placeholder'] = "Add multiple " . Str::plural($label);
 					unset($params['placeholder']);
 					// Override the edit value
 					if (isset($row) && isset($row->$field_name)) {
@@ -544,7 +544,7 @@ class LAFormMaker
 		if (is_string($json) && Str::startsWith($json, "@")) {
 			// Get Module / Table Name
 			$json = str_ireplace("@", "", $json);
-			$table_name = strtolower(str_plural($json));
+			$table_name = strtolower(Str::plural($json));
 			// Search Module
 			$module = Module::getByTable($table_name);
 			if (isset($module->id)) {
@@ -552,7 +552,7 @@ class LAFormMaker
 			} else {
 				// Search Table if no module found
 				if (Schema::hasTable($table_name)) {
-					$model = "App\\" . ucfirst(str_singular($table_name));
+					$model = "App\\" . ucfirst(Str::singular($table_name));
 					$result = $model::all();
 					// find view column name
 					$view_col = "";

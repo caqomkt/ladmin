@@ -16,14 +16,14 @@ class LAHelper
 		$module_name = trim($module_name);
 		$module_name = str_replace(" ", "_", $module_name);
 		
-		$array['module'] = ucfirst(str_plural($module_name));
-		$array['label'] = ucfirst(str_plural($module_name));
-		$array['table'] = strtolower(str_plural($module_name));
-		$array['model'] = ucfirst(str_singular($module_name));
+		$array['module'] = ucfirst(Str::plural($module_name));
+		$array['label'] = ucfirst(Str::plural($module_name));
+		$array['table'] = strtolower(Str::plural($module_name));
+		$array['model'] = ucfirst(Str::singular($module_name));
 		$array['fa_icon'] = $icon;
 		$array['controller'] = $array['module']."Controller";
-		$array['singular_l'] = strtolower(str_singular($module_name));
-		$array['singular_c'] = ucfirst(str_singular($module_name));
+		$array['singular_l'] = strtolower(Str::singular($module_name));
+		$array['singular_c'] = ucfirst(Str::singular($module_name));
 		
 		return (object) $array;
 	}
