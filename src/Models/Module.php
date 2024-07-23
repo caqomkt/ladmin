@@ -1190,6 +1190,12 @@ class Module extends Model
                         // TODO: Bug fix
                         $row->{$field['colname']} = '[]';
                         break;
+                    case 'Taginput':
+                        $row->{$field['colname']} = '[]';
+                        break;
+                    case 'Checkbox':
+                        $row->{$field['colname']} = 0;
+                    break;
                     default:
                         $row->{$field['colname']} = null;
                         break;

@@ -100,7 +100,7 @@ class EmployeesController extends Controller
 					$m->to($user->email, $user->name)->subject('LaraAdmin - Your Login Credentials');
 				});
 			} else {
-				Log::info("User created: username: ".$user->email." Password: ".$password);
+				//Log::info("User created: username: ".$user->email." Password: ".$password);
 			}
 			
 			return redirect()->route(config('laraadmin.adminRoute') . '.employees.index');
@@ -316,7 +316,7 @@ class EmployeesController extends Controller
 				$m->to($user->email, $user->name)->subject('LaraAdmin - Login Credentials changed');
 			});
 		} else {
-			Log::info("User change_password: username: ".$user->email." Password: ".$request->password);
+			//Log::info("User change_password: username: ".$user->email." Password: ".$request->password);
 		}
 		
 		return redirect(config('laraadmin.adminRoute') . '/employees/'.$id.'#tab-account-settings');

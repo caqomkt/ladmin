@@ -7,7 +7,7 @@ Log in
 <body class="login-page" cz-shortcut-listen="true" style="min-height: 496.802px;">
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{ url('/home') }}"><b>{{ LAConfigs::getByKey('sitename_part1') }} </b>{{ LAConfigs::getByKey('sitename_part2') }}</a>
+            <a href="{{ url('/') }}"><b>{{ LAConfigs::getByKey('sitename_part1') }} </b>{{ LAConfigs::getByKey('sitename_part2') }}</a>
         </div>
         <div class="card">
         <div class="card-body login-card-body">

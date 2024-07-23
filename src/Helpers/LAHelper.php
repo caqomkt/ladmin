@@ -311,7 +311,7 @@ class LAHelper
 		$treeview2 = ' class="dropdown-item" ';
 		$subviewSign = "";
 		if(count($childrens)) {
-			$treeview = ' class="nav-item dropdown" ';
+			$treeview = ' class="nav-item dropdown d-none d-lg-inline" ';
 			$treeview2 = ' href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle" ';
 			$subviewSign = ' <span class="caret"></span>';
 		}

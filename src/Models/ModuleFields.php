@@ -132,7 +132,7 @@ class ModuleFields extends Model
         if (is_int($field->field_type)) {
             Log::debug("tipo de arquivo correto");
         } else{
-            Log::debug("tipo de arquivo incorreto");
+            Log::debug("tipo de arquivo incorreto" . $field);
         }
 
         // Log::info(print_r($field));

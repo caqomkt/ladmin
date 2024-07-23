@@ -164,13 +164,13 @@ class CodeGenerator
 
         LAHelper::log("info", "Appending routes...", $comm);
         if (LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
-            $routesFile = base_path('routes/admin_routes.php');
+            $routesFile = base_path('routes/web.php');
         } else {
-            $routesFile = app_path('Http/admin_routes.php');
+            $routesFile = app_path('Http/web.php');
         }
 
         $contents = file_get_contents($routesFile);
-        $contents = str_replace('});', '', $contents);
+        $contents = str_replace('}); Auth::routes();', '', $contents);
         file_put_contents($routesFile, $contents);
 
         $md = file_get_contents($templateDirectory . "/routes.stub");

@@ -115,6 +115,7 @@ class LAFormMaker
 					//$params['data-rule-currency'] = "true";
 					//$params['step'] = 'any';
 					//$params['min'] = "0";
+					$params['class'] = "form-control valor_id";
 					$params['id'] = "valor_id";
 					$out .= Form::text($field_name, $default_val, $params);
 					break;
@@ -178,7 +179,7 @@ class LAFormMaker
 				case 'Dropdown':
 					$out .= '<label for="' . $field_name . '">' . $label . ': ' . $required_ast . ' </label>';
 					unset($params['data-rule-maxlength']);
-					$params['data-placeholder'] = "Selecione: uma opção";
+					$params['data-placeholder'] = "Selecione uma opção";
 					unset($params['placeholder']);
 					$params['rel'] = "select2";
 					$params['class'] = "form-control select2 select2-hidden-accessible";
@@ -201,6 +202,7 @@ class LAFormMaker
 						$popup_vals = array();
 					}
 					$out .= Form::select($field_name, $popup_vals, $default_val, $params);
+					//ver no vendor\laravelcollective\html\src\formbuilder.php   > função select
 					break;
 				case 'Email':
 					$out .= '<label for="' . $field_name . '">' . $label . ': ' . $required_ast . ' </label>';
@@ -233,10 +235,10 @@ class LAFormMaker
 					
 					if(isset($upload->id)) {
                         $out .= "<a class='btn btn-default btn_upload_file  form-control hide' file_type='file' selecter='" . $field_name . "'>Anexar arquivo <i class='fa fa-cloud-upload'></i></a>
-                            <a class='uploaded_file form-control' target='_blank' href='" . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name) . "'><i class='fa fa-file-o'></i> Anexo &nbsp;&nbsp;<i title='Remover arquivo' class='fa fa-times'></i> </a>";
+                            <a class='uploaded_file form-control' target='_blank' href='" . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name) . "'><i class='fa fa-file-o'></i> " . $upload->name ."<i title='Remover arquivo' class='fa fa-times text-danger'></i> </a>";
                     } else {
                         $out .= "<a class='btn btn-default btn_upload_file  form-control' file_type='file' selecter='" . $field_name . "'>Anexar arquivo <i class='fa fa-cloud-upload'></i></a>
-                            <a class='uploaded_file form-control hide' target='_blank'><i class='fa fa-file-o'></i><i title='Remover arquivo' class='fa fa-times'></i></a>";
+                            <a class='uploaded_file form-control hide' target='_blank'><i class='fa fa-file-o'></i> Anexo <i title='Remover arquivo' class='fa fa-times text-danger'></i></a>";
                     }
 
 					
@@ -265,9 +267,9 @@ class LAFormMaker
 								if (in_array($upload->extension, ["jpg", "png", "gif", "jpeg"])) {
 									$fileImage = "<img width='30' src='" . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name . "") . "'>";
 								} else {
-									$fileImage = "<i class='fa fa-file-o'></i>";
+									$fileImage = "<i class='fa fa-file-o'></i> ". $upload->name;
 								}
-								$uploadImages .= "<a class='uploaded_file2' upload_id='" . $upload->id . "' target='_blank' href='" . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name) . "'>" . $fileImage . "<small class='text-danger'>[ <i title='Remover arquivo' class='fa fa-times'></i> Excluir ]</small></a>";
+								$uploadImages .= "<a class='uploaded_file2 form-control ml-3' upload_id='" . $upload->id . "' target='_blank' href='" . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name) . "'>" . $fileImage . "<i title='Remover arquivo' class='fa fa-times text-danger'></i></a>";
 							}
 						}
 						$out .= Form::hidden($field_name, json_encode($uploadIds), $params);
@@ -278,7 +280,7 @@ class LAFormMaker
 						$out .= Form::hidden($field_name, "[]", $params);
 						$out .= "<div class='uploaded_files'></div>";
 					}
-					$out .= "<a class='btn btn-default btn_upload_files' file_type='files' selecter='" . $field_name . "' style='margin-top:5px;'>Upload <i class='fa fa-cloud-upload'></i></a>";
+					$out .= "<a class='btn btn-default btn_upload_files' file_type='files' selecter='" . $field_name . "' style='margin-top:5px; width:100%'>Anexar arquivos <i class='fa fa-cloud-upload'></i></a>";
 					break;
 				case 'Float':
 					$out .= '<label for="' . $field_name . '">' . $label . ': ' . $required_ast . ' </label>';
@@ -323,10 +325,10 @@ class LAFormMaker
 					}
 					if (isset($upload->id)) {
 						$out .= "<a class='btn btn-default btn_upload_image hide' file_type='image' selecter='" . $field_name . "'>Upload <i class='fa fa-cloud-upload'></i></a>
-					<div class='uploaded_image'><img src='" . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name . "?s=150") . "'><i title='Remove Image' class='fa fa-times'></i></div>";
+					<div class='uploaded_image'><img src='" . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name) . "' style='max-height:100px; max-width:100px'><i title='Remover Imagem' class='fa fa-times'></i></div>";
 					} else {
 						$out .= "<a class='btn btn-default btn_upload_image' file_type='image' selecter='" . $field_name . "'>Upload <i class='fa fa-cloud-upload'></i></a>
-					<div class='uploaded_image hide'><img src=''><i title='Remove Image' class='fa fa-times'></i></div>";
+					<div class='uploaded_image hide'><img src='' style='max-height:100px; max-width:100px'><i title='Remover Imagem' class='fa fa-times'></i></div>";
 					}
 					break;
 				case 'Integer':
@@ -421,7 +423,7 @@ class LAFormMaker
 							if ($default_val != "" && $default_val == $value) {
 								$sel = true;
 							}
-							$out .= '<label>' . (Form::radio($field_name, $key, $sel)) . ' ' . $value . ' </label>';
+							$out .= '<label class="ml-2">' . (Form::radio($field_name, $key, $sel)) . ' ' . $value . ' </label>';
 						}
 						$out .= '</div>';
 						break;
@@ -437,7 +439,7 @@ class LAFormMaker
 							if ($default_val != "" && $default_val == $value) {
 								$sel = true;
 							}
-							$out .= '<label>' . (Form::radio($field_name, $value, $sel)) . ' ' . $value . ' </label>';
+							$out .= '<label class="ml-2">' . (Form::radio($field_name, $value, $sel)) . ' ' . $value . ' </label>';
 						}
 						$out .= '</div>';
 						break;
@@ -690,7 +692,7 @@ class LAFormMaker
 
 							$fileImage = "";
 							if (in_array($upload->extension, ["jpg", "png", "gif", "jpeg"])) {
-								$value = "<img width='100' src='" . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name) . "'>";
+								$value = '<a target="_blank" href="' . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name) . '"><img width="100" src="' . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name) . '"></a>';
 							} else {
 								$value = '<a class="preview" target="_blank" href="' . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name) . '">
 						<span class="fa-stack fa-lg"><i class="fa fa-square fa-stack-2x"></i><i class="fa fa-file-o fa-stack-1x fa-inverse"></i></span> ' . $upload->name . '</a>';
@@ -712,9 +714,9 @@ class LAFormMaker
 								$uploadIds[] = $upload->id;
 								$fileImage = "";
 								if (in_array($upload->extension, ["jpg", "png", "gif", "jpeg"])) {
-									$fileImage = "<img src='" . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name) . "'>";
+									$fileImage = "<img width='60px' src='" . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name) . "'>";
 								} else {
-									$fileImage = "<i class='fa fa-file-o'></i>";
+									$fileImage = "<i class='fa fa-file-o'></i> ". $upload->name;
 								}
 								// $uploadImages .= "<a class='uploaded_file2' upload_id='".$upload->id."' target='_blank' href='".url("files/".$upload->hash.DIRECTORY_SEPARATOR.$upload->name)."'>".$fileImage."<i title='Remove File' class='fa fa-times'></i></a>";
 								$uploads_html .= '<a class="preview" target="_blank" href="' . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name) . '" data-toggle="tooltip" data-placement="top" data-container="body" style="display:inline-block;margin-right:5px;" title="' . $upload->name . '">
@@ -735,7 +737,7 @@ class LAFormMaker
 						$upload = \App\Models\Upload::find($value);
 					}
 					if (isset($upload->id)) {
-						$value = '<a class="preview" target="_blank" href="' . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name) . '"><img src="' . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name . "?s=150") . '"></a>';
+						$value = '<a class="preview" target="_blank" href="' . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name) . '"><img src="' . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name) . '"  style="max-height:100px; max-width:100px"></a>';
 					} else {
 						$value = 'Sem imagem';
 					}

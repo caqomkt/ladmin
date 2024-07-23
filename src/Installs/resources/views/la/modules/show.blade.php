@@ -636,7 +636,7 @@ location.reload();
 });
 $("#dt_module_fields").DataTable({
 "language": {
-"url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Portuguese-Brasil.json"
+                "url": "{{ asset('la-assets/plugins/datatables/portuguese-brasil.json') }}",
 },
 "initComplete": function(settings, json) {
 console.log('DataTables has finished its initialisation.');
