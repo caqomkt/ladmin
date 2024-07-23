@@ -287,7 +287,9 @@ class CodeGenerator
                     }
                     //$listing_col = "false";
                     if ($field['listing_col']) {
-                        $listing_col = "true";
+                        $listing_col = 1;
+                    } else {
+                        $listing_col = 0;
                     }
                     $values = "";
                     if ($field['popup_vals'] != "") {
