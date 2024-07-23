@@ -9,7 +9,6 @@ use Dwij\Laraadmin\Models\Module;
 use Dwij\Laraadmin\Models\ModuleFieldTypes;
 use Dwij\Laraadmin\Helpers\LAHelper;
 use Dwij\Laraadmin\Models\Menu;
-use Illuminate\Support\Str;
 
 /**
  * Class CodeGenerator
@@ -227,19 +226,19 @@ class CodeGenerator
     {
         $filesystem = new Filesystem();
 
-        if (Str::startsWith($table, "create_")) {
+        if (starts_with($table, "create_")) {
             $tname = str_replace("create_", "", $table);
             $table = str_replace("_table", "", $tname);
         }
 
-        $modelName = ucfirst(Str::singular($table));
-        $tableP = Str::plural(strtolower($table));
-        $tableS = Str::singular(strtolower($table));
+        $modelName = ucfirst(str_singular($table));
+        $tableP = str_plural(strtolower($table));
+        $tableS = str_singular(strtolower($table));
         $migrationName = 'create_' . $tableP . '_table';
         $migrationFileName = date("Y_m_d_His_") . $migrationName . ".php";
         $migrationClassName = ucfirst(camel_case($migrationName));
         $dbTableName = $tableP;
-        $moduleName = ucfirst(Str::plural($table));
+        $moduleName = ucfirst(str_plural($table));
 
         LAHelper::log("info", "Model:\t   " . $modelName, $comm);
         LAHelper::log("info", "Module:\t   " . $moduleName, $comm);
@@ -271,7 +270,7 @@ class CodeGenerator
                     }
                     $dvalue = "";
                     if ($field['defaultvalue'] != "") {
-                        if (Str::startsWith($field['defaultvalue'], "[")) {
+                        if (starts_with($field['defaultvalue'], "[")) {
                             $dvalue = $field['defaultvalue'];
                         } else {
                             $dvalue = '"' . $field['defaultvalue'] . '"';
@@ -287,11 +286,13 @@ class CodeGenerator
                     }
                     //$listing_col = "false";
                     if ($field['listing_col']) {
-                        $listing_col = "true";
+                        $listing_col = 1;
+                    } else {
+                        $listing_col = 0;
                     }
                     $values = "";
                     if ($field['popup_vals'] != "") {
-                        if (Str::startsWith($field['popup_vals'], "[")) {
+                        if (starts_with($field['popup_vals'], "[")) {
                             $values = $field['popup_vals'];
                         } else {
                             $values = '"' . $field['popup_vals'] . '"';
@@ -386,21 +387,21 @@ class CodeGenerator
         $config = array();
         $config = (object)$config;
 
-        if (Str::startsWith($module, "create_")) {
+        if (starts_with($module, "create_")) {
             $tname = str_replace("create_", "", $module);
             $module = str_replace("_table", "", $tname);
         }
 
-        $config->modelName = ucfirst(Str::singular($module));
-        $tableP = Str::plural(strtolower($module));
-        $tableS = Str::singular(strtolower($module));
+        $config->modelName = ucfirst(str_singular($module));
+        $tableP = str_plural(strtolower($module));
+        $tableS = str_singular(strtolower($module));
         $config->dbTableName = $tableP;
         $config->fa_icon = $icon;
-        $config->moduleName = ucfirst(Str::plural($module));
-        $config->moduleName2 = str_replace('_', ' ', ucfirst(Str::plural($module)));
-        $config->controllerName = ucfirst(Str::plural($module)) . "Controller";
-        $config->singularVar = strtolower(Str::singular($module));
-        $config->singularCapitalVar = str_replace('_', ' ', ucfirst(Str::singular($module)));
+        $config->moduleName = ucfirst(str_plural($module));
+        $config->moduleName2 = str_replace('_', ' ', ucfirst(str_plural($module)));
+        $config->controllerName = ucfirst(str_plural($module)) . "Controller";
+        $config->singularVar = strtolower(str_singular($module));
+        $config->singularCapitalVar = str_replace('_', ' ', ucfirst(str_singular($module)));
 
         $module = Module::get($config->moduleName);
         if (!isset($module->id)) {

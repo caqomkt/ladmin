@@ -113,6 +113,7 @@ $(function () {
 
 		language: {
 					                "url": "{{ asset('la-assets/plugins/datatables/portuguese-brasil.json') }}",
+
 		},
 		@if($show_actions)
 		columnDefs: [ { orderable: false, targets: [-1] }],

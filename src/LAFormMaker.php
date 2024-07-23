@@ -7,7 +7,6 @@ use Collective\Html\FormFacade as Form;
 use Dwij\Laraadmin\Models\Module;
 use Dwij\Laraadmin\Models\ModuleFieldTypes;
 use Log;
-use Illuminate\Support\Str;
 
 class LAFormMaker
 {
@@ -103,7 +102,7 @@ class LAFormMaker
 					$out .= '<div style="vertical-align:top;"><div class="Toggle"></div></div>';
 					break;
 				case 'Currency':
-					$out .= '<label for="' . $field_name . '">' . $label . '(R$): ' . $required_ast . ' </label>';
+					$out .= '<label for="' . $field_name . '">' . $label . ' (R$): ' . $required_ast . ' </label>';
 					if ($default_val != null) {
 						$default_val = $defaultvalue;
 					}
@@ -232,7 +231,7 @@ class LAFormMaker
 					if ($default_val != 0) {
 						$upload = \App\Models\Upload::find($default_val);
 					}
-					
+
 					if(isset($upload->id)) {
                         $out .= "<a class='btn btn-default btn_upload_file  form-control hide' file_type='file' selecter='" . $field_name . "'>Anexar arquivo <i class='fa fa-cloud-upload'></i></a>
                             <a class='uploaded_file form-control' target='_blank' href='" . url("files/" . $upload->hash . DIRECTORY_SEPARATOR . $upload->name) . "'><i class='fa fa-file-o'></i> " . $upload->name ."<i title='Remover arquivo' class='fa fa-times text-danger'></i> </a>";
@@ -241,7 +240,7 @@ class LAFormMaker
                             <a class='uploaded_file form-control hide' target='_blank'><i class='fa fa-file-o'></i> Anexo <i title='Remover arquivo' class='fa fa-times text-danger'></i></a>";
                     }
 
-					
+
 					break;
 				case 'Files':
 					$out .= '<label for="' . $field_name . '" style="display:block;">' . $label . ': ' . $required_ast . ' </label>';
@@ -360,7 +359,7 @@ class LAFormMaker
 				case 'Multiselect':
 					$out .= '<label for="' . $field_name . '">' . $label . ': ' . $required_ast . ' </label>';
 					unset($params['data-rule-maxlength']);
-					$params['data-placeholder'] = "Selecione " . Str::plural($label);
+					$params['data-placeholder'] = "Selecione " . str_plural($label);
 					unset($params['placeholder']);
 					$params['multiple'] = "";
 					$params['class'] = "select2 select2-hidden-accessible";
@@ -415,7 +414,7 @@ class LAFormMaker
 					if (isset($row) && isset($row->$field_name)) {
 						$default_val = $row->$field_name;
 					}
-					if (Str::startsWith($popup_vals, "@")) {
+					if (starts_with($popup_vals, "@")) {
 						$popup_vals = LAFormMaker::process_values($popup_vals);
 						$out .= '<div class="radio">';
 						foreach ($popup_vals as $key => $value) {
@@ -467,7 +466,7 @@ class LAFormMaker
 					}
 					$params['multiple'] = "true";
 					$params['rel'] = "taginput";
-					$params['data-placeholder'] = "Add multiple " . Str::plural($label);
+					$params['data-placeholder'] = "Add multiple " . str_plural($label);
 					unset($params['placeholder']);
 					// Override the edit value
 					if (isset($row) && isset($row->$field_name)) {
@@ -543,10 +542,10 @@ class LAFormMaker
 	{
 		$out = array();
 		// Check if populated values are from Module or Database Table
-		if (is_string($json) && Str::startsWith($json, "@")) {
+		if (is_string($json) && starts_with($json, "@")) {
 			// Get Module / Table Name
 			$json = str_ireplace("@", "", $json);
-			$table_name = strtolower(Str::plural($json));
+			$table_name = strtolower(str_plural($json));
 			// Search Module
 			$module = Module::getByTable($table_name);
 			if (isset($module->id)) {
@@ -554,7 +553,7 @@ class LAFormMaker
 			} else {
 				// Search Table if no module found
 				if (Schema::hasTable($table_name)) {
-					$model = "App\\" . ucfirst(Str::singular($table_name));
+					$model = "App\\" . ucfirst(str_singular($table_name));
 					$result = $model::all();
 					// find view column name
 					$view_col = "";
@@ -669,7 +668,7 @@ class LAFormMaker
 					break;
 				case 'Dropdown':
 					$values = LAFormMaker::process_values($fieldObj['popup_vals']);
-					if (Str::startsWith($fieldObj['popup_vals'], "@")) {
+					if (starts_with($fieldObj['popup_vals'], "@")) {
 						if ($value != 0) {
 							$moduleVal = Module::getByTable(str_replace("@", "", $fieldObj['popup_vals']));
 							if (isset($moduleVal->id)) {
@@ -705,7 +704,7 @@ class LAFormMaker
 					}
 					break;
 				case 'Files':
-					if ($value != "" && $value != "[]" && $value != "null" && Str::startsWith($value, "[")) {
+					if ($value != "" && $value != "[]" && $value != "null" && starts_with($value, "[")) {
 						$uploads = json_decode($value);
 						$uploads_html = "";
 						foreach ($uploads as $uploadId) {
@@ -751,7 +750,7 @@ class LAFormMaker
 					$valueOut = "";
 					$values = LAFormMaker::process_values($fieldObj['popup_vals']);
 					if (count($values)) {
-						if (Str::startsWith($fieldObj['popup_vals'], "@")) {
+						if (starts_with($fieldObj['popup_vals'], "@")) {
 							$moduleVal = Module::getByTable(str_replace("@", "", $fieldObj['popup_vals']));
 							$valueSel = json_decode($value);
 							foreach ($values as $key => $val) {
@@ -783,7 +782,7 @@ class LAFormMaker
 					$valueOut = "";
 					$values = LAFormMaker::process_values($fieldObj['popup_vals']);
 					if (count($values)) {
-						if (Str::startsWith($fieldObj['popup_vals'], "@")) {
+						if (starts_with($fieldObj['popup_vals'], "@")) {
 							$moduleVal = Module::getByTable(str_replace("@", "", $fieldObj['popup_vals']));
 							$valueSel = json_decode($value);
 							foreach ($values as $key => $val) {

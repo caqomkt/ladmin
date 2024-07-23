@@ -84,12 +84,12 @@ class ModuleController extends Controller
     public function update(Request $request)
     {
         $module = Module::find($request->id);
-        if(isset($module->id)) {
+        if (isset($module->id)) {
             $module->label = ucfirst($request->label);
             $module->fa_icon = $request->icon;
             $module->save();
             $menu = Menu::where('url', strtolower($module->name))->where('type', 'module')->first();
-            if(isset($menu->id)) {
+            if (isset($menu->id)) {
                 $menu->name = ucfirst($request->label);
                 $menu->icon = $request->icon;
                 $menu->save();
@@ -108,7 +108,7 @@ class ModuleController extends Controller
         $module = Module::find($id);
         //Delete Menu
         $menuItems = Menu::where('name', $module->name)->first();
-        if(isset($menuItems)) {
+        if (isset($menuItems)) {
             $menuItems->delete();
         }
         // Delete Module Fields
@@ -118,7 +118,7 @@ class ModuleController extends Controller
         // Delete Controller
         \File::delete(app_path('/Http/Controllers/LA/' . $module->name . 'Controller.php'));
         // Delete Model
-        if($module->model == "User" || $module->model == "Role" || $module->model == "Permission") {
+        if ($module->model == "User" || $module->model == "Role" || $module->model == "Permission") {
             \File::delete(app_path($module->model . '.php'));
         } else {
             \File::delete(app_path('Models/' . $module->model . '.php'));
@@ -127,8 +127,8 @@ class ModuleController extends Controller
         // Find existing migration file
         $mfiles = scandir(base_path('database/migrations/'));
         $fileExistName = "";
-        foreach($mfiles as $mfile) {
-            if(str_contains($mfile, "create_" . $module->name_db . "_table")) {
+        foreach ($mfiles as $mfile) {
+            if (str_contains($mfile, "create_" . $module->name_db . "_table")) {
                 $migrationClassName = ucfirst(camel_case("create_" . $module->name_db . "_table"));
                 $templateDirectory = __DIR__ . '/../stubs';
                 $migrationData = file_get_contents($templateDirectory . "/migration_removal.stub");
@@ -138,25 +138,25 @@ class ModuleController extends Controller
             }
         }
         // Delete Admin Routes
-        if(LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
+        if (LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
             $file_admin_routes = base_path("/routes/admin_routes.php");
         } else {
             $file_admin_routes = base_path("/app/Http/admin_routes.php");
         }
-        while(LAHelper::getLineWithString($file_admin_routes, "LA\\" . $module->name . "Controller") != -1) {
+        while (LAHelper::getLineWithString($file_admin_routes, "LA\\" . $module->name . "Controller") != -1) {
             $line = LAHelper::getLineWithString($file_admin_routes, "LA\\" . $module->name . 'Controller');
             $fileData = file_get_contents($file_admin_routes);
             $fileData = str_replace($line, "", $fileData);
             file_put_contents($file_admin_routes, $fileData);
         }
-        if(LAHelper::getLineWithString($file_admin_routes, "=== " . $module->name . " ===") != -1) {
+        if (LAHelper::getLineWithString($file_admin_routes, "=== " . $module->name . " ===") != -1) {
             $line = LAHelper::getLineWithString($file_admin_routes, "=== " . $module->name . " ===");
             $fileData = file_get_contents($file_admin_routes);
             $fileData = str_replace($line, "", $fileData);
             file_put_contents($file_admin_routes, $fileData);
         }
         // Delete Table
-        if(Schema::hasTable($module->name_db)) {
+        if (Schema::hasTable($module->name_db)) {
             Schema::drop($module->name_db);
         }
         // Delete Module
@@ -275,18 +275,15 @@ class ModuleController extends Controller
     {
         $module = Module::find($module_id);
         $moduleField = ModuleFields::where('module', $module_id)->get();
-
-        foreach($moduleField as $field) {
-            if($field->colname !== $column_name) {
+        foreach ($moduleField as $field) {
+            if ($field->colname !== $column_name) {
                 $field->listing_col = 0;
             }
-
-            if($field->colname == $column_name) {
+            if ($field->colname == $column_name) {
                 $field->listing_col = 1;
             }
             $field->save();
         }
-
         $module->view_col = $column_name;
         $module->save();
         return redirect()->route(config('laraadmin.adminRoute') . '.modules.show', [$module_id]);
@@ -306,20 +303,20 @@ class ModuleController extends Controller
         $modules = LAHelper::getModuleNames([]);
         $roles = Role::all();
         $now = date("Y-m-d H:i:s");
-        foreach($roles as $role) {
+        foreach ($roles as $role) {
             /* =============== role_module_fields =============== */
-            foreach($module->fields as $field) {
+            foreach ($module->fields as $field) {
                 $field_name = $field['colname'] . '_' . $role->id;
                 $field_value = $request->$field_name;
-                if($field_value == 0) {
+                if ($field_value == 0) {
                     $access = 'invisible';
-                } else if($field_value == 1) {
+                } else if ($field_value == 1) {
                     $access = 'readonly';
-                } else if($field_value == 2) {
+                } else if ($field_value == 2) {
                     $access = 'write';
                 }
                 $query = DB::table('role_module_fields')->where('role_id', $role->id)->where('field_id', $field['id']);
-                if($query->count() == 0) {
+                if ($query->count() == 0) {
                     DB::insert('insert into role_module_fields (role_id, field_id, access, created_at, updated_at) values (?, ?, ?, ?, ?)', [$role->id, $field['id'], $access, $now, $now]);
                 } else {
                     DB::table('role_module_fields')->where('role_id', $role->id)->where('field_id', $field['id'])->update(['access' => $access]);
@@ -327,33 +324,33 @@ class ModuleController extends Controller
             }
             /* =============== role_module =============== */
             $module_name = 'module_' . $role->id;
-            if(isset($request->$module_name)) {
+            if (isset($request->$module_name)) {
                 $view = 'module_view_' . $role->id;
                 $create = 'module_create_' . $role->id;
                 $edit = 'module_edit_' . $role->id;
                 $delete = 'module_delete_' . $role->id;
-                if(isset($request->$view)) {
+                if (isset($request->$view)) {
                     $view = 1;
                 } else {
                     $view = 0;
                 }
-                if(isset($request->$create)) {
+                if (isset($request->$create)) {
                     $create = 1;
                 } else {
                     $create = 0;
                 }
-                if(isset($request->$edit)) {
+                if (isset($request->$edit)) {
                     $edit = 1;
                 } else {
                     $edit = 0;
                 }
-                if(isset($request->$delete)) {
+                if (isset($request->$delete)) {
                     $delete = 1;
                 } else {
                     $delete = 0;
                 }
                 $query = DB::table('role_module')->where('role_id', $role->id)->where('module_id', $id);
-                if($query->count() == 0) {
+                if ($query->count() == 0) {
                     DB::insert('insert into role_module (role_id, module_id, acc_view, acc_create, acc_edit, acc_delete, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?)', [$role->id, $id, $view, $create, $edit, $delete, $now, $now]);
                 } else {
                     DB::table('role_module')->where('role_id', $role->id)->where('module_id', $id)->update(['acc_view' => $view, 'acc_create' => $create, 'acc_edit' => $edit, 'acc_delete' => $delete]);
@@ -372,7 +369,7 @@ class ModuleController extends Controller
     public function save_module_field_sort(Request $request, $id)
     {
         $sort_array = $request->sort_array;
-        foreach($sort_array as $index => $field_id) {
+        foreach ($sort_array as $index => $field_id) {
             DB::table('module_fields')->where('id', $field_id)->update(['sort' => ($index + 1)]);
         }
         return response()->json([
@@ -393,16 +390,16 @@ class ModuleController extends Controller
         $arr[] = "app/Http/Controllers/LA/" . $module->controller . ".php";
         $arr[] = "app/Models/" . $module->model . ".php";
         $views = scandir(resource_path('views/la/' . $module->name_db));
-        foreach($views as $view) {
-            if($view != "." && $view != "..") {
+        foreach ($views as $view) {
+            if ($view != "." && $view != "..") {
                 $arr[] = "resources/views/la/" . $view;
             }
         }
         // Find existing migration file
         $mfiles = scandir(base_path('database/migrations/'));
         $fileExistName = "";
-        foreach($mfiles as $mfile) {
-            if(str_contains($mfile, "create_" . $module->name_db . "_table")) {
+        foreach ($mfiles as $mfile) {
+            if (str_contains($mfile, "create_" . $module->name_db . "_table")) {
                 $arr[] = 'database/migrations/' . $mfile;
             }
         }

@@ -56,6 +56,7 @@ $(function () {
         ajax: "{{ url(config('laraadmin.adminRoute') . '/user_dt_ajax') }}",
 			"language": {
 				                "url": "{{ asset('la-assets/plugins/datatables/portuguese-brasil.json') }}",
+
 			}
 	});
 		

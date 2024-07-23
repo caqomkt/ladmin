@@ -4,7 +4,6 @@ namespace App\Http\Controllers\LA;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use App\Http\Requests;
 use Auth;
 use DB;
@@ -14,184 +13,214 @@ use Collective\Html\FormFacade as Form;
 use Dwij\Laraadmin\Models\Module;
 use Dwij\Laraadmin\Models\ModuleFields;
 use Dwij\Laraadmin\Helpers\LAHelper;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use Zizaco\Entrust\EntrustFacade as Entrust;
+
+use App\Permission;
+use App\Role;
 
 class PermissionsController extends Controller
 {
-    public $show_action = true;
-    public $view_col = 'name';
-    public $listing_cols = ['id', 'name', 'guard_name'];
-
-    /**
-     * Display a listing of the Permissions.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $module = Module::get('Permissions');
-        if (Module::hasAccess($module->id)) {
-            $permissions = Permission::all();
-            return view('la.permissions.index', [
-                'show_actions' => $this->show_action,
-                'listing_cols' => $this->listing_cols,
-                'module' => $module,
-                'permissions' => $permissions
-            ]);
-        } else {
+	public $show_action = true;
+	
+	/**
+	 * Display a listing of the Permissions.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function index()
+	{
+		$module = Module::get('Permissions');
+		
+		if(Module::hasAccess($module->id)) {
+			return View('la.permissions.index', [
+				'show_actions' => $this->show_action,
+				'listing_cols' => Module::getListingColumns('Permissions'),
+				'module' => $module
+			]);
+		} else {
             return redirect(config('laraadmin.adminRoute')."/");
         }
-    }
+	}
 
-    /**
-     * Show the form for creating a new permission.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        if (Module::hasAccess("Permissions", "create")) {
-            return view('la.permissions.create');
-        } else {
-            return redirect(config('laraadmin.adminRoute')."/");
-        }
-    }
+	/**
+	 * Show the form for creating a new permission.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function create()
+	{
+		//
+	}
 
-    /**
-     * Store a newly created permission in database.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        if (Module::hasAccess("Permissions", "create")) {
-            $rules = [
-                'name' => 'required|unique:permissions,name',
-                'guard_name' => 'required'
-            ];
-            $validator = Validator::make($request->all(), $rules);
+	/**
+	 * Store a newly created permission in database.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function store(Request $request)
+	{
+		if(Module::hasAccess("Permissions", "create")) {
+		
+			$rules = Module::validateRules("Permissions", $request);
+			
+			$validator = Validator::make($request->all(), $rules);
+			
+			if ($validator->fails()) {
+				return redirect()->back()->withErrors($validator)->withInput();
+			}
+			
+			$insert_id = Module::insert("Permissions", $request);
+			
+			return redirect()->route(config('laraadmin.adminRoute') . '.permissions.index');
+			
+		} else {
+			return redirect(config('laraadmin.adminRoute')."/");
+		}
+	}
 
-            if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator)->withInput();
-            }
+	/**
+	 * Display the specified permission.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function show($id)
+	{
+		if(Module::hasAccess("Permissions", "view")) {
+			
+			$permission = Permission::find($id);
+			if(isset($permission->id)) {
+				$module = Module::get('Permissions');
+				$module->row = $permission;
+				
+				$roles = Role::all();
 
-            Permission::create($request->only(['name', 'guard_name']));
-            return redirect()->route(config('laraadmin.adminRoute') . '.permissions.index');
-        } else {
-            return redirect(config('laraadmin.adminRoute')."/");
-        }
-    }
+				return view('la.permissions.show', [
+					'module' => $module,
+					'view_col' => $module->view_col,
+					'no_header' => true,
+					'no_padding' => "no-padding",
+					'roles' => $roles
+				])->with('permission', $permission);
+			} else {
+				return view('errors.404', [
+					'record_id' => $id,
+					'record_name' => ucfirst("permission"),
+				]);
+			}
+		} else {
+			return redirect(config('laraadmin.adminRoute')."/");
+		}
+	}
 
-    /**
-     * Display the specified permission.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        if (Module::hasAccess("Permissions", "view")) {
-            $permission = Permission::findById($id);
-            if (isset($permission)) {
-                return view('la.permissions.show', [
-                    'permission' => $permission,
-                ]);
-            } else {
-                return view('errors.404', [
-                    'record_id' => $id,
-                    'record_name' => ucfirst("permission"),
-                ]);
-            }
-        } else {
-            return redirect(config('laraadmin.adminRoute')."/");
-        }
-    }
+	/**
+	 * Show the form for editing the specified permission.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function edit($id)
+	{
+		if(Module::hasAccess("Permissions", "edit")) {			
+			$permission = Permission::find($id);
+			if(isset($permission->id)) {	
+				$module = Module::get('Permissions');
+				
+				$module->row = $permission;
+				
+				return view('la.permissions.edit', [
+					'module' => $module,
+					'view_col' => $module->view_col,
+				])->with('permission', $permission);
+			} else {
+				return view('errors.404', [
+					'record_id' => $id,
+					'record_name' => ucfirst("permission"),
+				]);
+			}
+		} else {
+			return redirect(config('laraadmin.adminRoute')."/");
+		}
+	}
 
-    /**
-     * Show the form for editing the specified permission.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        if (Module::hasAccess("Permissions", "edit")) {
-            $permission = Permission::findById($id);
-            if (isset($permission)) {
-                return view('la.permissions.edit', [
-                    'permission' => $permission,
-                ]);
-            } else {
-                return view('errors.404');
-            }
-        } else {
-            return redirect(config('laraadmin.adminRoute')."/");
-        }
-    }
+	/**
+	 * Update the specified permission in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function update(Request $request, $id)
+	{
+		if(Module::hasAccess("Permissions", "edit")) {
+			
+			$rules = Module::validateRules("Permissions", $request, true);
+			
+			$validator = Validator::make($request->all(), $rules);
+			
+			if ($validator->fails()) {
+				return redirect()->back()->withErrors($validator)->withInput();;
+			}
+			
+			$insert_id = Module::updateRow("Permissions", $request, $id);
+			
+			return redirect()->route(config('laraadmin.adminRoute') . '.permissions.index');
+			
+		} else {
+			return redirect(config('laraadmin.adminRoute')."/");
+		}
+	}
 
-    /**
-     * Update the specified permission in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        if (Module::hasAccess("Permissions", "edit")) {
-            $rules = [
-                'name' => 'required|unique:permissions,name,' . $id,
-                'guard_name' => 'required'
-            ];
-            $validator = Validator::make($request->all(), $rules);
+	/**
+	 * Remove the specified permission from storage.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy($id)
+	{
+		if(Module::hasAccess("Permissions", "delete")) {
+			Permission::find($id)->delete();
+			
+			// Redirecting to index() method
+			return redirect()->route(config('laraadmin.adminRoute') . '.permissions.index');
+		} else {
+			return redirect(config('laraadmin.adminRoute')."/");
+		}
+	}
+	
+	/**
+	 * Datatable Ajax fetch
+	 *
+	 * @return
+	 */
+	public function dtajax(Request $request)
+	{
+		$module = Module::get('Permissions');
+		$listing_cols = Module::getListingColumns('Permissions');
 
-            if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator)->withInput();;
-            }
-
-            $permission = Permission::findById($id);
-            $permission->update($request->only(['name', 'guard_name']));
-            return redirect()->route(config('laraadmin.adminRoute') . '.permissions.index');
-        } else {
-            return redirect(config('laraadmin.adminRoute')."/");
-        }
-    }
-
-    /**
-     * Remove the specified permission from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        if (Module::hasAccess("Permissions", "delete")) {
-            Permission::findById($id)->delete();
-            return redirect()->route(config('laraadmin.adminRoute') . '.permissions.index');
-        } else {
-            return redirect(config('laraadmin.adminRoute')."/");
-        }
-    }
-
-    /**
-     * Datatable Ajax fetch
-     *
-     * @return
-     */
-    public function dtajax()
-    {
-        $values = Permission::query();
+		$values = DB::table('permissions')->select($listing_cols)->whereNull('deleted_at');
 		$out = Datatables::of($values)->make();
-        $data = $out->getData();
+		$data = $out->getData();
 
-        for($i = 0; $i < count($data->data); $i++) {
-            $data->data[$i][] = view('la.layouts.actions', [
-                'module' => 'Permissions',
-                'id' => $data->data[$i][0]
-            ])->render();
-if($this->show_action) {
+		$fields_popup = ModuleFields::getModuleFields('Permissions');
+		
+		for($i=0; $i < count($data->data); $i++) {
+			for ($j=0; $j < count($listing_cols); $j++) { 
+				$col = $listing_cols[$j];
+				if($fields_popup[$col] != null && starts_with($fields_popup[$col]->popup_vals, "@")) {
+					$data->data[$i][$j] = ModuleFields::getFieldValue($fields_popup[$col], $data->data[$i][$j]);
+				}
+				if($col == $module->view_col) {
+					$data->data[$i][$j] = '<a href="'.url(config('laraadmin.adminRoute') . '/permissions/'.$data->data[$i][0]).'">'.$data->data[$i][$j].'</a>';
+				}
+				// else if($col == "author") {
+				//    $data->data[$i][$j];
+				// }
+			}
+			
+			if($this->show_action) {
 				$output = '';
 				if(Module::hasAccess("Permissions", "edit")) {
 					$output .= '<a href="'.url(config('laraadmin.adminRoute') . '/permissions/'.$data->data[$i][0].'/edit').'" class="btn btn-warning btn-xs" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-edit"></i></a>';
@@ -204,26 +233,41 @@ if($this->show_action) {
 				}
 				$data->data[$i][] = (string)$output;
 			}
-        }
-        $out->setData($data);
-        return $out;
-    }
+		}
+		$out->setData($data);
+		return $out;
+	}
+
+	/**
+	 * Save the  permissions for role in permission view.
+	 *
+	 * @param  int  $id
+	 * @return Redirect to permisssions page
+	 */
 	public function save_permissions(Request $request, $id)
 	{
-		if (Module::hasAccess("Roles", "edit")) {
-			$role = Role::findById($id);
-			if (isset($role)) {
-				$permissions = $request->input('permissions', []);
-				$role->syncPermissions($permissions);
-				return redirect()->route(config('laraadmin.adminRoute') . '.permissions.index')
-								->with('success', 'Permissions updated successfully.');
-			} else {
-				return view('errors.404', [
-					'record_id' => $id,
-					'record_name' => ucfirst("role"),
-				]);
+		if(Entrust::hasRole('SUPER_ADMIN')) {
+			$permission = Permission::find($id);
+			$module = Module::get('Permissions');
+			$module->row = $permission;
+			$roles = Role::all();
+			
+			foreach ($roles as $role) {
+				$permi_role_id = 'permi_role_'.$role->id;
+				$permission_set = $request->$permi_role_id;
+				if(isset($permission_set)) {
+					$query = DB::table('permission_role')->where('permission_id', $id)->where('role_id', $role->id);
+					if($query->count() == 0) {
+						DB::insert('insert into permission_role (permission_id, role_id) values (?, ?)', [$id, $role->id]);
+					}
+				} else {
+					$query = DB::table('permission_role')->where('permission_id', $id)->where('role_id', $role->id);
+					if($query->count() > 0) {
+						DB::delete('delete from permission_role where permission_id = "'.$id.'" AND role_id = "'.$role->id.'" ');
+					}
+				}
 			}
-				return redirect(config('laraadmin.adminRoute') . '/permissions/'.$id."#tab-access");
+			return redirect(config('laraadmin.adminRoute') . '/permissions/'.$id."#tab-access");
 		} else {
 			return redirect(config('laraadmin.adminRoute')."/");
 		}

@@ -6,7 +6,6 @@ use DB;
 use Log;
 
 use Dwij\Laraadmin\Models\Module;
-use Illuminate\Support\Str;
 
 class LAHelper
 {
@@ -15,19 +14,19 @@ class LAHelper
 		$array = array();
 		$module_name = trim($module_name);
 		$module_name = str_replace(" ", "_", $module_name);
-		
-		$array['module'] = ucfirst(Str::plural($module_name));
-		$array['label'] = ucfirst(Str::plural($module_name));
-		$array['table'] = strtolower(Str::plural($module_name));
-		$array['model'] = ucfirst(Str::singular($module_name));
+
+		$array['module'] = ucfirst(str_plural($module_name));
+		$array['label'] = ucfirst(str_plural($module_name));
+		$array['table'] = strtolower(str_plural($module_name));
+		$array['model'] = ucfirst(str_singular($module_name));
 		$array['fa_icon'] = $icon;
 		$array['controller'] = $array['module']."Controller";
-		$array['singular_l'] = strtolower(Str::singular($module_name));
-		$array['singular_c'] = ucfirst(Str::singular($module_name));
-		
+		$array['singular_l'] = strtolower(str_singular($module_name));
+		$array['singular_c'] = ucfirst(str_singular($module_name));
+
 		return (object) $array;
 	}
-	
+
 	// $tables = LAHelper::getDBTables([]);
     public static function getDBTables($remove_tables = []) {
         if(env('DB_CONNECTION') == "sqlite") {
@@ -49,7 +48,7 @@ class LAHelper
 		} else {
 			$tables = DB::select('SHOW TABLES');
 		}
-		
+
 		$tables_out = array();
 		foreach ($tables as $table) {
 			$table = (Array)$table;
@@ -73,33 +72,33 @@ class LAHelper
 		$remove_tables = array_merge($remove_tables, $remove_tables2);
 		$remove_tables = array_unique($remove_tables);
 		$tables_out = array_diff($tables_out, $remove_tables);
-		
+
 		$tables_out2 = array();
 		foreach ($tables_out as $table) {
 			$tables_out2[$table] = $table;
 		}
-		
+
 		return $tables_out2;
     }
-	
+
 	// $modules = LAHelper::getModuleNames([]);
     public static function getModuleNames($remove_modules = []) {
         $modules = Module::all();
-		
+
 		$modules_out = array();
 		foreach ($modules as $module) {
 			$modules_out[] = $module->name;
 		}
 		$modules_out = array_diff($modules_out, $remove_modules);
-		
+
 		$modules_out2 = array();
 		foreach ($modules_out as $module) {
 			$modules_out2[$module] = $module;
 		}
-		
+
 		return $modules_out2;
     }
-	
+
 	// LAHelper::parseValues($field['popup_vals']);
     public static function parseValues($value) {
 		// return $value;
@@ -123,7 +122,7 @@ class LAHelper
 		}
 		return $valueOut;
 	}
-	
+
 	// LAHelper::log("info", "", $commandObject);
 	public static function log($type, $text, $commandObject) {
 		if($commandObject) {
@@ -135,17 +134,17 @@ class LAHelper
 			Log::$type($text);
 		}
 	}
-	
+
 	// LAHelper::recurse_copy("", "");
-	public static function recurse_copy($src,$dst) { 
-		$dir = opendir($src); 
+	public static function recurse_copy($src,$dst) {
+		$dir = opendir($src);
 		@mkdir($dst, 0777, true);
-		while(false !== ( $file = readdir($dir)) ) { 
-			if (( $file != '.' ) && ( $file != '..' )) { 
-				if ( is_dir($src . '/' . $file) ) { 
-					LAHelper::recurse_copy($src . '/' . $file,$dst . '/' . $file); 
-				} 
-				else { 
+		while(false !== ( $file = readdir($dir)) ) {
+			if (( $file != '.' ) && ( $file != '..' )) {
+				if ( is_dir($src . '/' . $file) ) {
+					LAHelper::recurse_copy($src . '/' . $file,$dst . '/' . $file);
+				}
+				else {
 					// ignore files
 					if(!in_array($file, [".DS_Store"])) {
 						copy($src . '/' . $file, $dst . '/' . $file);
@@ -153,25 +152,25 @@ class LAHelper
 				}
 			}
 		}
-		closedir($dir); 
+		closedir($dir);
 	}
-	
+
 	// LAHelper::recurse_delete("");
 	public static function recurse_delete($dir) {
 		if (is_dir($dir)) {
-			$objects = scandir($dir); 
+			$objects = scandir($dir);
 			foreach ($objects as $object) {
-				if ($object != "." && $object != "..") { 
+				if ($object != "." && $object != "..") {
 					if (is_dir($dir."/".$object))
 						LAHelper::recurse_delete($dir."/".$object);
 					else
-						unlink($dir."/".$object); 
+						unlink($dir."/".$object);
 				}
 			}
-			rmdir($dir); 
+			rmdir($dir);
 		}
 	}
-	
+
 	// Generate Random Password
 	// $password = LAHelper::gen_password();
 	public static function gen_password($chars_min=6, $chars_max=8, $use_upper_case=false, $include_numbers=false, $include_special_chars=false) {
@@ -185,7 +184,7 @@ class LAHelper
 		}
 		$password = "";
 		for($i=0; $i<$length; $i++) {
-			$current_letter = $use_upper_case ? (rand(0,1) ? strtoupper($selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))];            
+			$current_letter = $use_upper_case ? (rand(0,1) ? strtoupper($selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))];
 			$password .=  $current_letter;
 		}
 		return $password;
@@ -200,7 +199,7 @@ class LAHelper
 			return "";
 		}
     }
-	
+
 	// LAHelper::createThumbnail($filepath, $thumbpath, $thumbnail_width, $thumbnail_height);
 	public static function createThumbnail($filepath, $thumbpath, $thumbnail_width, $thumbnail_height, $background=false) {
 	    list($original_width, $original_height, $original_type) = getimagesize($filepath);
@@ -250,6 +249,8 @@ class LAHelper
 		$editing .= \Collective\Html\FormFacade::close();
 		if($menu->type != "module") {
 			$info = (object) array();
+            //print_r($info);
+            //var_dump($menu);
 			$info->id = $menu->id;
 			$info->name = $menu->name;
 			$info->url = $menu->url;
@@ -257,13 +258,14 @@ class LAHelper
 			$info->icon = $menu->icon;
 
 			$editing .= '<a class="editMenuBtn btn btn-xs btn-success pull-right" info=\''.json_encode($info).'\'><i class="fa fa-edit"></i></a>';
+            //dd($editing);
 		}
 		$str = '<li class="dd-item dd3-item" data-id="'.$menu->id.'">
 			<div class="dd-handle dd3-handle"></div>
 			<div class="dd3-content"><i class="fa '.$menu->icon.'"></i> '.$menu->name.' '.$editing.'</div>';
-		
+
 		$childrens = \Dwij\Laraadmin\Models\Menu::where("parent", $menu->id)->orderBy('hierarchy', 'asc')->get();
-		
+
 		if(count($childrens) > 0) {
 			$str .= '<ol class="dd-list">';
 			foreach($childrens as $children) {
@@ -289,9 +291,9 @@ class LAHelper
 		if($active) {
 			$active_str = 'class="active"';
 		}
-		
+
 		$str = '<li'.$treeview.' '.$active_str.'><a class="nav-link" href="'.url(config("laraadmin.adminRoute") . '/' . $menu->url ) .'"><i class="nav-icon fa '.$menu->icon.'"></i> <p>'.LAHelper::real_module_name($menu->name).' '.$subviewSign.'</p></a>';
-		
+
 		if(count($childrens)) {
 			$str .= '<ul class="nav nav-treeview">';
 			foreach($childrens as $children) {
@@ -319,9 +321,9 @@ class LAHelper
 		if($active) {
 			$active_str = 'class="active"';
 		}
-		
+
 		$str = '<li '.$treeview.''.$active_str.'><a '.$treeview2.' href="'.url(config("laraadmin.adminRoute") . '/' . $menu->url ) .'"><i class=" fa '.$menu->icon.'"></i> '.LAHelper::real_module_name($menu->name).$subviewSign.'</a>';
-		
+
 		if(count($childrens)) {
 			$str .= '<ul class="dropdown-menu" role="menu">';
 			foreach($childrens as $children) {
@@ -336,10 +338,10 @@ class LAHelper
 	// LAHelper::laravel_ver()
 	public static function laravel_ver() {
 		$var = \App::VERSION();
-		
-		if(Str::startsWith($var, "5.2")) {
+
+		if(starts_with($var, "5.2")) {
 			return 5.2;
-		} else if(Str::startsWith($var, "5.3")) {
+		} else if(starts_with($var, "5.3")) {
 			return 5.3;
 		} else if(substr_count($var, ".") == 3) {
 			$var = substr($var, 0, strrpos($var, "."));
@@ -353,7 +355,7 @@ class LAHelper
 		$name = str_replace('_', ' ', $name);
 		return $name;
 	}
-	
+
 	// LAHelper::getLineWithString()
 	public static function getLineWithString($fileName, $str) {
 		$lines = file($fileName);
@@ -392,11 +394,4 @@ class LAHelper
 		$md = file_get_contents($from);
 		return $md;
 	}
-
-	public static function is_assoc_array($arr) {
-        if (!is_array($arr)) {
-            return false;
-        }
-        return array_keys($arr) !== range(0, count($arr) - 1);
-    }
 }

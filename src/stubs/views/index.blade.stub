@@ -49,7 +49,7 @@
             <div class="modal-header">
             <h4 class="modal-title" id="myModalLabel">Adicionar __singular_cap_var__</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                
+
             </div>
             {!! Form::open(['action' => 'LA\__controller_class_name__@store', 'id' => '__singular_var__-add-form']) !!}
             <div class="modal-body">
@@ -124,9 +124,9 @@ $(function () {
             "columnDefs": [{
         @if($show_actions)
         columnDefs: [
-        	{ 
-        		orderable: false, 
-        		targets: [-1] 
+        	{
+        		orderable: false,
+        		targets: [-1]
         		}
         	],
         @endif

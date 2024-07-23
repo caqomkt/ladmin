@@ -637,6 +637,7 @@ location.reload();
 $("#dt_module_fields").DataTable({
 "language": {
                 "url": "{{ asset('la-assets/plugins/datatables/portuguese-brasil.json') }}",
+
 },
 "initComplete": function(settings, json) {
 console.log('DataTables has finished its initialisation.');

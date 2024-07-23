@@ -36,25 +36,25 @@ class LAProvider extends ServiceProvider
 
         /*
         |--------------------------------------------------------------------------
-        | Blade Directives for Spatie not working in Laravel 5.3
+        | Blade Directives for Entrust not working in Laravel 5.3
         |--------------------------------------------------------------------------
         */
         if (LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
 
-            // Call to Spatie::hasRole
+            // Call to Entrust::hasRole
             Blade::directive('role', function ($expression) {
-                return "<?php if(auth()->check() && auth()->user()->hasRole({$expression})) : ?>";
+                return "<?php if (\\Entrust::hasRole({$expression})) : ?>";
             });
 
-            // Call to Spatie::can
+            // Call to Entrust::can
             Blade::directive('permission', function ($expression) {
-                return "<?php if(auth()->check() && auth()->user()->can({$expression})) : ?>";
+                return "<?php if (\\Entrust::can({$expression})) : ?>";
             });
 
             // Call to Entrust::ability
-            //Blade::directive('ability', function ($expression) {
-            //    return "<?php if (\\Entrust::ability({$expression})) : ? >";
-            //});
+            Blade::directive('ability', function ($expression) {
+                return "<?php if (\\Entrust::ability({$expression})) : ?>";
+            });
         }
     }
 
@@ -85,8 +85,8 @@ class LAProvider extends ServiceProvider
         $this->app->register(\Yajra\Datatables\DatatablesServiceProvider::class);
         // For Gravatar
         $this->app->register(\Creativeorange\Gravatar\GravatarServiceProvider::class);
-        // For Spatie
-        $this->app->register(\Spatie\Permission\PermissionServiceProvider::class);
+        // For Entrust
+        $this->app->register(\Zizaco\Entrust\EntrustServiceProvider::class);
         // For Spatie Backup
         //$this->app->register(\Spatie\Backup\BackupServiceProvider::class);
 
@@ -120,10 +120,11 @@ class LAProvider extends ServiceProvider
         // For LaraAdmin Configuration Model
         $loader->alias('LAConfigs', \Dwij\Laraadmin\Models\LAConfigs::class);
 
-        // For Spatie
-        $loader->alias('Role', \Spatie\Permission\Models\Role::class);
-        $loader->alias('Permission', \Spatie\Permission\Models\Permission::class);
-        //$loader->alias('ability', \Zizaco\Entrust\Middleware\EntrustAbility::class);
+        // For Entrust
+        $loader->alias('Entrust', \Zizaco\Entrust\EntrustFacade::class);
+        $loader->alias('role', \Zizaco\Entrust\Middleware\EntrustRole::class);
+        $loader->alias('permission', \Zizaco\Entrust\Middleware\EntrustPermission::class);
+        $loader->alias('ability', \Zizaco\Entrust\Middleware\EntrustAbility::class);
 
         /*
         |--------------------------------------------------------------------------

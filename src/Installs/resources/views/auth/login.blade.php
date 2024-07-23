@@ -12,8 +12,8 @@ Log in
         <div class="card">
         <div class="card-body login-card-body">
         @if (count($errors) > 0)
-        
-            
+
+
                 <div class="alert alert-danger">
                     <strong>Erro!</strong> Os dados digitados são inválidos.
                     <!--
@@ -60,7 +60,7 @@ Log in
 </div>
                 <!--<a href="{{ url('/register') }}" class="text-center">Register a new membership</a>-->
             </div><!-- /.login-box-b    ody -->
-            
+
             <p style="text-align:center;">Desenvolvido por <a href="http:caqo.com.br" target="_blank">CAQO Marketing</a></p>
         </div>
     </div><!-- /.login-box -->

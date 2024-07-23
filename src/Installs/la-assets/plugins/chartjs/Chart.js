@@ -7,23 +7,16 @@
  * Released under the MIT license
  * https://github.com/nnnick/Chart.js/blob/master/LICENSE.md
  */
-
-
 (function(){
-
 	"use strict";
-
 	//Declare root variable - window in the browser, global on the server
 	var root = this,
 		previous = root.Chart;
-
 	//Occupy the global variable of Chart, and create a simple base class
 	var Chart = function(context){
 		var chart = this;
 		this.canvas = context.canvas;
-
 		this.ctx = context;
-
 		//Variables global to the chart
 		var computeDimension = function(element,dimension)
 		{
@@ -36,20 +29,16 @@
 				return document.defaultView.getComputedStyle(element).getPropertyValue(dimension);
 			}
 		}
-
 		var width = this.width = computeDimension(context.canvas,'Width');
 		var height = this.height = computeDimension(context.canvas,'Height');
-
 		// Firefox requires this to work correctly
 		context.canvas.width  = width;
 		context.canvas.height = height;
-
 		var width = this.width = context.canvas.width;
 		var height = this.height = context.canvas.height;
 		this.aspectRatio = this.width / this.height;
 		//High pixel density displays - multiply the size of the canvas height/width by the device pixel ratio, then scale.
 		helpers.retinaScale(this);
-
 		return this;
 	};
 	//Globally expose the defaults to allow for user updating/changing
@@ -57,19 +46,14 @@
 		global: {
 			// Boolean - Whether to animate the chart
 			animation: true,
-
 			// Number - Number of animation steps
 			animationSteps: 60,
-
 			// String - Animation easing effect
 			animationEasing: "easeOutQuart",
-
 			// Boolean - If we should show the scale at all
 			showScale: true,
-
 			// Boolean - If we want to override with a hard coded scale
 			scaleOverride: false,
-
 			// ** Required if scaleOverride is true **
 			// Number - The number of steps in a hard coded scale
 			scaleSteps: null,
@@ -77,118 +61,80 @@
 			scaleStepWidth: null,
 			// Number - The scale starting value
 			scaleStartValue: null,
-
 			// String - Colour of the scale line
 			scaleLineColor: "rgba(0,0,0,.1)",
-
 			// Number - Pixel width of the scale line
 			scaleLineWidth: 1,
-
 			// Boolean - Whether to show labels on the scale
 			scaleShowLabels: true,
-
 			// Interpolated JS string - can access value
 			scaleLabel: "<%=value%>",
-
 			// Boolean - Whether the scale should stick to integers, and not show any floats even if drawing space is there
 			scaleIntegersOnly: true,
-
 			// Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
 			scaleBeginAtZero: false,
-
 			// String - Scale label font declaration for the scale label
 			scaleFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-
 			// Number - Scale label font size in pixels
 			scaleFontSize: 12,
-
 			// String - Scale label font weight style
 			scaleFontStyle: "normal",
-
 			// String - Scale label font colour
 			scaleFontColor: "#666",
-
 			// Boolean - whether or not the chart should be responsive and resize when the browser does.
 			responsive: false,
-
 			// Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
 			maintainAspectRatio: true,
-
 			// Boolean - Determines whether to draw tooltips on the canvas or not - attaches events to touchmove & mousemove
 			showTooltips: true,
-
 			// Boolean - Determines whether to draw built-in tooltip or call custom tooltip function
 			customTooltips: false,
-
 			// Array - Array of string names to attach tooltip events
 			tooltipEvents: ["mousemove", "touchstart", "touchmove", "mouseout"],
-
 			// String - Tooltip background colour
 			tooltipFillColor: "rgba(0,0,0,0.8)",
-
 			// String - Tooltip label font declaration for the scale label
 			tooltipFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-
 			// Number - Tooltip label font size in pixels
 			tooltipFontSize: 14,
-
 			// String - Tooltip font weight style
 			tooltipFontStyle: "normal",
-
 			// String - Tooltip label font colour
 			tooltipFontColor: "#fff",
-
 			// String - Tooltip title font declaration for the scale label
 			tooltipTitleFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-
 			// Number - Tooltip title font size in pixels
 			tooltipTitleFontSize: 14,
-
 			// String - Tooltip title font weight style
 			tooltipTitleFontStyle: "bold",
-
 			// String - Tooltip title font colour
 			tooltipTitleFontColor: "#fff",
-
 			// Number - pixel width of padding around tooltip text
 			tooltipYPadding: 6,
-
 			// Number - pixel width of padding around tooltip text
 			tooltipXPadding: 6,
-
 			// Number - Size of the caret on the tooltip
 			tooltipCaretSize: 8,
-
 			// Number - Pixel radius of the tooltip border
 			tooltipCornerRadius: 6,
-
 			// Number - Pixel offset from point x to tooltip edge
 			tooltipXOffset: 10,
-
 			// String - Template string for single tooltips
 			tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>",
-
 			// String - Template string for single tooltips
 			multiTooltipTemplate: "<%= value %>",
-
 			// String - Colour behind the legend colour block
 			multiTooltipKeyBackground: '#fff',
-
 			// Function - Will fire on animation progression.
 			onAnimationProgress: function(){},
-
 			// Function - Will fire on animation completion.
 			onAnimationComplete: function(){}
-
 		}
 	};
-
 	//Create a dictionary of chart types, to allow for extension of existing types
 	Chart.types = {};
-
 	//Global Chart helpers object for utility methods and classes
 	var helpers = Chart.helpers = {};
-
 		//-- Basic js utility methods
 	var each = helpers.each = function(loopable,callback,self){
 			var additionalArgs = Array.prototype.slice.call(arguments, 3);
@@ -241,13 +187,11 @@
 		},
 		where = helpers.where = function(collection, filterCallback){
 			var filtered = [];
-
 			helpers.each(collection, function(item){
 				if (filterCallback(item)){
 					filtered.push(item);
 				}
 			});
-
 			return filtered;
 		},
 		findNextWhere = helpers.findNextWhere = function(arrayToSearch, filterCallback, startIndex){
@@ -278,17 +222,12 @@
 			//Basic javascript inheritance based on the model created in Backbone.js
 			var parent = this;
 			var ChartElement = (extensions && extensions.hasOwnProperty("constructor")) ? extensions.constructor : function(){ return parent.apply(this, arguments); };
-
 			var Surrogate = function(){ this.constructor = ChartElement;};
 			Surrogate.prototype = parent.prototype;
 			ChartElement.prototype = new Surrogate();
-
 			ChartElement.extend = inherits;
-
 			if (extensions) extend(ChartElement.prototype, extensions);
-
 			ChartElement.__super__ = parent.prototype;
-
 			return ChartElement;
 		},
 		noop = helpers.noop = function(){},
@@ -342,15 +281,11 @@
 			var distanceFromXCenter = anglePoint.x - centrePoint.x,
 				distanceFromYCenter = anglePoint.y - centrePoint.y,
 				radialDistanceFromCenter = Math.sqrt( distanceFromXCenter * distanceFromXCenter + distanceFromYCenter * distanceFromYCenter);
-
-
 			var angle = Math.PI * 2 + Math.atan2(distanceFromYCenter, distanceFromXCenter);
-
 			//If the segment is in the top left quadrant, we need to add another rotation to the angle
 			if (distanceFromXCenter < 0 && distanceFromYCenter < 0){
 				angle += Math.PI*2;
 			}
-
 			return {
 				angle: angle,
 				distance: radialDistanceFromCenter
@@ -381,15 +316,12 @@
 			return Math.floor(Math.log(val) / Math.LN10);
 		},
 		calculateScaleRange = helpers.calculateScaleRange = function(valuesArray, drawingSize, textSize, startFromZero, integersOnly){
-
 			//Set a minimum step of two - a point at the top of the graph, and a point at the base
 			var minSteps = 2,
 				maxSteps = Math.floor(drawingSize/(textSize * 1.5)),
 				skipFitting = (minSteps >= maxSteps);
-
 			var maxValue = max(valuesArray),
 				minValue = min(valuesArray);
-
 			// We need some degree of seperation here to calculate the scales if all the values are the same
 			// Adding/minusing 0.5 will give us a range of 1.
 			if (maxValue === minValue){
@@ -403,7 +335,6 @@
 					maxValue += 0.5;
 				}
 			}
-
 			var	valueRange = Math.abs(maxValue - minValue),
 				rangeOrderOfMagnitude = calculateOrderOfMagnitude(valueRange),
 				graphMax = Math.ceil(maxValue / (1 * Math.pow(10, rangeOrderOfMagnitude))) * Math.pow(10, rangeOrderOfMagnitude),
@@ -411,7 +342,6 @@
 				graphRange = graphMax - graphMin,
 				stepValue = Math.pow(10, rangeOrderOfMagnitude),
 				numberOfSteps = Math.round(graphRange / stepValue);
-
 			//If we have more space on the graph we'll use it to give more definition to the data
 			while((numberOfSteps > maxSteps || (numberOfSteps * 2) < maxSteps) && !skipFitting) {
 				if(numberOfSteps > maxSteps){
@@ -441,50 +371,40 @@
 						stepValue /=2;
 						numberOfSteps = Math.round(graphRange/stepValue);
 					}
-
 				}
 			}
-
 			if (skipFitting){
 				numberOfSteps = minSteps;
 				stepValue = graphRange / numberOfSteps;
 			}
-
 			return {
 				steps : numberOfSteps,
 				stepValue : stepValue,
 				min : graphMin,
 				max	: graphMin + (numberOfSteps * stepValue)
 			};
-
 		},
 		/* jshint ignore:start */
 		// Blows up jshint errors based on the new Function constructor
 		//Templating methods
 		//Javascript micro templating by John Resig - source at http://ejohn.org/blog/javascript-micro-templating/
 		template = helpers.template = function(templateString, valuesObject){
-
 			// If templateString is function rather than string-template - call the function for valuesObject
-
 			if(templateString instanceof Function){
 			 	return templateString(valuesObject);
 		 	}
-
 			var cache = {};
 			function tmpl(str, data){
 				// Figure out if we're getting a template, or if we need to
 				// load the template - and be sure to cache the result.
 				var fn = !/\W/.test(str) ?
 				cache[str] = cache[str] :
-
 				// Generate a reusable function that will serve as a template
 				// generator (and which will be cached).
 				new Function("obj",
 					"var p=[],print=function(){p.push.apply(p,arguments);};" +
-
 					// Introduce the data as local variables using with(){}
 					"with(obj){p.push('" +
-
 					// Convert the template into pure JavaScript
 					str
 						.replace(/[\r\t\n]/g, " ")
@@ -496,7 +416,6 @@
 						.split("\r").join("\\'") +
 					"');}return p.join('');"
 				);
-
 				// Provide some basic currying to the user
 				return data ? fn( data ) : fn;
 			}
@@ -685,15 +604,12 @@
 				};
 		})(),
 		animationLoop = helpers.animationLoop = function(callback,totalSteps,easingString,onProgress,onComplete,chartInstance){
-
 			var currentStep = 0,
 				easingFunction = easingEffects[easingString] || easingEffects.linear;
-
 			var animationFrame = function(){
 				currentStep++;
 				var stepDecimal = currentStep/totalSteps;
 				var easeDecimal = easingFunction(stepDecimal);
-
 				callback.call(chartInstance,easeDecimal,stepDecimal, currentStep);
 				onProgress.call(chartInstance,easeDecimal,stepDecimal);
 				if (currentStep < totalSteps){
@@ -710,22 +626,18 @@
 			var e = evt.originalEvent || evt,
 				canvas = evt.currentTarget || evt.srcElement,
 				boundingRect = canvas.getBoundingClientRect();
-
 			if (e.touches){
 				mouseX = e.touches[0].clientX - boundingRect.left;
 				mouseY = e.touches[0].clientY - boundingRect.top;
-
 			}
 			else{
 				mouseX = e.clientX - boundingRect.left;
 				mouseY = e.clientY - boundingRect.top;
 			}
-
 			return {
 				x : mouseX,
 				y : mouseY
 			};
-
 		},
 		addEvent = helpers.addEvent = function(node,eventType,method){
 			if (node.addEventListener){
@@ -748,7 +660,6 @@
 		bindEvents = helpers.bindEvents = function(chartInstance, arrayOfEvents, handler){
 			// Create the events object if it's not already present
 			if (!chartInstance.events) chartInstance.events = {};
-
 			each(arrayOfEvents,function(eventName){
 				chartInstance.events[eventName] = function(){
 					handler.apply(chartInstance, arguments);
@@ -776,7 +687,6 @@
 			var ctx = chart.ctx,
 				width = chart.canvas.width,
 				height = chart.canvas.height;
-
 			if (window.devicePixelRatio) {
 				ctx.canvas.style.width = width + "px";
 				ctx.canvas.style.height = height + "px";
@@ -814,19 +724,15 @@
 			ctx.quadraticCurveTo(x, y, x + radius, y);
 			ctx.closePath();
 		};
-
-
 	//Store a reference to each instance - allowing us to globally resize chart instances on window resize.
 	//Destroy method on the chart will remove the instance of the chart from this reference.
 	Chart.instances = {};
-
 	Chart.Type = function(data,options,chart){
 		this.options = options;
 		this.chart = chart;
 		this.id = uid();
 		//Add the chart instance to the global namespace
 		Chart.instances[this.id] = this;
-
 		// Initialize is always called when a chart type is created
 		// By default it is a no op, but it should be extended
 		if (options.responsive){
@@ -834,7 +740,6 @@
 		}
 		this.initialize.call(this,data);
 	};
-
 	//Core methods that'll be a part of every chart type
 	extend(Chart.Type.prototype,{
 		initialize : function(){return this;},
@@ -852,12 +757,9 @@
 			var canvas = this.chart.canvas,
 				newWidth = getMaximumWidth(this.chart.canvas),
 				newHeight = this.options.maintainAspectRatio ? newWidth / this.chart.aspectRatio : getMaximumHeight(this.chart.canvas);
-
 			canvas.width = this.chart.width = newWidth;
 			canvas.height = this.chart.height = newHeight;
-
 			retinaScale(this.chart);
-
 			if (typeof callback === "function"){
 				callback.apply(this, Array.prototype.slice.call(arguments, 1));
 			}
@@ -891,11 +793,9 @@
 			this.clear();
 			unbindEvents(this, this.events);
 			var canvas = this.chart.canvas;
-
 			// Reset canvas height/width attributes starts a fresh with the canvas context
 			canvas.width = this.chart.width;
 			canvas.height = this.chart.height;
-
 			// < IE9 doesn't support removeProperty
 			if (canvas.style.removeProperty) {
 				canvas.style.removeProperty('width');
@@ -904,21 +804,17 @@
 				canvas.style.removeAttribute('width');
 				canvas.style.removeAttribute('height');
 			}
-
 			delete Chart.instances[this.id];
 		},
 		showTooltip : function(ChartElements, forceRedraw){
 			// Only redraw the chart if we've actually changed what we're hovering on.
 			if (typeof this.activeElements === 'undefined') this.activeElements = [];
-
 			var isChanged = (function(Elements){
 				var changed = false;
-
 				if (Elements.length !== this.activeElements.length){
 					changed = true;
 					return changed;
 				}
-
 				each(Elements, function(element, index){
 					if (element !== this.activeElements[index]){
 						changed = true;
@@ -926,7 +822,6 @@
 				}, this);
 				return changed;
 			}).call(this, ChartElements);
-
 			if (!isChanged && !forceRedraw){
 				return;
 			}
@@ -942,7 +837,6 @@
 				if (this.datasets && this.datasets.length > 1) {
 					var dataArray,
 						dataIndex;
-
 					for (var i = this.datasets.length - 1; i >= 0; i--) {
 						dataArray = this.datasets[i].points || this.datasets[i].bars || this.datasets[i].segments;
 						dataIndex = indexOf(dataArray, ChartElements[0]);
@@ -953,7 +847,6 @@
 					var tooltipLabels = [],
 						tooltipColors = [],
 						medianPosition = (function(index) {
-
 							// Get all the points at that particular index
 							var Elements = [],
 								dataCollection,
@@ -969,33 +862,25 @@
 									Elements.push(dataCollection[dataIndex]);
 								}
 							});
-
 							helpers.each(Elements, function(element) {
 								xPositions.push(element.x);
 								yPositions.push(element.y);
-
-
 								//Include any colour information about the element
 								tooltipLabels.push(helpers.template(this.options.multiTooltipTemplate, element));
 								tooltipColors.push({
 									fill: element._saved.fillColor || element.fillColor,
 									stroke: element._saved.strokeColor || element.strokeColor
 								});
-
 							}, this);
-
 							yMin = min(yPositions);
 							yMax = max(yPositions);
-
 							xMin = min(xPositions);
 							xMax = max(xPositions);
-
 							return {
 								x: (xMin > this.chart.width/2) ? xMin : xMax,
 								y: (yMin + yMax)/2
 							};
 						}).call(this, dataIndex);
-
 					new Chart.MultiTooltip({
 						x: medianPosition.x,
 						y: medianPosition.y,
@@ -1020,7 +905,6 @@
 						ctx: this.chart.ctx,
 						custom: this.options.customTooltips
 					}).draw();
-
 				} else {
 					each(ChartElements, function(Element) {
 						var tooltipPosition = Element.tooltipPosition();
@@ -1049,37 +933,25 @@
 			return this.chart.canvas.toDataURL.apply(this.chart.canvas, arguments);
 		}
 	});
-
 	Chart.Type.extend = function(extensions){
-
 		var parent = this;
-
 		var ChartType = function(){
 			return parent.apply(this,arguments);
 		};
-
 		//Copy the prototype object of the this class
 		ChartType.prototype = clone(parent.prototype);
 		//Now overwrite some of the properties in the base class with the new extensions
 		extend(ChartType.prototype, extensions);
-
 		ChartType.extend = Chart.Type.extend;
-
 		if (extensions.name || parent.prototype.name){
-
 			var chartName = extensions.name || parent.prototype.name;
 			//Assign any potential default values of the new chart type
-
 			//If none are defined, we'll use a clone of the chart type this is being extended from.
 			//I.e. if we extend a line chart, we'll use the defaults from the line chart if our new chart
 			//doesn't define some defaults of their own.
-
 			var baseDefaults = (Chart.defaults[parent.prototype.name]) ? clone(Chart.defaults[parent.prototype.name]) : {};
-
 			Chart.defaults[chartName] = extend(baseDefaults,extensions.defaults);
-
 			Chart.types[chartName] = ChartType;
-
 			//Register this new chart type in the Chart prototype
 			Chart.prototype[chartName] = function(data,options){
 				var config = merge(Chart.defaults.global, Chart.defaults[chartName], options || {});
@@ -1090,7 +962,6 @@
 		}
 		return parent;
 	};
-
 	Chart.Element = function(configuration){
 		extend(this,configuration);
 		this.initialize.apply(this,arguments);
@@ -1136,10 +1007,7 @@
 			return isNumber(this.value);
 		}
 	});
-
 	Chart.Element.extend = inherits;
-
-
 	Chart.Point = Chart.Element.extend({
 		display: true,
 		inRange: function(chartX,chartY){
@@ -1150,59 +1018,42 @@
 			if (this.display){
 				var ctx = this.ctx;
 				ctx.beginPath();
-
 				ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
 				ctx.closePath();
-
 				ctx.strokeStyle = this.strokeColor;
 				ctx.lineWidth = this.strokeWidth;
-
 				ctx.fillStyle = this.fillColor;
-
 				ctx.fill();
 				ctx.stroke();
 			}
-
-
 			//Quick debug for bezier curve splining
 			//Highlights control points and the line between them.
 			//Handy for dev - stripped in the min version.
-
 			// ctx.save();
 			// ctx.fillStyle = "black";
 			// ctx.strokeStyle = "black"
 			// ctx.beginPath();
 			// ctx.arc(this.controlPoints.inner.x,this.controlPoints.inner.y, 2, 0, Math.PI*2);
 			// ctx.fill();
-
 			// ctx.beginPath();
 			// ctx.arc(this.controlPoints.outer.x,this.controlPoints.outer.y, 2, 0, Math.PI*2);
 			// ctx.fill();
-
 			// ctx.moveTo(this.controlPoints.inner.x,this.controlPoints.inner.y);
 			// ctx.lineTo(this.x, this.y);
 			// ctx.lineTo(this.controlPoints.outer.x,this.controlPoints.outer.y);
 			// ctx.stroke();
-
 			// ctx.restore();
-
-
-
 		}
 	});
-
 	Chart.Arc = Chart.Element.extend({
 		inRange : function(chartX,chartY){
-
 			var pointRelativePosition = helpers.getAngleFromPoint(this, {
 				x: chartX,
 				y: chartY
 			});
-
 			//Check if within the range of the open/close angle
 			var betweenAngles = (pointRelativePosition.angle >= this.startAngle && pointRelativePosition.angle <= this.endAngle),
 				withinRadius = (pointRelativePosition.distance >= this.innerRadius && pointRelativePosition.distance <= this.outerRadius);
-
 			return (betweenAngles && withinRadius);
 			//Ensure within the outside of the arc centre, but inside arc outer
 		},
@@ -1215,32 +1066,22 @@
 			};
 		},
 		draw : function(animationPercent){
-
 			var easingDecimal = animationPercent || 1;
-
 			var ctx = this.ctx;
-
 			ctx.beginPath();
-
 			ctx.arc(this.x, this.y, this.outerRadius, this.startAngle, this.endAngle);
-
 			ctx.arc(this.x, this.y, this.innerRadius, this.endAngle, this.startAngle, true);
-
 			ctx.closePath();
 			ctx.strokeStyle = this.strokeColor;
 			ctx.lineWidth = this.strokeWidth;
-
 			ctx.fillStyle = this.fillColor;
-
 			ctx.fill();
 			ctx.lineJoin = 'bevel';
-
 			if (this.showStroke){
 				ctx.stroke();
 			}
 		}
 	});
-
 	Chart.Rectangle = Chart.Element.extend({
 		draw : function(){
 			var ctx = this.ctx,
@@ -1249,7 +1090,6 @@
 				rightX = this.x + halfWidth,
 				top = this.base - (this.base - this.y),
 				halfStroke = this.strokeWidth / 2;
-
 			// Canvas doesn't allow us to stroke inside the width so we can
 			// adjust the sizes to fit if we're setting a stroke on the line
 			if (this.showStroke){
@@ -1257,13 +1097,10 @@
 				rightX -= halfStroke;
 				top += halfStroke;
 			}
-
 			ctx.beginPath();
-
 			ctx.fillStyle = this.fillColor;
 			ctx.strokeStyle = this.strokeColor;
 			ctx.lineWidth = this.strokeWidth;
-
 			// It'd be nice to keep this class totally generic to any rectangle
 			// and simply specify which border to miss out.
 			ctx.moveTo(leftX, this.base);
@@ -1282,40 +1119,28 @@
 			return (chartX >= this.x - this.width/2 && chartX <= this.x + this.width/2) && (chartY >= this.y && chartY <= this.base);
 		}
 	});
-
 	Chart.Tooltip = Chart.Element.extend({
 		draw : function(){
-
 			var ctx = this.chart.ctx;
-
 			ctx.font = fontString(this.fontSize,this.fontStyle,this.fontFamily);
-
 			this.xAlign = "center";
 			this.yAlign = "above";
-
 			//Distance between the actual element.y position and the start of the tooltip caret
 			var caretPadding = this.caretPadding = 2;
-
 			var tooltipWidth = ctx.measureText(this.text).width + 2*this.xPadding,
 				tooltipRectHeight = this.fontSize + 2*this.yPadding,
 				tooltipHeight = tooltipRectHeight + this.caretHeight + caretPadding;
-
 			if (this.x + tooltipWidth/2 >this.chart.width){
 				this.xAlign = "left";
 			} else if (this.x - tooltipWidth/2 < 0){
 				this.xAlign = "right";
 			}
-
 			if (this.y - tooltipHeight < 0){
 				this.yAlign = "below";
 			}
-
-
 			var tooltipX = this.x - tooltipWidth/2,
 				tooltipY = this.y - tooltipHeight;
-
 			ctx.fillStyle = this.fillColor;
-
 			// Custom Tooltips
 			if(this.custom){
 				this.custom(this);
@@ -1343,7 +1168,6 @@
 					ctx.fill();
 					break;
 				}
-
 				switch(this.xAlign)
 				{
 				case "left":
@@ -1353,11 +1177,8 @@
 					tooltipX = this.x - (this.cornerRadius + this.caretHeight);
 					break;
 				}
-
 				drawRoundedRectangle(ctx,tooltipX,tooltipY,tooltipWidth,tooltipRectHeight,this.cornerRadius);
-
 				ctx.fill();
-
 				ctx.fillStyle = this.textColor;
 				ctx.textAlign = "center";
 				ctx.textBaseline = "middle";
@@ -1365,54 +1186,40 @@
 			}
 		}
 	});
-
 	Chart.MultiTooltip = Chart.Element.extend({
 		initialize : function(){
 			this.font = fontString(this.fontSize,this.fontStyle,this.fontFamily);
-
 			this.titleFont = fontString(this.titleFontSize,this.titleFontStyle,this.titleFontFamily);
-
 			this.height = (this.labels.length * this.fontSize) + ((this.labels.length-1) * (this.fontSize/2)) + (this.yPadding*2) + this.titleFontSize *1.5;
-
 			this.ctx.font = this.titleFont;
-
 			var titleWidth = this.ctx.measureText(this.title).width,
 				//Label has a legend square as well so account for this.
 				labelWidth = longestText(this.ctx,this.font,this.labels) + this.fontSize + 3,
 				longestTextWidth = max([labelWidth,titleWidth]);
-
 			this.width = longestTextWidth + (this.xPadding*2);
-
-
 			var halfHeight = this.height/2;
-
 			//Check to ensure the height will fit on the canvas
 			if (this.y - halfHeight < 0 ){
 				this.y = halfHeight;
 			} else if (this.y + halfHeight > this.chart.height){
 				this.y = this.chart.height - halfHeight;
 			}
-
 			//Decide whether to align left or right based on position on canvas
 			if (this.x > this.chart.width/2){
 				this.x -= this.xOffset + this.width;
 			} else {
 				this.x += this.xOffset;
 			}
-
-
 		},
 		getLineHeight : function(index){
 			var baseLineHeight = this.y - (this.height/2) + this.yPadding,
 				afterTitleIndex = index-1;
-
 			//If the index is zero, we're getting the title
 			if (index === 0){
 				return baseLineHeight + this.titleFontSize/2;
 			} else{
 				return baseLineHeight + ((this.fontSize*1.5*afterTitleIndex) + this.fontSize/2) + this.titleFontSize * 1.5;
 			}
-
 		},
 		draw : function(){
 			// Custom Tooltips
@@ -1425,44 +1232,33 @@
 				ctx.fillStyle = this.fillColor;
 				ctx.fill();
 				ctx.closePath();
-
 				ctx.textAlign = "left";
 				ctx.textBaseline = "middle";
 				ctx.fillStyle = this.titleTextColor;
 				ctx.font = this.titleFont;
-
 				ctx.fillText(this.title,this.x + this.xPadding, this.getLineHeight(0));
-
 				ctx.font = this.font;
 				helpers.each(this.labels,function(label,index){
 					ctx.fillStyle = this.textColor;
 					ctx.fillText(label,this.x + this.xPadding + this.fontSize + 3, this.getLineHeight(index + 1));
-
 					//A bit gnarly, but clearing this rectangle breaks when using explorercanvas (clears whole canvas)
 					//ctx.clearRect(this.x + this.xPadding, this.getLineHeight(index + 1) - this.fontSize/2, this.fontSize, this.fontSize);
 					//Instead we'll make a white filled block to put the legendColour palette over.
-
 					ctx.fillStyle = this.legendColorBackground;
 					ctx.fillRect(this.x + this.xPadding, this.getLineHeight(index + 1) - this.fontSize/2, this.fontSize, this.fontSize);
-
 					ctx.fillStyle = this.legendColors[index].fill;
 					ctx.fillRect(this.x + this.xPadding, this.getLineHeight(index + 1) - this.fontSize/2, this.fontSize, this.fontSize);
-
-
 				},this);
 			}
 		}
 	});
-
 	Chart.Scale = Chart.Element.extend({
 		initialize : function(){
 			this.fit();
 		},
 		buildYLabels : function(){
 			this.yLabels = [];
-
 			var stepDecimalPlaces = getDecimalPlaces(this.stepValue);
-
 			for (var i=0; i<=this.steps; i++){
 				this.yLabels.push(template(this.templateString,{value:(this.min + (i * this.stepValue)).toFixed(stepDecimalPlaces)}));
 			}
@@ -1481,19 +1277,15 @@
 		// Fitting loop to rotate x Labels and figure out what fits there, and also calculate how many Y steps to use
 		fit: function(){
 			// First we need the width of the yLabels, assuming the xLabels aren't rotated
-
 			// To do that we need the base line at the top and base of the chart, assuming there is no x label rotation
 			this.startPoint = (this.display) ? this.fontSize : 0;
 			this.endPoint = (this.display) ? this.height - (this.fontSize * 1.5) - 5 : this.height; // -5 to pad labels
-
 			// Apply padding settings to the start and end point.
 			this.startPoint += this.padding;
 			this.endPoint -= this.padding;
-
 			// Cache the starting height, so can determine if we need to recalculate the scale yAxis
 			var cachedHeight = this.endPoint - this.startPoint,
 				cachedYLabelWidth;
-
 			// Build the current yLabels so we have an idea of what size they'll be to start
 			/*
 			 *	This sets what is returned from calculateScaleRange as static properties of this class:
@@ -1505,42 +1297,31 @@
 			 *
 			 */
 			this.calculateYRange(cachedHeight);
-
 			// With these properties set we can now build the array of yLabels
 			// and also the width of the largest yLabel
 			this.buildYLabels();
-
 			this.calculateXLabelRotation();
-
 			while((cachedHeight > this.endPoint - this.startPoint)){
 				cachedHeight = this.endPoint - this.startPoint;
 				cachedYLabelWidth = this.yLabelWidth;
-
 				this.calculateYRange(cachedHeight);
 				this.buildYLabels();
-
 				// Only go through the xLabel loop again if the yLabel width has changed
 				if (cachedYLabelWidth < this.yLabelWidth){
 					this.calculateXLabelRotation();
 				}
 			}
-
 		},
 		calculateXLabelRotation : function(){
 			//Get the width of each grid by calculating the difference
 			//between x offsets between 0 and 1.
-
 			this.ctx.font = this.font;
-
 			var firstWidth = this.ctx.measureText(this.xLabels[0]).width,
 				lastWidth = this.ctx.measureText(this.xLabels[this.xLabels.length - 1]).width,
 				firstRotated,
 				lastRotated;
-
-
 			this.xScalePaddingRight = lastWidth/2 + 3;
 			this.xScalePaddingLeft = (firstWidth/2 > this.yLabelWidth + 10) ? firstWidth/2 : this.yLabelWidth + 10;
-
 			this.xLabelRotation = 0;
 			if (this.display){
 				var originalLabelWidth = longestText(this.ctx,this.font,this.xLabels),
@@ -1549,24 +1330,18 @@
 				this.xLabelWidth = originalLabelWidth;
 				//Allow 3 pixels x2 padding either side for label readability
 				var xGridWidth = Math.floor(this.calculateX(1) - this.calculateX(0)) - 6;
-
 				//Max label rotate should be 90 - also act as a loop counter
 				while ((this.xLabelWidth > xGridWidth && this.xLabelRotation === 0) || (this.xLabelWidth > xGridWidth && this.xLabelRotation <= 90 && this.xLabelRotation > 0)){
 					cosRotation = Math.cos(toRadians(this.xLabelRotation));
-
 					firstRotated = cosRotation * firstWidth;
 					lastRotated = cosRotation * lastWidth;
-
 					// We're right aligning the text now.
 					if (firstRotated + this.fontSize / 2 > this.yLabelWidth + 8){
 						this.xScalePaddingLeft = firstRotated + this.fontSize / 2;
 					}
 					this.xScalePaddingRight = this.fontSize/2;
-
-
 					this.xLabelRotation++;
 					this.xLabelWidth = cosRotation * originalLabelWidth;
-
 				}
 				if (this.xLabelRotation > 0){
 					this.endPoint -= Math.sin(toRadians(this.xLabelRotation))*originalLabelWidth + 3;
@@ -1577,7 +1352,6 @@
 				this.xScalePaddingRight = this.padding;
 				this.xScalePaddingLeft = this.padding;
 			}
-
 		},
 		// Needs to be overidden in each Chart type
 		// Otherwise we need to pass all the data into the scale class
@@ -1595,11 +1369,9 @@
 				innerWidth = this.width - (this.xScalePaddingLeft + this.xScalePaddingRight),
 				valueWidth = innerWidth/Math.max((this.valuesCount - ((this.offsetGridLines) ? 0 : 1)), 1),
 				valueOffset = (valueWidth * index) + this.xScalePaddingLeft;
-
 			if (this.offsetGridLines){
 				valueOffset += (valueWidth/2);
 			}
-
 			return Math.round(valueOffset);
 		},
 		update : function(newProps){
@@ -1617,22 +1389,18 @@
 					var yLabelCenter = this.endPoint - (yLabelGap * index),
 						linePositionY = Math.round(yLabelCenter),
 						drawHorizontalLine = this.showHorizontalLines;
-
 					ctx.textAlign = "right";
 					ctx.textBaseline = "middle";
 					if (this.showLabels){
 						ctx.fillText(labelString,xStart - 10,yLabelCenter);
 					}
-
 					// This is X axis, so draw it
 					if (index === 0 && !drawHorizontalLine){
 						drawHorizontalLine = true;
 					}
-
 					if (drawHorizontalLine){
 						ctx.beginPath();
 					}
-
 					if (index > 0){
 						// This is a grid line in the centre, so drop that
 						ctx.lineWidth = this.gridLineWidth;
@@ -1642,16 +1410,13 @@
 						ctx.lineWidth = this.lineWidth;
 						ctx.strokeStyle = this.lineColor;
 					}
-
 					linePositionY += helpers.aliasPixel(ctx.lineWidth);
-
 					if(drawHorizontalLine){
 						ctx.moveTo(xStart, linePositionY);
 						ctx.lineTo(this.width, linePositionY);
 						ctx.stroke();
 						ctx.closePath();
 					}
-
 					ctx.lineWidth = this.lineWidth;
 					ctx.strokeStyle = this.lineColor;
 					ctx.beginPath();
@@ -1659,25 +1424,20 @@
 					ctx.lineTo(xStart, linePositionY);
 					ctx.stroke();
 					ctx.closePath();
-
 				},this);
-
 				each(this.xLabels,function(label,index){
 					var xPos = this.calculateX(index) + aliasPixel(this.lineWidth),
 						// Check to see if line/bar here and decide where to place the line
 						linePos = this.calculateX(index - (this.offsetGridLines ? 0.5 : 0)) + aliasPixel(this.lineWidth),
 						isRotated = (this.xLabelRotation > 0),
 						drawVerticalLine = this.showVerticalLines;
-
 					// This is Y axis, so draw it
 					if (index === 0 && !drawVerticalLine){
 						drawVerticalLine = true;
 					}
-
 					if (drawVerticalLine){
 						ctx.beginPath();
 					}
-
 					if (index > 0){
 						// This is a grid line in the centre, so drop that
 						ctx.lineWidth = this.gridLineWidth;
@@ -1687,26 +1447,20 @@
 						ctx.lineWidth = this.lineWidth;
 						ctx.strokeStyle = this.lineColor;
 					}
-
 					if (drawVerticalLine){
 						ctx.moveTo(linePos,this.endPoint);
 						ctx.lineTo(linePos,this.startPoint - 3);
 						ctx.stroke();
 						ctx.closePath();
 					}
-
-
 					ctx.lineWidth = this.lineWidth;
 					ctx.strokeStyle = this.lineColor;
-
-
 					// Small lines at the bottom of the base grid line
 					ctx.beginPath();
 					ctx.moveTo(linePos,this.endPoint);
 					ctx.lineTo(linePos,this.endPoint + 5);
 					ctx.stroke();
 					ctx.closePath();
-
 					ctx.save();
 					ctx.translate(xPos,(isRotated) ? this.endPoint + 12 : this.endPoint + 8);
 					ctx.rotate(toRadians(this.xLabelRotation)*-1);
@@ -1716,12 +1470,9 @@
 					ctx.fillText(label, 0, 0);
 					ctx.restore();
 				},this);
-
 			}
 		}
-
 	});
-
 	Chart.RadialScale = Chart.Element.extend({
 		initialize: function(){
 			this.size = min([this.height, this.width]);
@@ -1730,7 +1481,6 @@
 		calculateCenterOffset: function(value){
 			// Take into account half font size + the yPadding of the top value
 			var scalingFactor = this.drawingArea / (this.max - this.min);
-
 			return (value - this.min) * scalingFactor;
 		},
 		update : function(){
@@ -1743,9 +1493,7 @@
 		},
 		buildYLabels: function(){
 			this.yLabels = [];
-
 			var stepDecimalPlaces = getDecimalPlaces(this.stepValue);
-
 			for (var i=0; i<=this.steps; i++){
 				this.yLabels.push(template(this.templateString,{value:(this.min + (i * this.stepValue)).toFixed(stepDecimalPlaces)}));
 			}
@@ -1781,8 +1529,6 @@
 			 *
 			 * https://dl.dropboxusercontent.com/u/34601363/yeahscience.gif
 			 */
-
-
 			// Get maximum radius of the polygon. Either half the height (minus the text width) or half the width.
 			// Use this to calculate the offset + change. - Make sure L/R protrusion is at least 0 to stop issues with centre points
 			var largestPossibleRadius = min([(this.height/2 - this.pointLabelFontSize - 5), this.width/2]),
@@ -1835,43 +1581,29 @@
 					}
 				}
 			}
-
 			xProtrusionLeft = furthestLeft;
-
 			xProtrusionRight = Math.ceil(furthestRight - this.width);
-
 			furthestRightAngle = this.getIndexAngle(furthestRightIndex);
-
 			furthestLeftAngle = this.getIndexAngle(furthestLeftIndex);
-
 			radiusReductionRight = xProtrusionRight / Math.sin(furthestRightAngle + Math.PI/2);
-
 			radiusReductionLeft = xProtrusionLeft / Math.sin(furthestLeftAngle + Math.PI/2);
-
 			// Ensure we actually need to reduce the size of the chart
 			radiusReductionRight = (isNumber(radiusReductionRight)) ? radiusReductionRight : 0;
 			radiusReductionLeft = (isNumber(radiusReductionLeft)) ? radiusReductionLeft : 0;
-
 			this.drawingArea = largestPossibleRadius - (radiusReductionLeft + radiusReductionRight)/2;
-
 			//this.drawingArea = min([maxWidthRadius, (this.height - (2 * (this.pointLabelFontSize + 5)))/2])
 			this.setCenterPoint(radiusReductionLeft, radiusReductionRight);
-
 		},
 		setCenterPoint: function(leftMovement, rightMovement){
-
 			var maxRight = this.width - rightMovement - this.drawingArea,
 				maxLeft = leftMovement + this.drawingArea;
-
 			this.xCenter = (maxLeft + maxRight)/2;
 			// Always vertically in the centre as the text height doesn't change
 			this.yCenter = (this.height/2);
 		},
-
 		getIndexAngle : function(index){
 			var angleMultiplier = (Math.PI * 2) / this.valuesCount;
 			// Start from the top instead of right, so remove a quarter of the circle
-
 			return index * angleMultiplier - (Math.PI/2);
 		},
 		getPointPosition : function(index, distanceFromCenter){
@@ -1890,12 +1622,10 @@
 						var yCenterOffset = index * (this.drawingArea/this.steps),
 							yHeight = this.yCenter - yCenterOffset,
 							pointPosition;
-
 						// Draw circular lines around the scale
 						if (this.lineWidth > 0){
 							ctx.strokeStyle = this.lineColor;
 							ctx.lineWidth = this.lineWidth;
-
 							if(this.lineArc){
 								ctx.beginPath();
 								ctx.arc(this.xCenter, this.yCenter, yCenterOffset, 0, Math.PI*2);
@@ -1935,7 +1665,6 @@
 						}
 					}
 				}, this);
-
 				if (!this.lineArc){
 					ctx.lineWidth = this.angleLineWidth;
 					ctx.strokeStyle = this.angleLineColor;
@@ -1952,7 +1681,6 @@
 						var pointLabelPosition = this.getPointPosition(i, this.calculateCenterOffset(this.max) + 5);
 						ctx.font = fontString(this.pointLabelFontSize,this.pointLabelFontStyle,this.pointLabelFontFamily);
 						ctx.fillStyle = this.pointLabelFontColor;
-
 						var labelsCount = this.labels.length,
 							halfLabelsCount = this.labels.length/2,
 							quarterLabelsCount = halfLabelsCount/2,
@@ -1967,7 +1695,6 @@
 						} else {
 							ctx.textAlign = 'right';
 						}
-
 						// Set the correct text baseline based on outer positioning
 						if (exactQuarter){
 							ctx.textBaseline = 'middle';
@@ -1976,14 +1703,12 @@
 						} else {
 							ctx.textBaseline = 'top';
 						}
-
 						ctx.fillText(this.labels[i], pointLabelPosition.x, pointLabelPosition.y);
 					}
 				}
 			}
 		}
 	});
-
 	// Attach global event to resize each chart instance when the browser resizes
 	helpers.addEvent(window, "resize", (function(){
 		// Basic debounce of resize function so it doesn't hurt performance when resizing browser.
@@ -2001,8 +1726,6 @@
 			}, 50);
 		};
 	})());
-
-
 	if (amd) {
 		define(function(){
 			return Chart;
@@ -2010,69 +1733,47 @@
 	} else if (typeof module === 'object' && module.exports) {
 		module.exports = Chart;
 	}
-
 	root.Chart = Chart;
-
 	Chart.noConflict = function(){
 		root.Chart = previous;
 		return Chart;
 	};
-
 }).call(this);
-
 (function(){
 	"use strict";
-
 	var root = this,
 		Chart = root.Chart,
 		helpers = Chart.helpers;
-
-
 	var defaultConfig = {
 		//Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
 		scaleBeginAtZero : true,
-
 		//Boolean - Whether grid lines are shown across the chart
 		scaleShowGridLines : true,
-
 		//String - Colour of the grid lines
 		scaleGridLineColor : "rgba(0,0,0,.05)",
-
 		//Number - Width of the grid lines
 		scaleGridLineWidth : 1,
-
 		//Boolean - Whether to show horizontal lines (except X axis)
 		scaleShowHorizontalLines: true,
-
 		//Boolean - Whether to show vertical lines (except Y axis)
 		scaleShowVerticalLines: true,
-
 		//Boolean - If there is a stroke on each bar
 		barShowStroke : true,
-
 		//Number - Pixel width of the bar stroke
 		barStrokeWidth : 2,
-
 		//Number - Spacing between each of the X value sets
 		barValueSpacing : 5,
-
 		//Number - Spacing between data sets within X values
 		barDatasetSpacing : 1,
-
 		//String - A legend template
 		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
-
 	};
-
-
 	Chart.Type.extend({
 		name: "Bar",
 		defaults : defaultConfig,
 		initialize:  function(data){
-
 			//Expose options as a scope variable here so we can access it in the ScaleClass
 			var options = this.options;
-
 			this.ScaleClass = Chart.Scale.extend({
 				offsetGridLines : true,
 				calculateBarX : function(datasetCount, datasetIndex, barIndex){
@@ -2080,7 +1781,6 @@
 					var xWidth = this.calculateBaseWidth(),
 						xAbsolute = this.calculateX(barIndex) - (xWidth/2),
 						barWidth = this.calculateBarWidth(datasetCount);
-
 					return xAbsolute + (barWidth * datasetIndex) + (datasetIndex * options.barDatasetSpacing) + barWidth/2;
 				},
 				calculateBaseWidth : function(){
@@ -2089,18 +1789,14 @@
 				calculateBarWidth : function(datasetCount){
 					//The padding between datasets is to the right of each bar, providing that there are more than 1 dataset
 					var baseWidth = this.calculateBaseWidth() - ((datasetCount - 1) * options.barDatasetSpacing);
-
 					return (baseWidth / datasetCount);
 				}
 			});
-
 			this.datasets = [];
-
 			//Set up tooltip events on the chart
 			if (this.options.showTooltips){
 				helpers.bindEvents(this, this.options.tooltipEvents, function(evt){
 					var activeBars = (evt.type !== 'mouseout') ? this.getBarsAtEvent(evt) : [];
-
 					this.eachBars(function(bar){
 						bar.restore(['fillColor', 'strokeColor']);
 					});
@@ -2111,26 +1807,21 @@
 					this.showTooltip(activeBars);
 				});
 			}
-
 			//Declare the extension of the default point, to cater for the options passed in to the constructor
 			this.BarClass = Chart.Rectangle.extend({
 				strokeWidth : this.options.barStrokeWidth,
 				showStroke : this.options.barShowStroke,
 				ctx : this.chart.ctx
 			});
-
 			//Iterate through each of the datasets, and build this into a property of the chart
 			helpers.each(data.datasets,function(dataset,datasetIndex){
-
 				var datasetObject = {
 					label : dataset.label || null,
 					fillColor : dataset.fillColor,
 					strokeColor : dataset.strokeColor,
 					bars : []
 				};
-
 				this.datasets.push(datasetObject);
-
 				helpers.each(dataset.data,function(dataPoint,index){
 					//Add a new point for each piece of data, passing any required data to draw.
 					datasetObject.bars.push(new this.BarClass({
@@ -2143,13 +1834,9 @@
 						highlightStroke : dataset.highlightStroke || dataset.strokeColor
 					}));
 				},this);
-
 			},this);
-
 			this.buildScale(data.labels);
-
 			this.BarClass.prototype.base = this.scale.endPoint;
-
 			this.eachBars(function(bar, index, datasetIndex){
 				helpers.extend(bar, {
 					width : this.scale.calculateBarWidth(this.datasets.length),
@@ -2158,7 +1845,6 @@
 				});
 				bar.save();
 			}, this);
-
 			this.render();
 		},
 		update : function(){
@@ -2167,7 +1853,6 @@
 			helpers.each(this.activeElements, function(activeElement){
 				activeElement.restore(['fillColor', 'strokeColor']);
 			});
-
 			this.eachBars(function(bar){
 				bar.save();
 			});
@@ -2185,7 +1870,6 @@
 					barsArray.push(dataset.bars[barIndex]);
 				},
 				barIndex;
-
 			for (var datasetIndex = 0; datasetIndex < this.datasets.length; datasetIndex++) {
 				for (barIndex = 0; barIndex < this.datasets[datasetIndex].bars.length; barIndex++) {
 					if (this.datasets[datasetIndex].bars[barIndex].inRange(eventPosition.x,eventPosition.y)){
@@ -2194,12 +1878,10 @@
 					}
 				}
 			}
-
 			return barsArray;
 		},
 		buildScale : function(labels){
 			var self = this;
-
 			var dataTotal = function(){
 				var values = [];
 				self.eachBars(function(bar){
@@ -2207,7 +1889,6 @@
 				});
 				return values;
 			};
-
 			var scaleOptions = {
 				templateString : this.options.scaleLabel,
 				height : this.chart.height,
@@ -2242,7 +1923,6 @@
 				showLabels : this.options.scaleShowLabels,
 				display : this.options.showScale
 			};
-
 			if (this.options.scaleOverride){
 				helpers.extend(scaleOptions, {
 					calculateYRange: helpers.noop,
@@ -2252,7 +1932,6 @@
 					max: this.options.scaleStartValue + (this.options.scaleSteps * this.options.scaleStepWidth)
 				});
 			}
-
 			this.scale = new this.ScaleClass(scaleOptions);
 		},
 		addData : function(valuesArray,label){
@@ -2270,7 +1949,6 @@
 					fillColor : this.datasets[datasetIndex].fillColor
 				}));
 			},this);
-
 			this.scale.addXLabel(label);
 			//Then re-render the chart.
 			this.update();
@@ -2297,11 +1975,8 @@
 		draw : function(ease){
 			var easingDecimal = ease || 1;
 			this.clear();
-
 			var ctx = this.chart.ctx;
-
 			this.scale.draw(easingDecimal);
-
 			//Draw all the bars for each dataset
 			helpers.each(this.datasets,function(dataset,datasetIndex){
 				helpers.each(dataset.bars,function(bar,index){
@@ -2315,53 +1990,36 @@
 						}, easingDecimal).draw();
 					}
 				},this);
-
 			},this);
 		}
 	});
-
-
 }).call(this);
-
 (function(){
 	"use strict";
-
 	var root = this,
 		Chart = root.Chart,
 		//Cache a local reference to Chart.helpers
 		helpers = Chart.helpers;
-
 	var defaultConfig = {
 		//Boolean - Whether we should show a stroke on each segment
 		segmentShowStroke : true,
-
 		//String - The colour of each segment stroke
 		segmentStrokeColor : "#fff",
-
 		//Number - The width of each segment stroke
 		segmentStrokeWidth : 2,
-
 		//The percentage of the chart that we cut out of the middle.
 		percentageInnerCutout : 50,
-
 		//Number - Amount of animation steps
 		animationSteps : 100,
-
 		//String - Animation easing effect
 		animationEasing : "easeOutBounce",
-
 		//Boolean - Whether we animate the rotation of the Doughnut
 		animateRotate : true,
-
 		//Boolean - Whether we animate scaling the Doughnut from the centre
 		animateScale : false,
-
 		//String - A legend template
 		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
-
 	};
-
-
 	Chart.Type.extend({
 		//Passing in a name registers this chart in the Chart namespace
 		name: "Doughnut",
@@ -2370,22 +2028,18 @@
 		//Initialize is fired when the chart is initialized - Data is passed in as a parameter
 		//Config is automatically merged by the core of Chart.js, and is available at this.options
 		initialize:  function(data){
-
 			//Declare segments as a static property to prevent inheriting across the Chart type prototype
 			this.segments = [];
 			this.outerRadius = (helpers.min([this.chart.width,this.chart.height]) -	this.options.segmentStrokeWidth/2)/2;
-
 			this.SegmentArc = Chart.Arc.extend({
 				ctx : this.chart.ctx,
 				x : this.chart.width/2,
 				y : this.chart.height/2
 			});
-
 			//Set up tooltip events on the chart
 			if (this.options.showTooltips){
 				helpers.bindEvents(this, this.options.tooltipEvents, function(evt){
 					var activeSegments = (evt.type !== 'mouseout') ? this.getSegmentsAtEvent(evt) : [];
-
 					helpers.each(this.segments,function(segment){
 						segment.restore(["fillColor"]);
 					});
@@ -2396,18 +2050,14 @@
 				});
 			}
 			this.calculateTotal(data);
-
 			helpers.each(data,function(datapoint, index){
 				this.addData(datapoint, index, true);
 			},this);
-
 			this.render();
 		},
 		getSegmentsAtEvent : function(e){
 			var segmentsArray = [];
-
 			var location = helpers.getRelativePosition(e);
-
 			helpers.each(this.segments,function(segment){
 				if (segment.inRange(location.x,location.y)) segmentsArray.push(segment);
 			},this);
@@ -2444,25 +2094,21 @@
 		},
 		update : function(){
 			this.calculateTotal(this.segments);
-
 			// Reset any highlight colours before updating.
 			helpers.each(this.activeElements, function(activeElement){
 				activeElement.restore(['fillColor']);
 			});
-
 			helpers.each(this.segments,function(segment){
 				segment.save();
 			});
 			this.render();
 		},
-
 		removeData: function(atIndex){
 			var indexToDelete = (helpers.isNumber(atIndex)) ? atIndex : this.segments.length-1;
 			this.segments.splice(indexToDelete, 1);
 			this.reflow();
 			this.update();
 		},
-
 		reflow : function(){
 			helpers.extend(this.SegmentArc.prototype,{
 				x : this.chart.width/2,
@@ -2485,9 +2131,7 @@
 					outerRadius : this.outerRadius,
 					innerRadius : (this.outerRadius/100) * this.options.percentageInnerCutout
 				},animDecimal);
-
 				segment.endAngle = segment.startAngle + segment.circumference;
-
 				segment.draw();
 				if (index === 0){
 					segment.startAngle = Math.PI * 1.5;
@@ -2497,73 +2141,50 @@
 					this.segments[index+1].startAngle = segment.endAngle;
 				}
 			},this);
-
 		}
 	});
-
 	Chart.types.Doughnut.extend({
 		name : "Pie",
 		defaults : helpers.merge(defaultConfig,{percentageInnerCutout : 0})
 	});
-
 }).call(this);
 (function(){
 	"use strict";
-
 	var root = this,
 		Chart = root.Chart,
 		helpers = Chart.helpers;
-
 	var defaultConfig = {
-
 		///Boolean - Whether grid lines are shown across the chart
 		scaleShowGridLines : true,
-
 		//String - Colour of the grid lines
 		scaleGridLineColor : "rgba(0,0,0,.05)",
-
 		//Number - Width of the grid lines
 		scaleGridLineWidth : 1,
-
 		//Boolean - Whether to show horizontal lines (except X axis)
 		scaleShowHorizontalLines: true,
-
 		//Boolean - Whether to show vertical lines (except Y axis)
 		scaleShowVerticalLines: true,
-
 		//Boolean - Whether the line is curved between points
 		bezierCurve : true,
-
 		//Number - Tension of the bezier curve between points
 		bezierCurveTension : 0.4,
-
 		//Boolean - Whether to show a dot for each point
 		pointDot : true,
-
 		//Number - Radius of each point dot in pixels
 		pointDotRadius : 4,
-
 		//Number - Pixel width of point dot stroke
 		pointDotStrokeWidth : 1,
-
 		//Number - amount extra to add to the radius to cater for hit detection outside the drawn point
 		pointHitDetectionRadius : 20,
-
 		//Boolean - Whether to show a stroke for datasets
 		datasetStroke : true,
-
 		//Number - Pixel width of dataset stroke
 		datasetStrokeWidth : 2,
-
 		//Boolean - Whether to fill the dataset with a colour
 		datasetFill : true,
-
 		//String - A legend template
 		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
-
 	};
-
-
 	Chart.Type.extend({
 		name: "Line",
 		defaults : defaultConfig,
@@ -2579,9 +2200,7 @@
 					return (Math.pow(mouseX-this.x, 2) < Math.pow(this.radius + this.hitDetectionRadius,2));
 				}
 			});
-
 			this.datasets = [];
-
 			//Set up tooltip events on the chart
 			if (this.options.showTooltips){
 				helpers.bindEvents(this, this.options.tooltipEvents, function(evt){
@@ -2596,10 +2215,8 @@
 					this.showTooltip(activePoints);
 				});
 			}
-
 			//Iterate through each of the datasets, and build this into a property of the chart
 			helpers.each(data.datasets,function(dataset){
-
 				var datasetObject = {
 					label : dataset.label || null,
 					fillColor : dataset.fillColor,
@@ -2608,10 +2225,7 @@
 					pointStrokeColor : dataset.pointStrokeColor,
 					points : []
 				};
-
 				this.datasets.push(datasetObject);
-
-
 				helpers.each(dataset.data,function(dataPoint,index){
 					//Add a new point for each piece of data, passing any required data to draw.
 					datasetObject.points.push(new this.PointClass({
@@ -2624,10 +2238,7 @@
 						highlightStroke : dataset.pointHighlightStroke || dataset.pointStrokeColor
 					}));
 				},this);
-
 				this.buildScale(data.labels);
-
-
 				this.eachPoints(function(point, index){
 					helpers.extend(point, {
 						x: this.scale.calculateX(index),
@@ -2635,10 +2246,7 @@
 					});
 					point.save();
 				}, this);
-
 			},this);
-
-
 			this.render();
 		},
 		update : function(){
@@ -2669,16 +2277,13 @@
 		},
 		buildScale : function(labels){
 			var self = this;
-
 			var dataTotal = function(){
 				var values = [];
 				self.eachPoints(function(point){
 					values.push(point.value);
 				});
-
 				return values;
 			};
-
 			var scaleOptions = {
 				templateString : this.options.scaleLabel,
 				height : this.chart.height,
@@ -2713,7 +2318,6 @@
 				showLabels : this.options.scaleShowLabels,
 				display : this.options.showScale
 			};
-
 			if (this.options.scaleOverride){
 				helpers.extend(scaleOptions, {
 					calculateYRange: helpers.noop,
@@ -2723,13 +2327,10 @@
 					max: this.options.scaleStartValue + (this.options.scaleSteps * this.options.scaleStepWidth)
 				});
 			}
-
-
 			this.scale = new Chart.Scale(scaleOptions);
 		},
 		addData : function(valuesArray,label){
 			//Map the values array for each of the datasets
-
 			helpers.each(valuesArray,function(value,datasetIndex){
 				//Add a new point for each piece of data, passing any required data to draw.
 				this.datasets[datasetIndex].points.push(new this.PointClass({
@@ -2741,7 +2342,6 @@
 					fillColor : this.datasets[datasetIndex].pointColor
 				}));
 			},this);
-
 			this.scale.addXLabel(label);
 			//Then re-render the chart.
 			this.update();
@@ -2764,9 +2364,7 @@
 		draw : function(ease){
 			var easingDecimal = ease || 1;
 			this.clear();
-
 			var ctx = this.chart.ctx;
-
 			// Some helper methods for getting the next/prev points
 			var hasValue = function(item){
 				return item.value !== null;
@@ -2777,16 +2375,11 @@
 			previousPoint = function(point, collection, index){
 				return helpers.findPreviousWhere(collection, hasValue, index) || point;
 			};
-
 			this.scale.draw(easingDecimal);
-
-
 			helpers.each(this.datasets,function(dataset){
 				var pointsWithValues = helpers.where(dataset.points, hasValue);
-
 				//Transition each point first so that the line and point drawing isn't out of sync
 				//We can use this extra loop to calculate the control points of this dataset also in this loop
-
 				helpers.each(dataset.points, function(point, index){
 					if (point.hasValue()){
 						point.transition({
@@ -2795,8 +2388,6 @@
 						}, easingDecimal);
 					}
 				},this);
-
-
 				// Control points need to be calculated in a seperate loop, because we need to know the current x/y of the point
 				// This would cause issues when there is no animation, because the y of the next point would be 0, so beziers would be skewed
 				if (this.options.bezierCurve){
@@ -2808,9 +2399,7 @@
 							nextPoint(point, pointsWithValues, index),
 							tension
 						);
-
 						// Prevent the bezier going outside of the bounds of the graph
-
 						// Cap puter bezier handles to the upper/lower scale bounds
 						if (point.controlPoints.outer.y > this.scale.endPoint){
 							point.controlPoints.outer.y = this.scale.endPoint;
@@ -2818,7 +2407,6 @@
 						else if (point.controlPoints.outer.y < this.scale.startPoint){
 							point.controlPoints.outer.y = this.scale.startPoint;
 						}
-
 						// Cap inner bezier handles to the upper/lower scale bounds
 						if (point.controlPoints.inner.y > this.scale.endPoint){
 							point.controlPoints.inner.y = this.scale.endPoint;
@@ -2828,13 +2416,10 @@
 						}
 					},this);
 				}
-
-
 				//Draw the line between all the points
 				ctx.lineWidth = this.options.datasetStrokeWidth;
 				ctx.strokeStyle = dataset.strokeColor;
 				ctx.beginPath();
-
 				helpers.each(pointsWithValues, function(point, index){
 					if (index === 0){
 						ctx.moveTo(point.x, point.y);
@@ -2842,7 +2427,6 @@
 					else{
 						if(this.options.bezierCurve){
 							var previous = previousPoint(point, pointsWithValues, index);
-
 							ctx.bezierCurveTo(
 								previous.controlPoints.outer.x,
 								previous.controlPoints.outer.y,
@@ -2857,9 +2441,7 @@
 						}
 					}
 				}, this);
-
 				ctx.stroke();
-
 				if (this.options.datasetFill && pointsWithValues.length > 0){
 					//Round off the line by going to the base of the chart, back to the start, then fill.
 					ctx.lineTo(pointsWithValues[pointsWithValues.length - 1].x, this.scale.endPoint);
@@ -2868,7 +2450,6 @@
 					ctx.closePath();
 					ctx.fill();
 				}
-
 				//Now draw the points over the line
 				//A little inefficient double looping, but better than the line
 				//lagging behind the point positions
@@ -2878,63 +2459,43 @@
 			},this);
 		}
 	});
-
-
 }).call(this);
-
 (function(){
 	"use strict";
-
 	var root = this,
 		Chart = root.Chart,
 		//Cache a local reference to Chart.helpers
 		helpers = Chart.helpers;
-
 	var defaultConfig = {
 		//Boolean - Show a backdrop to the scale label
 		scaleShowLabelBackdrop : true,
-
 		//String - The colour of the label backdrop
 		scaleBackdropColor : "rgba(255,255,255,0.75)",
-
 		// Boolean - Whether the scale should begin at zero
 		scaleBeginAtZero : true,
-
 		//Number - The backdrop padding above & below the label in pixels
 		scaleBackdropPaddingY : 2,
-
 		//Number - The backdrop padding to the side of the label in pixels
 		scaleBackdropPaddingX : 2,
-
 		//Boolean - Show line for each value in the scale
 		scaleShowLine : true,
-
 		//Boolean - Stroke a line around each segment in the chart
 		segmentShowStroke : true,
-
 		//String - The colour of the stroke on each segement.
 		segmentStrokeColor : "#fff",
-
 		//Number - The width of the stroke value in pixels
 		segmentStrokeWidth : 2,
-
 		//Number - Amount of animation steps
 		animationSteps : 100,
-
 		//String - Animation easing effect.
 		animationEasing : "easeOutBounce",
-
 		//Boolean - Whether to animate the rotation of the chart
 		animateRotate : true,
-
 		//Boolean - Whether to animate scaling the chart from the centre
 		animateScale : false,
-
 		//String - A legend template
 		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
 	};
-
-
 	Chart.Type.extend({
 		//Passing in a name registers this chart in the Chart namespace
 		name: "PolarArea",
@@ -2976,15 +2537,11 @@
 				templateString: this.options.scaleLabel,
 				valuesCount: data.length
 			});
-
 			this.updateScaleRange(data);
-
 			this.scale.update();
-
 			helpers.each(data,function(segment,index){
 				this.addData(segment,index,true);
 			},this);
-
 			//Set up tooltip events on the chart
 			if (this.options.showTooltips){
 				helpers.bindEvents(this, this.options.tooltipEvents, function(evt){
@@ -2998,14 +2555,11 @@
 					this.showTooltip(activeSegments);
 				});
 			}
-
 			this.render();
 		},
 		getSegmentsAtEvent : function(e){
 			var segmentsArray = [];
-
 			var location = helpers.getRelativePosition(e);
-
 			helpers.each(this.segments,function(segment){
 				if (segment.inRange(location.x,location.y)) segmentsArray.push(segment);
 			},this);
@@ -3013,7 +2567,6 @@
 		},
 		addData : function(segment, atIndex, silent){
 			var index = atIndex || this.segments.length;
-
 			this.segments.splice(index, 0, new this.SegmentArc({
 				fillColor: segment.color,
 				highlightColor: segment.highlight || segment.color,
@@ -3046,7 +2599,6 @@
 			helpers.each(datapoints,function(segment){
 				valuesArray.push(segment.value);
 			});
-
 			var scaleSizes = (this.options.scaleOverride) ?
 				{
 					steps: this.options.scaleSteps,
@@ -3061,7 +2613,6 @@
 					this.options.scaleBeginAtZero,
 					this.options.scaleIntegersOnly
 				);
-
 			helpers.extend(
 				this.scale,
 				scaleSizes,
@@ -3071,11 +2622,9 @@
 					yCenter: this.chart.height/2
 				}
 			);
-
 		},
 		update : function(){
 			this.calculateTotal(this.segments);
-
 			helpers.each(this.segments,function(segment){
 				segment.save();
 			});
@@ -3089,18 +2638,15 @@
 			});
 			this.updateScaleRange(this.segments);
 			this.scale.update();
-
 			helpers.extend(this.scale,{
 				xCenter: this.chart.width/2,
 				yCenter: this.chart.height/2
 			});
-
 			helpers.each(this.segments, function(segment){
 				segment.update({
 					outerRadius : this.scale.calculateCenterOffset(segment.value)
 				});
 			}, this);
-
 		},
 		draw : function(ease){
 			var easingDecimal = ease || 1;
@@ -3111,15 +2657,12 @@
 					circumference : this.scale.getCircumference(),
 					outerRadius : this.scale.calculateCenterOffset(segment.value)
 				},easingDecimal);
-
 				segment.endAngle = segment.startAngle + segment.circumference;
-
 				// If we've removed the first segment we need to set the first one to
 				// start at the top.
 				if (index === 0){
 					segment.startAngle = Math.PI * 1.5;
 				}
-
 				//Check to see if it's the last segment, if not get the next and update the start angle
 				if (index < this.segments.length - 1){
 					this.segments[index+1].startAngle = segment.endAngle;
@@ -3129,76 +2672,52 @@
 			this.scale.draw();
 		}
 	});
-
 }).call(this);
 (function(){
 	"use strict";
-
 	var root = this,
 		Chart = root.Chart,
 		helpers = Chart.helpers;
-
-
-
 	Chart.Type.extend({
 		name: "Radar",
 		defaults:{
 			//Boolean - Whether to show lines for each scale point
 			scaleShowLine : true,
-
 			//Boolean - Whether we show the angle lines out of the radar
 			angleShowLineOut : true,
-
 			//Boolean - Whether to show labels on the scale
 			scaleShowLabels : false,
-
 			// Boolean - Whether the scale should begin at zero
 			scaleBeginAtZero : true,
-
 			//String - Colour of the angle line
 			angleLineColor : "rgba(0,0,0,.1)",
-
 			//Number - Pixel width of the angle line
 			angleLineWidth : 1,
-
 			//String - Point label font declaration
 			pointLabelFontFamily : "'Arial'",
-
 			//String - Point label font weight
 			pointLabelFontStyle : "normal",
-
 			//Number - Point label font size in pixels
 			pointLabelFontSize : 10,
-
 			//String - Point label font colour
 			pointLabelFontColor : "#666",
-
 			//Boolean - Whether to show a dot for each point
 			pointDot : true,
-
 			//Number - Radius of each point dot in pixels
 			pointDotRadius : 3,
-
 			//Number - Pixel width of point dot stroke
 			pointDotStrokeWidth : 1,
-
 			//Number - amount extra to add to the radius to cater for hit detection outside the drawn point
 			pointHitDetectionRadius : 20,
-
 			//Boolean - Whether to show a stroke for datasets
 			datasetStroke : true,
-
 			//Number - Pixel width of dataset stroke
 			datasetStrokeWidth : 2,
-
 			//Boolean - Whether to fill the dataset with a colour
 			datasetFill : true,
-
 			//String - A legend template
 			legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
-
 		},
-
 		initialize: function(data){
 			this.PointClass = Chart.Point.extend({
 				strokeWidth : this.options.pointDotStrokeWidth,
@@ -3207,16 +2726,12 @@
 				hitDetectionRadius : this.options.pointHitDetectionRadius,
 				ctx : this.chart.ctx
 			});
-
 			this.datasets = [];
-
 			this.buildScale(data);
-
 			//Set up tooltip events on the chart
 			if (this.options.showTooltips){
 				helpers.bindEvents(this, this.options.tooltipEvents, function(evt){
 					var activePointsCollection = (evt.type !== 'mouseout') ? this.getPointsAtEvent(evt) : [];
-
 					this.eachPoints(function(point){
 						point.restore(['fillColor', 'strokeColor']);
 					});
@@ -3224,14 +2739,11 @@
 						activePoint.fillColor = activePoint.highlightFill;
 						activePoint.strokeColor = activePoint.highlightStroke;
 					});
-
 					this.showTooltip(activePointsCollection);
 				});
 			}
-
 			//Iterate through each of the datasets, and build this into a property of the chart
 			helpers.each(data.datasets,function(dataset){
-
 				var datasetObject = {
 					label: dataset.label || null,
 					fillColor : dataset.fillColor,
@@ -3240,9 +2752,7 @@
 					pointStrokeColor : dataset.pointStrokeColor,
 					points : []
 				};
-
 				this.datasets.push(datasetObject);
-
 				helpers.each(dataset.data,function(dataPoint,index){
 					//Add a new point for each piece of data, passing any required data to draw.
 					var pointPosition;
@@ -3261,9 +2771,7 @@
 						highlightStroke : dataset.pointHighlightStroke || dataset.pointStrokeColor
 					}));
 				},this);
-
 			},this);
-
 			this.render();
 		},
 		eachPoints : function(callback){
@@ -3271,32 +2779,26 @@
 				helpers.each(dataset.points,callback,this);
 			},this);
 		},
-
 		getPointsAtEvent : function(evt){
 			var mousePosition = helpers.getRelativePosition(evt),
 				fromCenter = helpers.getAngleFromPoint({
 					x: this.scale.xCenter,
 					y: this.scale.yCenter
 				}, mousePosition);
-
 			var anglePerIndex = (Math.PI * 2) /this.scale.valuesCount,
 				pointIndex = Math.round((fromCenter.angle - Math.PI * 1.5) / anglePerIndex),
 				activePointsCollection = [];
-
 			// If we're at the top, make the pointIndex 0 to get the first of the array.
 			if (pointIndex >= this.scale.valuesCount || pointIndex < 0){
 				pointIndex = 0;
 			}
-
 			if (fromCenter.distance <= this.scale.drawingArea){
 				helpers.each(this.datasets, function(dataset){
 					activePointsCollection.push(dataset.points[pointIndex]);
 				});
 			}
-
 			return activePointsCollection;
 		},
-
 		buildScale : function(data){
 			this.scale = new Chart.RadialScale({
 				display: this.options.showScale,
@@ -3327,7 +2829,6 @@
 				labels: data.labels,
 				valuesCount: data.datasets[0].data.length
 			});
-
 			this.scale.setScaleSize();
 			this.updateScaleRange(data.datasets);
 			this.scale.buildYLabels();
@@ -3347,8 +2848,6 @@
 				});
 				return totalDataArray;
 			})();
-
-
 			var scaleSizes = (this.options.scaleOverride) ?
 				{
 					steps: this.options.scaleSteps,
@@ -3363,12 +2862,10 @@
 					this.options.scaleBeginAtZero,
 					this.options.scaleIntegersOnly
 				);
-
 			helpers.extend(
 				this.scale,
 				scaleSizes
 			);
-
 		},
 		addData : function(valuesArray,label){
 			//Map the values array for each of the datasets
@@ -3384,11 +2881,8 @@
 					fillColor : this.datasets[datasetIndex].pointColor
 				}));
 			},this);
-
 			this.scale.labels.push(label);
-
 			this.reflow();
-
 			this.update();
 		},
 		removeData : function(){
@@ -3424,18 +2918,13 @@
 				ctx = this.chart.ctx;
 			this.clear();
 			this.scale.draw();
-
 			helpers.each(this.datasets,function(dataset){
-
 				//Transition each point first so that the line and point drawing isn't out of sync
 				helpers.each(dataset.points,function(point,index){
 					if (point.hasValue()){
 						point.transition(this.scale.getPointPosition(index, this.scale.calculateCenterOffset(point.value)), easeDecimal);
 					}
 				},this);
-
-
-
 				//Draw the line between all the points
 				ctx.lineWidth = this.options.datasetStrokeWidth;
 				ctx.strokeStyle = dataset.strokeColor;
@@ -3450,10 +2939,8 @@
 				},this);
 				ctx.closePath();
 				ctx.stroke();
-
 				ctx.fillStyle = dataset.fillColor;
 				ctx.fill();
-
 				//Now draw the points over the line
 				//A little inefficient double looping, but better than the line
 				//lagging behind the point positions
@@ -3462,15 +2949,7 @@
 						point.draw();
 					}
 				});
-
 			},this);
-
 		}
-
 	});
-
-
-
-
-
 }).call(this);

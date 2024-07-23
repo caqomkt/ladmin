@@ -33,7 +33,7 @@
         <button onclick="return confirm('Deseja sair sem salvar?')" class="btn btn-default">
         <a href="{{ url(config('laraadmin.adminRoute') . '/__db_table_name__/' . $__singular_var__->id) }}">Cancelar</a>
         </button>
-            {!! Form::submit( 'Salvar', ['class'=>'btn bg-gradient-success pull-right']) !!} 
+            {!! Form::submit( 'Salvar', ['class'=>'btn bg-gradient-success pull-right']) !!}
         </div>
         {!! Form::close() !!}
     </div>

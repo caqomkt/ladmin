@@ -1,7 +1,7 @@
 <?php
 /**
  * Controller generated using LaraAdmin
- 
+
 
  */
 
@@ -20,14 +20,13 @@ use Dwij\Laraadmin\Models\Module;
 use Dwij\Laraadmin\Models\ModuleFields;
 use Dwij\Laraadmin\Helpers\LAHelper;
 use App\Models\Comentario;
-use Illuminate\Support\Str;
 
 use App\Models\__model_name__;
 
 class __controller_class_name__ extends Controller
 {
     public $show_action = true;
-    
+
     /**
      * Display a listing of the __module_name__.
      *
@@ -36,7 +35,7 @@ class __controller_class_name__ extends Controller
     public function index()
     {
         $module = Module::get('__module_name__');
-        
+
         if(Module::hasAccess($module->id)) {
             return View('la.__view_folder__.index', [
                 'show_actions' => $this->show_action,
@@ -47,7 +46,7 @@ class __controller_class_name__ extends Controller
             return redirect(config('laraadmin.adminRoute') . "/");
         }
     }
-    
+
     /**
      * Show the form for creating a new __singular_var__.
      *
@@ -57,7 +56,7 @@ class __controller_class_name__ extends Controller
     {
         //
     }
-    
+
     /**
      * Store a newly created __singular_var__ in database.
      *
@@ -67,32 +66,32 @@ class __controller_class_name__ extends Controller
     public function store(Request $request)
     {
         if(Module::hasAccess("__module_name__", "create")) {
-            
+
             $rules = Module::validateRules("__module_name__", $request);
-            
+
             $validator = Validator::make($request->all(), $rules);
-            
+
             if($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
-            
+
             $insert_id = Module::insert("__module_name__", $request);
-            
+
             // Registrar na auditoria Store
-            // Adiciona o Id de acordo com o último registro
+            // Adiciona o Id de acordo com o Ãºltimo registro
             $novoId = __model_name__::latest()->value('id');
             app('App\Http\Controllers\LA\AuditoriasController')->registrar("__module_name__", __FUNCTION__, $novoId, $request);
 
             // REDIRECIONAMENTO ANTERIOR
             //return redirect()->route(config('laraadmin.adminRoute') . '.__route_resource__.index')->with('confirmacao', 'Registro inserido com sucesso!');
-            
+
             return redirect(config('laraadmin.adminRoute') . "/__route_resource__/" . $insert_id)->with('confirmacao', 'Registro inserido com sucesso!');
 
         } else {
             return redirect(config('laraadmin.adminRoute') . "/");
         }
     }
-    
+
     /**
      * Display the specified __singular_var__.
      *
@@ -102,7 +101,7 @@ class __controller_class_name__ extends Controller
     public function show($id)
     {
         if(Module::hasAccess("__module_name__", "view")) {
-            
+
             $__singular_var__ = __model_name__::find($id);
             if(isset($__singular_var__->id)) {
                 $module = Module::get('__module_name__');
@@ -113,7 +112,7 @@ class __controller_class_name__ extends Controller
                         ->where('modulo', '=', '__module_name__')
                         ->whereNull('comentarios.deleted_at')
                         ->get();
-                
+
                 return view('la.__view_folder__.show', [
                     'module' => $module,
                     'view_col' => $module->view_col,
@@ -132,7 +131,7 @@ class __controller_class_name__ extends Controller
             return redirect(config('laraadmin.adminRoute') . "/");
         }
     }
-    
+
     /**
      * Show the form for editing the specified __singular_var__.
      *
@@ -145,9 +144,9 @@ class __controller_class_name__ extends Controller
             $__singular_var__ = __model_name__::find($id);
             if(isset($__singular_var__->id)) {
                 $module = Module::get('__module_name__');
-                
+
                 $module->row = $__singular_var__;
-                
+
                 return view('la.__view_folder__.edit', [
                     'module' => $module,
                     'view_col' => $module->view_col,
@@ -162,7 +161,7 @@ class __controller_class_name__ extends Controller
             return redirect(config('laraadmin.adminRoute') . "/");
         }
     }
-    
+
     /**
      * Update the specified __singular_var__ in storage.
      *
@@ -173,30 +172,30 @@ class __controller_class_name__ extends Controller
     public function update(Request $request, $id)
     {
         if(Module::hasAccess("__module_name__", "edit")) {
-            
+
             $rules = Module::validateRules("__module_name__", $request, true);
-            
+
             $validator = Validator::make($request->all(), $rules);
-            
+
             if($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
-            
+
             $insert_id = Module::updateRow("__module_name__", $request, $id);
-            
+
             // Registrar na auditoria Update
             app('App\Http\Controllers\LA\AuditoriasController')->registrar("__module_name__", __FUNCTION__, $id, $request);
 
             // REDIRECIONAMENTO ANTERIOR
             // return redirect()->route(config('laraadmin.adminRoute') . '.__route_resource__.index')->with('confirmacao', 'Registro atualizado com sucesso!');
-            
+
             return redirect("admin/__route_resource__/" . $id)->with('confirmacao', 'Registro atualizado com sucesso!');
 
         } else {
             return redirect(config('laraadmin.adminRoute') . "/");
         }
     }
-    
+
     /**
      * Remove the specified __singular_var__ from storage.
      *
@@ -211,14 +210,14 @@ class __controller_class_name__ extends Controller
             app('App\Http\Controllers\LA\AuditoriasController')->registrar("__module_name__", __FUNCTION__, $id, $request);
 
             __model_name__::find($id)->delete();
-            
+
             // Redirecting to index() method
             return redirect()->route(config('laraadmin.adminRoute') . '.__route_resource__.index')->with('confirmacao', 'Registro apagado com sucesso!');
         } else {
             return redirect(config('laraadmin.adminRoute') . "/");
         }
     }
-    
+
     /**
      * Server side Datatable fetch via Ajax
      *
@@ -229,19 +228,19 @@ class __controller_class_name__ extends Controller
     {
         $module = Module::get('__module_name__');
         $listing_cols = Module::getListingColumns('__module_name__');
-        
+
         $values = DB::table('__db_table_name__')->select($listing_cols)->whereNull('deleted_at');
         $out = Datatables::of($values)->make();
         $data = $out->getData();
-        
+
         $fields_popup = ModuleFields::getModuleFields('__module_name__');
-        
+
         for($i = 0; $i < count($data->data); $i++) {
             for($j = 0; $j < count($listing_cols); $j++) {
                 $col = $listing_cols[$j];
-                if($fields_popup[$col] != null && Str::startsWith($fields_popup[$col]->popup_vals, "@")) {
+                if($fields_popup[$col] != null && starts_with($fields_popup[$col]->popup_vals, "@")) {
                     $data->data[$i][$j] = ModuleFields::getFieldValue($fields_popup[$col], $data->data[$i][$j]);
-                } elseif ($fields_popup[$col] != null && Str::startsWith($fields_popup[$col]->popup_vals, "[")) {
+                } elseif ($fields_popup[$col] != null && starts_with($fields_popup[$col]->popup_vals, "[")) {
 					$data->data[$i][$j] = LAHelper::parseValues($data->data[$i][$j]);
 				} elseif ($fields_popup[$col] != null && $fields_popup[$col]->field_type == 3 && $data->data[$i][$j]) {
 					if ($data->data[$i][$j] == 0) {
@@ -249,7 +248,7 @@ class __controller_class_name__ extends Controller
 					} else {
 						$data->data[$i][$j] = 'R$ ' . number_format($data->data[$i][$j], 2, ',', '.');
 					}
-                }
+				}
                 if($col == $module->view_col) {
                     $data->data[$i][$j] = '<a href="' . url(config('laraadmin.adminRoute') . '/__route_resource__/' . $data->data[$i][0]) . '">' . $data->data[$i][$j] . '</a>';
                 }
@@ -257,19 +256,19 @@ class __controller_class_name__ extends Controller
                 //    $data->data[$i][$j];
                 // }
             }
-            
+
             if($this->show_action) {
                 $output = '<div class="btn-group">
 
                             <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
-                            <span class="sr-only">Ações</span>
+                            <span class="sr-only">AÃ§Ãµes</span>
                             </button>
                             <div class="dropdown-menu" role="menu" style="">';
 
                 if(Module::hasAccess("__module_name__", "edit")) {
                     $output .= '<a href="' . url(config('laraadmin.adminRoute') . '/__route_resource__/' . $data->data[$i][0] . '/edit') . '" class="dropdown-item text-warning" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fa fa-edit"></i> Editar</a>';
                 }
-                
+
                 if(Module::hasAccess("__module_name__", "delete")) {
                     $output .= Form::open(['route' => [config('laraadmin.adminRoute') . '.__route_resource__.destroy', $data->data[$i][0]], 'method' => 'delete', 'style' => 'display:inline', 'onsubmit' => 'return confirm("Deseja apagar o registro?");']);
                     $output .= ' <button class="dropdown-item text-danger" type="submit" data-toggle="tooltip" data-placement="top" title="Apagar"><i class="fa fa-times"></i> Excluir</button>';

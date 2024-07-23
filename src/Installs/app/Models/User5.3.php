@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
@@ -10,40 +11,39 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 use Illuminate\Database\Eloquent\Model;
 // use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Permission\Traits\HasRoles;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Authenticatable implements AuthorizableContract, CanResetPasswordContract
 {
     use Notifiable;
-    use Notifiable, CanResetPassword, HasRoles; // Inclui HasRoles do Spatie
+    use CanResetPassword;
     // use SoftDeletes;
+    use EntrustUserTrait;
 
     protected $table = 'users';
 	
-    /**
+	/**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password', 'context_id', 'type' // Removi 'role', pois será tratado pelos relacionamentos do Spatie
-    ];
-    
-    /**
+	protected $fillable = [
+		'name', 'email', 'password', "role", "context_id", "type"
+	];
+	
+	/**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
+	protected $hidden = [
+		'password', 'remember_token',
     ];
-
+    
     // protected $dates = ['deleted_at'];
 
     /**
-     * User uploads relationship
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return mixed
      */
     public function uploads()
     {

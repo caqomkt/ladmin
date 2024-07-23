@@ -58,7 +58,7 @@
 			<div class="modal-body">
 				<div class="card-body">
                     @la_input($module, 'name', null, null, "form-control text-uppercase", ["placeholder" => "Role Name in CAPITAL LETTERS with '_' to JOIN e.g. 'SUPER_ADMIN'"])
-					@la_input($module, 'guard_name')
+					@la_input($module, 'display_name')
 					@la_input($module, 'description')
 					@la_input($module, 'parent')
 					@la_input($module, 'dept')

@@ -51,7 +51,7 @@
                     @la_form($module)
 					{{--
 					@la_input($module, 'name')
-					@la_input($module, 'guard_name')
+					@la_input($module, 'display_name')
 					@la_input($module, 'description')
 					--}}
 				</div>
@@ -77,6 +77,7 @@ $(function () {
         ajax: "{{ url(config('laraadmin.adminRoute') . '/permission_dt_ajax') }}",
 		"language": {
 				                "url": "{{ asset('la-assets/plugins/datatables/portuguese-brasil.json') }}",
+
 			}
 	});
 });

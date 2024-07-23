@@ -1,12 +1,12 @@
 @extends("la.layouts.app")
 @section("contentheader_title")
-<a href="{{ url(config('laraadmin.adminRoute') . '/roles') }}">FunÃ§Ãµes</a> :
+<a href="{{ url(config('laraadmin.adminRoute') . '/roles') }}">Funções</a> :
 @endsection
 @section("contentheader_description", $role->$view_col)
 @section("section", "Roles")
 @section("section_url", url(config('laraadmin.adminRoute') . '/roles'))
 @section("sub_section", "Edit")
-@section("htmlheader_title", "Editar funÃ§Ã£o : ".$role->$view_col)
+@section("htmlheader_title", "Editar função : ".$role->$view_col)
 @section("main-content")
 @if (count($errors) > 0)
 <div class="alert alert-danger">
@@ -23,8 +23,8 @@
 	</div>
 	<div class="card-body">
 		{!! Form::model($role, ['route' => [config('laraadmin.adminRoute') . '.roles.update', $role->id ], 'method'=>'PUT', 'id' => 'role-edit-form']) !!}
-		@la_input($module, 'name', null, null, "form-control text-uppercase", ["placeholder" => "O nome da funÃ§Ã£o deve estar em LETRAS MAIÃšSCULAS e unido por '_' ex: 'SUPER_ADMIN'"])
-		@la_input($module, 'guard_name')
+		@la_input($module, 'name', null, null, "form-control text-uppercase", ["placeholder" => "O nome da função deve estar em LETRAS MAIÚSCULAS e unido por '_' ex: 'SUPER_ADMIN'"])
+		@la_input($module, 'display_name')
 		@la_input($module, 'description')
 		@la_input($module, 'parent')
 		@la_input($module, 'dept')

@@ -21,7 +21,7 @@ Permission View
 						<div class="col-md-4"><i class="fa fa-twitter"></i> 12</div>
 						<div class="col-md-4"><i class="fa fa-instagram"></i> 89</div>
 					</div>
-					<p class="desc">DescriÃ§Ã£o</p>
+					<p class="desc">Descrição</p>
 				</div>
 			</div>
 		</div>
@@ -98,7 +98,7 @@ Permission View
 	<ul data-toggle="ajax-tab" class="nav nav-tabs profile" role="tablist">
 		<li class=""><a href="{{ url(config('laraadmin.adminRoute') . '/permissions') }}" data-toggle="tooltip" data-placement="right" title="Voltar para lista">
 				<i class="fa fa-chevron-left"></i>Voltar</a></li>
-		<li class="active"><a class="nav-link active" data-toggle="tab" href="#tab-general-info" role="tab" aria-controls="tab-general-info" aria-selected="true"><i class="fa fa-bars"></i> InformaÃ§Ãµes gerais</a></li>
+		<li class="active"><a class="nav-link active" data-toggle="tab" href="#tab-general-info" role="tab" aria-controls="tab-general-info" aria-selected="true"><i class="fa fa-bars"></i> Informações gerais</a></li>
 		@role("SUPER_ADMIN")
 		<li class=""><a role="tab" data-toggle="tab" href="#tab-access" data-target="#tab-access"><i class="fa fa-key"></i> Acessos</a></li>
 		@endrole
@@ -109,11 +109,11 @@ Permission View
 			<div class="tab-content">
 				<div class="panel infolist">
 					<div class="card-default card-heading">
-						<h4>InformaÃ§Ãµes gerais</h4>
+						<h4>Informações gerais</h4>
 					</div>
 					<div class="card-body">
 						@la_display($module, 'name')
-						@la_display($module, 'guard_name')
+						@la_display($module, 'display_name')
 						@la_display($module, 'description')
 					</div>
 				</div>
@@ -126,12 +126,12 @@ Permission View
 					<form action="{{ url('/admin/save_permissions/'.$permission->id) }}" method="post">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<div class="card-default card-heading">
-							<h4>PermissÃµes para funÃ§Ãµes</h4>
+							<h4>Permissões para funções</h4>
 						</div>
 						<div class="card-body">
 							@foreach ($roles as $role)
 							<div class="form-group">
-								<label for="ratings_innovation" class="col-md-2">{{ $role->guard_name }} :</label>
+								<label for="ratings_innovation" class="col-md-2">{{ $role->display_name }} :</label>
 								<div class="col-md-10 fvalue star_class">
 									<?php
 									$query = DB::table('permission_role')->where('permission_id', $permission->id)->where('role_id', $role->id);

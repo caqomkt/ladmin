@@ -33,6 +33,8 @@ Route::group([
     Route::post(config('laraadmin.adminRoute') . '/module_update', 'ModuleController@update');
     Route::post(config('laraadmin.adminRoute') . '/module_field_listing_show', 'FieldController@module_field_listing_show_ajax');
 
+
+
     /* ================== Menu Editor ================== */
     Route::resource(config('laraadmin.adminRoute') . '/la_menus', 'MenuController');
     Route::post(config('laraadmin.adminRoute') . '/la_menus/update_hierarchy', 'MenuController@update_hierarchy');

@@ -61,7 +61,7 @@ class DatabaseSeeder extends Seeder
 		// Create Super Admin Role
 		$role = new Role;
 		$role->name = "SUPER_ADMIN";
-		$role->guard_name = "Super Admin";
+		$role->display_name = "Super Admin";
 		$role->description = "Full Access Role";
 		$role->parent = 1;
 		$role->dept = $dept->id;
@@ -75,7 +75,7 @@ class DatabaseSeeder extends Seeder
 		// Create Admin Panel Permission
 		$perm = new Permission;
 		$perm->name = "ADMIN_PANEL";
-		$perm->guard_name = "Admin Panel";
+		$perm->display_name = "Admin Panel";
 		$perm->description = "Admin Panel Permission";
 		$perm->save();
 		
