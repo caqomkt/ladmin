@@ -3,9 +3,7 @@
 use Dwij\Laraadmin\Helpers\LAHelper;
 
 $as = "";
-if (LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
-    $as = config('laraadmin.adminRoute') . '.';
-}
+$as = config('laraadmin.adminRoute') . '.';
 
 /**
  * Connect routes with ADMIN_PANEL permission(for security) and 'Dwij\Laraadmin\Controllers' namespace

@@ -39,23 +39,20 @@ class LAProvider extends ServiceProvider
         | Blade Directives for Spatie not working in Laravel 5.3
         |--------------------------------------------------------------------------
         */
-        if (LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
+        // Call to Spatie::hasRole
+        Blade::directive('role', function ($expression) {
+            return "<?php if(auth()->check() && auth()->user()->hasRole({$expression})) : ?>";
+        });
 
-            // Call to Spatie::hasRole
-            Blade::directive('role', function ($expression) {
-                return "<?php if(auth()->check() && auth()->user()->hasRole({$expression})) : ?>";
-            });
+        // Call to Spatie::can
+        Blade::directive('permission', function ($expression) {
+            return "<?php if(auth()->check() && auth()->user()->can({$expression})) : ?>";
+        });
 
-            // Call to Spatie::can
-            Blade::directive('permission', function ($expression) {
-                return "<?php if(auth()->check() && auth()->user()->can({$expression})) : ?>";
-            });
-
-            // Call to Entrust::ability
-            //Blade::directive('ability', function ($expression) {
-            //    return "<?php if (\\Entrust::ability({$expression})) : ? >";
-            //});
-        }
+        // Call to Entrust::ability
+        //Blade::directive('ability', function ($expression) {
+        //    return "<?php if (\\Entrust::ability({$expression})) : ? >";
+        //});
     }
 
     /**
@@ -148,33 +145,25 @@ class LAProvider extends ServiceProvider
 
         // LAForm Input Maker
         Blade::directive('la_input', function ($expression) {
-            if (LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
-                $expression = "(" . $expression . ")";
-            }
+            $expression = "(" . $expression . ")";
             return "<?php echo LAFormMaker::input$expression; ?>";
         });
 
         // LAForm Form Maker
         Blade::directive('la_form', function ($expression) {
-            if (LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
-                $expression = "(" . $expression . ")";
-            }
+            $expression = "(" . $expression . ")";
             return "<?php echo LAFormMaker::form$expression; ?>";
         });
 
         // LAForm Maker - Display Values
         Blade::directive('la_display', function ($expression) {
-            if (LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
-                $expression = "(" . $expression . ")";
-            }
+            $expression = "(" . $expression . ")";
             return "<?php echo LAFormMaker::display$expression; ?>";
         });
 
         // LAForm Maker - Check Whether User has Module Access
         Blade::directive('la_access', function ($expression) {
-            if (LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
-                $expression = "(" . $expression . ")";
-            }
+            $expression = "(" . $expression . ")";
             return "<?php if(LAFormMaker::la_access$expression) { ?>";
         });
         Blade::directive('endla_access', function ($expression) {
@@ -183,9 +172,7 @@ class LAProvider extends ServiceProvider
 
         // LAForm Maker - Check Whether User has Module Field Access
         Blade::directive('la_field_access', function ($expression) {
-            if (LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.6 || LAHelper::laravel_ver() == 5.7 || LAHelper::laravel_ver() == 5.8) {
-                $expression = "(" . $expression . ")";
-            }
+            $expression = "(" . $expression . ")";
             return "<?php if(LAFormMaker::la_field_access$expression) { ?>";
         });
         Blade::directive('endla_field_access', function ($expression) {
