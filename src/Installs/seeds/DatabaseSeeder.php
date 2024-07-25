@@ -75,7 +75,7 @@ class DatabaseSeeder extends Seeder
 		// Create Admin Panel Permission
 		$perm = new Permission;
 		$perm->name = "ADMIN_PANEL";
-		$perm->guard_name = "Admin Panel";
+		$perm->guard_name = "web";
 		$perm->description = "Admin Panel Permission";
 		$perm->save();
 		
