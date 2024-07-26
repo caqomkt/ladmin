@@ -8,7 +8,7 @@ use App\Http\Requests;
 use Auth;
 use DB;
 use Validator;
-use Datatables;
+use Yajra\DataTables\Facades\DataTables;
 use Collective\Html\FormFacade as Form;
 use Dwij\Laraadmin\Models\Module;
 use Dwij\Laraadmin\Models\ModuleFields;
@@ -87,13 +87,13 @@ class UsersController extends Controller
 			for ($j=0; $j < count($listing_cols); $j++) { 
 				$col = $listing_cols[$j];
 				if($fields_popup[$col] != null && Str::startsWith($fields_popup[$col]->popup_vals, "@")) {
-					$data->data[$i][$j] = ModuleFields::getFieldValue($fields_popup[$col], $data->data[$i][$j]);
+					$data->data[$i]->$col = ModuleFields::getFieldValue($fields_popup[$col], $data->data[$i]->$col);
 				}
 				if($col == $module->view_col) {
-					$data->data[$i][$j] = '<a href="'.url(config('laraadmin.adminRoute') . '/users/'.$data->data[$i][0]).'">'.$data->data[$i][$j].'</a>';
+					$data->data[$i]->$col = '<a href="'.url(config('laraadmin.adminRoute') . '/users/'.$data->data[$i]->id).'">'.$data->data[$i]->$col.'</a>';
 				}
 				// else if($col == "author") {
-				//    $data->data[$i][$j];
+				//    $data->data[$i]->$col;
 				// }
 			}
 		}

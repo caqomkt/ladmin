@@ -9,7 +9,7 @@ use App\Http\Requests;
 use Auth;
 use DB;
 use Validator;
-use Datatables;
+use Yajra\DataTables\Facades\DataTables;
 use Collective\Html\FormFacade as Form;
 use Dwij\Laraadmin\Models\Module;
 use Dwij\Laraadmin\Models\ModuleFields;
@@ -187,22 +187,22 @@ class PermissionsController extends Controller
         $data = $out->getData();
 
         for($i = 0; $i < count($data->data); $i++) {
-            $data->data[$i][] = view('la.layouts.actions', [
+            $data->data[$i]->actions = view('la.layouts.actions', [
                 'module' => 'Permissions',
-                'id' => $data->data[$i][0]
+                'id' => $data->data[$i]->id
             ])->render();
 if($this->show_action) {
 				$output = '';
 				if(Module::hasAccess("Permissions", "edit")) {
-					$output .= '<a href="'.url(config('laraadmin.adminRoute') . '/permissions/'.$data->data[$i][0].'/edit').'" class="btn btn-warning btn-xs" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-edit"></i></a>';
+					$output .= '<a href="'.url(config('laraadmin.adminRoute') . '/permissions/'.$data->data[$i]->id.'/edit').'" class="btn btn-warning btn-xs" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-edit"></i></a>';
 				}
 				
 				if(Module::hasAccess("Permissions", "delete")) {
-					$output .= Form::open(['route' => [config('laraadmin.adminRoute') . '.permissions.destroy', $data->data[$i][0]], 'method' => 'delete', 'style'=>'display:inline']);
+					$output .= Form::open(['route' => [config('laraadmin.adminRoute') . '.permissions.destroy', $data->data[$i]->id], 'method' => 'delete', 'style'=>'display:inline']);
 					$output .= ' <button class="btn btn-danger btn-xs" type="submit"><i class="fa fa-times"></i></button>';
 					$output .= Form::close();
 				}
-				$data->data[$i][] = (string)$output;
+				$data->data[$i]->actions = (string)$output;
 			}
         }
         $out->setData($data);

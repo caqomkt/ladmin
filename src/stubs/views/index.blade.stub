@@ -121,6 +121,13 @@ $(function () {
                     colvis: '<i class="fa fa-eye"></i> colunas'
                 },
             },
+            columns: [
+                { data: "id" },
+                // Inserir outras colunas data aqui
+                @if($show_actions)
+                    { data: "actions" },
+                @endif
+            ],
             "columnDefs": [{
         @if($show_actions)
         columnDefs: [

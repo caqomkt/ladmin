@@ -19,7 +19,7 @@ use Auth;
 use DB;
 use File;
 use Validator;
-use Datatables;
+use Yajra\DataTables\Facades\DataTables;
 
 use App\Models\Upload;
 

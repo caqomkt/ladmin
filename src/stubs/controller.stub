@@ -14,7 +14,7 @@ use App\Http\Requests;
 use Auth;
 use DB;
 use Validator;
-use Datatables;
+use Yajra\DataTables\Facades\DataTables;
 use Collective\Html\FormFacade as Form;
 use Dwij\Laraadmin\Models\Module;
 use Dwij\Laraadmin\Models\ModuleFields;
@@ -79,7 +79,7 @@ class __controller_class_name__ extends Controller
             $insert_id = Module::insert("__module_name__", $request);
             
             // Registrar na auditoria Store
-            // Adiciona o Id de acordo com o último registro
+            // Adiciona o Id de acordo com o Ãºltimo registro
             $novoId = __model_name__::latest()->value('id');
             app('App\Http\Controllers\LA\AuditoriasController')->registrar("__module_name__", __FUNCTION__, $novoId, $request);
 
@@ -240,21 +240,21 @@ class __controller_class_name__ extends Controller
             for($j = 0; $j < count($listing_cols); $j++) {
                 $col = $listing_cols[$j];
                 if($fields_popup[$col] != null && Str::startsWith($fields_popup[$col]->popup_vals, "@")) {
-                    $data->data[$i][$j] = ModuleFields::getFieldValue($fields_popup[$col], $data->data[$i][$j]);
+                    $data->data[$i]->$col = ModuleFields::getFieldValue($fields_popup[$col], $data->data[$i]->$col);
                 } elseif ($fields_popup[$col] != null && Str::startsWith($fields_popup[$col]->popup_vals, "[")) {
-					$data->data[$i][$j] = LAHelper::parseValues($data->data[$i][$j]);
-				} elseif ($fields_popup[$col] != null && $fields_popup[$col]->field_type == 3 && $data->data[$i][$j]) {
-					if ($data->data[$i][$j] == 0) {
-						$data->data[$i][$j] = '';
+					$data->data[$i]->$col = LAHelper::parseValues($data->data[$i]->$col);
+				} elseif ($fields_popup[$col] != null && $fields_popup[$col]->field_type == 3 && $data->data[$i]->$col) {
+					if ($data->data[$i]->$col == 0) {
+						$data->data[$i]->$col = '';
 					} else {
-						$data->data[$i][$j] = 'R$ ' . number_format($data->data[$i][$j], 2, ',', '.');
+						$data->data[$i]->$col = 'R$ ' . number_format($data->data[$i]->$col, 2, ',', '.');
 					}
                 }
                 if($col == $module->view_col) {
-                    $data->data[$i][$j] = '<a href="' . url(config('laraadmin.adminRoute') . '/__route_resource__/' . $data->data[$i][0]) . '">' . $data->data[$i][$j] . '</a>';
+                    $data->data[$i]->$col = '<a href="' . url(config('laraadmin.adminRoute') . '/__route_resource__/' . $data->data[$i]->id) . '">' . $data->data[$i]->$col . '</a>';
                 }
                 // else if($col == "author") {
-                //    $data->data[$i][$j];
+                //    $data->data[$i]->$col;
                 // }
             }
             
@@ -262,21 +262,21 @@ class __controller_class_name__ extends Controller
                 $output = '<div class="btn-group">
 
                             <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
-                            <span class="sr-only">Ações</span>
+                            <span class="sr-only">AÃ§Ãµes</span>
                             </button>
                             <div class="dropdown-menu" role="menu" style="">';
 
                 if(Module::hasAccess("__module_name__", "edit")) {
-                    $output .= '<a href="' . url(config('laraadmin.adminRoute') . '/__route_resource__/' . $data->data[$i][0] . '/edit') . '" class="dropdown-item text-warning" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fa fa-edit"></i> Editar</a>';
+                    $output .= '<a href="' . url(config('laraadmin.adminRoute') . '/__route_resource__/' . $data->data[$i]->id . '/edit') . '" class="dropdown-item text-warning" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fa fa-edit"></i> Editar</a>';
                 }
                 
                 if(Module::hasAccess("__module_name__", "delete")) {
-                    $output .= Form::open(['route' => [config('laraadmin.adminRoute') . '.__route_resource__.destroy', $data->data[$i][0]], 'method' => 'delete', 'style' => 'display:inline', 'onsubmit' => 'return confirm("Deseja apagar o registro?");']);
+                    $output .= Form::open(['route' => [config('laraadmin.adminRoute') . '.__route_resource__.destroy', $data->data[$i]->id], 'method' => 'delete', 'style' => 'display:inline', 'onsubmit' => 'return confirm("Deseja apagar o registro?");']);
                     $output .= ' <button class="dropdown-item text-danger" type="submit" data-toggle="tooltip" data-placement="top" title="Apagar"><i class="fa fa-times"></i> Excluir</button>';
                     $output .= Form::close();
                 }
                 $output .= '</div></div>';
-                $data->data[$i][] = (string)$output;
+                $data->data[$i]->actions = (string)$output;
             }
         }
         $out->setData($data);
