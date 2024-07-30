@@ -130,7 +130,7 @@ class AuthController extends Controller
             'type' => "Employee",
         ]);
         $role = Role::where('name', 'SUPER_ADMIN')->first();
-        $user->attachRole($role);
+        $user->assignRole($role);
     
         return $user;
     }

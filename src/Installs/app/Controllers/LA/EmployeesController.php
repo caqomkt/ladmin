@@ -89,9 +89,9 @@ class EmployeesController extends Controller
 			]);
 	
 			// update user role
-			$user->detachRoles();
+			$user->roles()->detach();
 			$role = Role::find($request->role);
-			$user->attachRole($role);
+			$user->assignRole($role);
 			
 			if(env('MAIL_USERNAME') != null && env('MAIL_USERNAME') != "null" && env('MAIL_USERNAME') != "") {
 				// Send mail to User his Password
@@ -208,9 +208,9 @@ class EmployeesController extends Controller
 			$user->save();
 			
 			// update user role
-			$user->detachRoles();
+			$user->roles()->detach();
 			$role = Role::find($request->role);
-			$user->attachRole($role);
+			$user->assignRole($role);
 			
 			return redirect()->route(config('laraadmin.adminRoute') . '.employees.index');
 			
