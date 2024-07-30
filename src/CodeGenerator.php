@@ -233,7 +233,7 @@ class CodeGenerator
         $tableS = Str::singular(strtolower($table));
         $migrationName = 'create_' . $tableP . '_table';
         $migrationFileName = date("Y_m_d_His_") . $migrationName . ".php";
-        $migrationClassName = ucfirst(camel_case($migrationName));
+        $migrationClassName = ucfirst(Str::camel($migrationName));
         $dbTableName = $tableP;
         $moduleName = ucfirst(Str::plural($table));
 

@@ -3,8 +3,10 @@
 namespace Dwij\Laraadmin\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 use DB;
 use Dwij\Laraadmin\Helpers\LAHelper;
 use Dwij\Laraadmin\Models\Module;
