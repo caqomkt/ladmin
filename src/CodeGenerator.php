@@ -198,7 +198,8 @@ class CodeGenerator
                 "url" => $config->dbTableName,
                 "icon" => "fa " . $config->fa_icon,
                 "type" => 'module',
-                "parent" => 0
+                "parent" => 100, // insere item dentro do menu módulos
+                "hierarchy" => 100 // coloca como última opção no menu de módulos
             ]);
         }
 
