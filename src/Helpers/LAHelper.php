@@ -105,11 +105,14 @@ class LAHelper
 		// return $value;
 		$valueOut = "";
 		if (strpos($value, '[') !== false) {
-			$arr = json_decode($value);
-			foreach ($arr as $key) {
-				$valueOut .= "<div class='label label-primary'>".$key."</div> ";
-			}
-		} else if (strpos($value, ',') !== false) {
+            // Decodifica a string JSON
+            $arr = json_decode(html_entity_decode($value));
+            if (is_array($arr)) {
+                foreach ($arr as $key) {
+                    $valueOut .= "<div class='label label-primary'>".$key."</div>"; // Adiciona uma quebra de linha após cada item
+                }
+            }
+        } else if (strpos($value, ',') !== false) {
 			$arr = array_map('trim', explode(",", $value));
 			foreach ($arr as $key) {
 				$valueOut .= "<div class='label label-primary'>".$key."</div> ";
