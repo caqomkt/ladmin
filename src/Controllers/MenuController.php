@@ -4,7 +4,6 @@
 namespace Dwij\Laraadmin\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use DB;
@@ -54,13 +53,13 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $name = Input::get('name');
-        $url = Input::get('url');
-        $icon = Input::get('icon');
-        $type = Input::get('type');
+        $name = $request->input('name');
+        $url = $request->input('url');
+        $icon = $request->input('icon');
+        $type = $request->input('type');
         
         if($type == "module") {
-            $module_id = Input::get('module_id');
+            $module_id = $request->input('module_id');
             $module = Module::find($module_id);
             if(isset($module->id)) {
                 $name = $module->name;
@@ -98,10 +97,10 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $name = Input::get('name');
-        $url = Input::get('url');
-        $icon = Input::get('icon');
-        $type = Input::get('type');
+        $name = $request->input('name');
+        $url = $request->input('url');
+        $icon = $request->input('icon');
+        $type = $request->input('type');
         
         $menu = Menu::find($id);
         $menu->name = $name;
@@ -133,7 +132,7 @@ class MenuController extends Controller
      */
     public function update_hierarchy()
     {
-        $parents = Input::get('jsonData');
+        $parents = $request->input('jsonData');
         $parent_id = 0;
         
         for($i = 0; $i < count($parents); $i++) {
