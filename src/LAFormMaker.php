@@ -201,6 +201,8 @@ class LAFormMaker
 					} else {
 						$popup_vals = array();
 					}
+					// Adicionando o item vazio como primeira opção
+                    $popup_vals = array_merge(['' => 'Selecione uma opção'], $popup_vals);
 					$out .= Form::select($field_name, $popup_vals, $default_val, $params);
 					//ver no vendor\laravelcollective\html\src\formbuilder.php   > função select
 					break;
