@@ -104,6 +104,10 @@ class LAFormMaker
 					break;
 				case 'Currency':
 					$out .= '<label for="' . $field_name . '">' . $label . '(R$): ' . $required_ast . ' </label>';
+					if (isset($params['data-rule-maxlength'])) {
+						$params['maxlength'] = $params['data-rule-maxlength'];
+						unset($params['data-rule-maxlength']);
+					}
 					if ($default_val != null) {
 						$default_val = $defaultvalue;
 					}
@@ -348,6 +352,10 @@ class LAFormMaker
 					break;
 				case 'Mobile':
 					$out .= '<label for="' . $field_name . '">' . $label . ': ' . $required_ast . ' </label>';
+					if (isset($params['data-rule-maxlength'])) {
+						$params['maxlength'] = $params['data-rule-maxlength'];
+						unset($params['data-rule-maxlength']);
+					}
 					if ($default_val != null) {
 						$default_val = $defaultvalue;
 					}
@@ -525,6 +533,7 @@ class LAFormMaker
 						$default_val = $row->$field_name;
 					}
 					$params['data-rule-url'] = "true";
+					$params['placeholder'] = "https://exemplo.com.br";
 					$out .= Form::text($field_name, $default_val, $params);
 					break;
 			}
