@@ -192,19 +192,23 @@ class LAFormMaker
 					$params['tabindex'] = "-1";
 					$params['aria-hidden'] = "true";
 					$params['id'] = $field_name;
-					//echo $defaultvalue;
-					if ($default_val != null) {
-						$default_val = $defaultvalue;
-					}
-					// Override the edit value
+					//if ($default_val != null) {
+					//	$default_val = $defaultvalue;
+					//}
+					// Se não houver valor vindo do banco, o valor padrão será null (campo vazio)
+					$default_val = null;
+					// Se houver um valor no banco, sobrescreve o valor padrão
+					//Log::info('$row '.$row);
 					if (isset($row) && isset($row->$field_name)) {
 						$default_val = $row->$field_name;
+						//Log::info('$default_val '.$default_val);
 					}
 					if ($popup_vals != "") {
 						$popup_vals = LAFormMaker::process_values($popup_vals);
 					} else {
 						$popup_vals = array();
 					}
+					$popup_vals = ['' => 'Selecione uma opção'] + [' ' => ''] + $popup_vals;
 					$out .= Form::select($field_name, $popup_vals, $default_val, $params);
 					//ver no vendor\laravelcollective\html\src\formbuilder.php   > função select
 					break;
