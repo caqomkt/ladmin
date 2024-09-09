@@ -1,11 +1,6 @@
 @extends('la.layouts.app')
 @section("htmlheader_title", $__singular_var__->$view_col)
 @section('main-content')
-@if (session('confirmacao'))
-        <div class="alert alert-success">
-            {{ session('confirmacao') }}
-        </div>
-    @endif
 <div id="page-content" class="profile2">
     <br>
 
@@ -110,4 +105,15 @@
 </div>
 @endsection
 @push('scripts')
+<script>
+    @php
+        $successMessage = session('confirmacao', false);
+    @endphp
+    $(function() {
+        var successMessage = @json($successMessage);
+        if (successMessage) {
+            exibirToastDinamico('bg-success', '', '', successMessage);
+        }
+    });
+</script>
 @endpush
