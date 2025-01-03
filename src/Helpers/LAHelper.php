@@ -279,32 +279,82 @@ class LAHelper
 	}
 
 	// LAHelper::print_menu($menu)
-	public static function print_menu($menu, $active = false) {
-		$childrens = \Dwij\Laraadmin\Models\Menu::where("parent", $menu->id)->orderBy('hierarchy', 'asc')->get();
+	//public static function print_menu($menu, $active = false) {
+	//	$childrens = \Dwij\Laraadmin\Models\Menu::where("parent", $menu->id)->orderBy('hierarchy', 'asc')->get();
+//
+	//	$treeview = " class=\"nav-item\"";
+	//	$subviewSign = "";
+	//	if(count($childrens)) {
+	//		$treeview = " class=\"nav-item has-treeview\"";
+	//		$subviewSign = '<i class="fa fa-angle-left right"></i>';
+	//	}
+	//	$active_str = '';
+	//	if($active) {
+	//		$active_str = 'class="active"';
+	//	}
+	//	
+	//	$str = '<li'.$treeview.' '.$active_str.'><a class="nav-link" href="'.url(config("laraadmin.adminRoute") . '/' . $menu->url ) .'"><i class="nav-icon fa '.$menu->icon.'"></i> <p>'.LAHelper::real_module_name($menu->name).' '.$subviewSign.'</p></a>';
+	//	
+	//	if(count($childrens)) {
+	//		$str .= '<ul class="nav nav-treeview">';
+	//		foreach($childrens as $children) {
+	//			$str .= LAHelper::print_menu($children);
+	//		}
+	//		$str .= '</ul>';
+	//	}
+	//	$str .= '</li>';
+	//	return $str;
+	//}
 
-		$treeview = " class=\"nav-item\"";
-		$subviewSign = "";
-		if(count($childrens)) {
-			$treeview = " class=\"nav-item has-treeview\"";
-			$subviewSign = '<i class="fa fa-angle-left right"></i>';
-		}
-		$active_str = '';
-		if($active) {
-			$active_str = 'class="active"';
-		}
-		
-		$str = '<li'.$treeview.' '.$active_str.'><a class="nav-link" href="'.url(config("laraadmin.adminRoute") . '/' . $menu->url ) .'"><i class="nav-icon fa '.$menu->icon.'"></i> <p>'.LAHelper::real_module_name($menu->name).' '.$subviewSign.'</p></a>';
-		
-		if(count($childrens)) {
-			$str .= '<ul class="nav nav-treeview">';
-			foreach($childrens as $children) {
-				$str .= LAHelper::print_menu($children);
-			}
-			$str .= '</ul>';
-		}
-		$str .= '</li>';
-		return $str;
-	}
+	public static function print_menu($menu, $active = false) {
+        // Obtem os filhos do menu
+        $childrens = \Dwij\Laraadmin\Models\Menu::where("parent", $menu->id)->orderBy('hierarchy', 'asc')->get();
+
+        // Variáveis para estilização
+        $treeview = " class=\"nav-item\"";
+        $subviewSign = "";
+        if ($childrens->count()) {
+            $treeview = " class=\"nav-item has-treeview\"";
+            $subviewSign = '<i class="fa fa-angle-left right"></i>';
+        }
+        $active_str = '';
+        if ($active) {
+            $active_str = 'class="active"';
+        }
+
+        // Inicia a string do menu
+        $str = '<li'.$treeview.' '.$active_str.'>';
+        $str .= '<a class="nav-link" href="'.url(config("laraadmin.adminRoute") . '/' . $menu->url) .'">';
+        $str .= '<i class="nav-icon fa '.$menu->icon.'"></i>';
+        $str .= '<p>'.LAHelper::real_module_name($menu->name).' '.$subviewSign.'</p></a>';
+
+        // Processa os submenus
+        if ($childrens->count()) {
+            $str .= '<ul class="nav nav-treeview">';
+            foreach ($childrens as $children) {
+                // Verifica se o menu superior tem o ID 300
+                if ($menu->id == 300) {
+                    // Exibe todos os submenus sem verificar permissões
+                    $str .= LAHelper::print_menu($children);
+                } else {
+                    // Aplica as verificações de permissões
+                    if ($children->type == 'module' || $children->type == 'custom') {
+                        $module = Module::get($children->url);
+                        if ($module && Module::hasAccess($module->id)) {
+                            $str .= LAHelper::print_menu($children);
+                        }
+                    } else {
+                        // Se não for do tipo "module", sempre exibe
+                        $str .= LAHelper::print_menu($children);
+                    }
+                }
+            }
+            $str .= '</ul>';
+        }
+
+        $str .= '</li>';
+        return $str;
+    }
 
 	// LAHelper::print_menu_topnav($menu)
 	public static function print_menu_topnav($menu, $active = false) {
