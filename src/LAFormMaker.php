@@ -78,6 +78,7 @@ class LAFormMaker
 					}
 					$params['cols'] = 30;
 					$params['rows'] = 3;
+                    $params['id'] = $field_name;
 					$out .= Form::textarea($field_name, $default_val, $params);
 					break;
 				case 'Checkbox':
@@ -89,6 +90,7 @@ class LAFormMaker
 					unset($params['data-rule-maxlength']);
 					$params['class'] = "check-input ml-3";
 					$params['style'] = "width: 20px;height: 20px;";
+                    $params['id'] = $field_name;
 
 					//$params['checked'] = "";
 					if ($default_val != null) {
@@ -120,11 +122,11 @@ class LAFormMaker
 					//$params['step'] = 'any';
 					//$params['min'] = "0";
 					$params['class'] = "form-control valor_id";
-					$params['id'] = "valor_id";
+					$params['id'] = $field_name;
 					$out .= Form::text($field_name, $default_val, $params);
 					break;
 				case 'Date':
-					$out .= '<label for="' . $field_name . '">' . $label . ': ' . $required_ast . ' </label>';
+					$out .= '<label for="dt_' . $field_name . '">' . $label . ': ' . $required_ast . ' </label>';
 					if ($default_val != null) {
 						$default_val = $defaultvalue;
 					}
@@ -139,6 +141,7 @@ class LAFormMaker
 					unset($params['data-rule-maxlength']);
 					$params['class'] = "form-control datetimepicker-input";
 					$params['data-target'] = "#$field_name";
+                    $params['id'] = "dt_$field_name";
 					// $params['data-rule-date'] = "true";
 					$out .= '<div class="input-group date dtpicker" id="' . $field_name . '" data-target-input="nearest">';
 					$out .= Form::text($field_name, $dval, $params);
@@ -146,7 +149,7 @@ class LAFormMaker
 					// $out .= Form::date($field_name, $default_val, $params);
 					break;
 				case 'Datetime':
-					$out .= '<label for="' . $field_name . '">' . $label . ': ' . $required_ast . ' </label>';
+					$out .= '<label for="dt_' . $field_name . '">' . $label . ': ' . $required_ast . ' </label>';
 					if ($default_val != null) {
 						$default_val = $defaultvalue;
 					}
@@ -162,6 +165,7 @@ class LAFormMaker
 					unset($params['data-rule-maxlength']);
 					$params['class'] = "form-control datetimepicker-input";
 					$params['data-target'] = "#$field_name";
+                    $params['id'] = "dt_$field_name";
 					// $params['data-rule-date'] = "true";
 					$out .= '<div class="input-group date dttimepicker" id="' . $field_name . '" data-target-input="nearest">';
 					$out .= Form::text($field_name, $dval, $params);
@@ -178,6 +182,7 @@ class LAFormMaker
 					}
 					unset($params['data-rule-maxlength']);
 					$params['step'] = 'any';
+                    $params['id'] = $field_name;
 					$out .= Form::number($field_name, $default_val, $params);
 					break;
 				case 'Dropdown':
@@ -222,10 +227,11 @@ class LAFormMaker
 						$default_val = $row->$field_name;
 					}
 					$params['data-rule-email'] = "true";
+                    $params['id'] = $field_name;
 					$out .= Form::email($field_name, $default_val, $params);
 					break;
 				case 'File':
-					$out .= '<label for="' . $field_name . '" style="display:block;">' . $label . ': ' . $required_ast . ' </label>';
+					$out .= '<label style="display:block;">' . $label . ': ' . $required_ast . ' </label>';
 					if ($default_val != null) {
 						$default_val = $defaultvalue;
 					}
@@ -252,7 +258,7 @@ class LAFormMaker
 					
 					break;
 				case 'Files':
-					$out .= '<label for="' . $field_name . '" style="display:block;">' . $label . ': ' . $required_ast . ' </label>';
+					$out .= '<label style="display:block;">' . $label . ': ' . $required_ast . ' </label>';
 					if ($default_val != null) {
 						$default_val = $defaultvalue;
 					}
@@ -303,7 +309,7 @@ class LAFormMaker
 					$out .= Form::number($field_name, $default_val, $params);
 					break;
 				case 'HTML':
-					$out .= '<label for="' . $field_name . '">' . $label . ': ' . $required_ast . ' </label>';
+					$out .= '<label>' . $label . ': ' . $required_ast . ' </label>';
 					if ($default_val != null) {
 						$default_val = $defaultvalue;
 					}
@@ -316,7 +322,7 @@ class LAFormMaker
 					$out .= Form::hidden($field_name, $default_val, $params);
 					break;
 				case 'Image':
-					$out .= '<label for="' . $field_name . '" style="display:block;">' . $label . ': ' . $required_ast . ' </label>';
+					$out .= '<label style="display:block;">' . $label . ': ' . $required_ast . ' </label>';
 					if ($default_val != null) {
 						$default_val = $defaultvalue;
 					}
@@ -352,6 +358,7 @@ class LAFormMaker
 						$default_val = $row->$field_name;
 					}
 					// $params['min'] = "0"; // Required for Non-negative numbers
+                    $params['id'] = $field_name;
 					$out .= Form::number($field_name, $default_val, $params);
 					break;
 				case 'Mobile':
@@ -367,6 +374,7 @@ class LAFormMaker
 					if (isset($row) && isset($row->$field_name)) {
 						$default_val = $row->$field_name;
 					}
+                    $params['id'] = $field_name;
 					$out .= Form::text($field_name, $default_val, $params);
 					break;
 				case 'Multiselect':
@@ -409,6 +417,7 @@ class LAFormMaker
 					if (isset($row) && isset($row->$field_name)) {
 						$default_val = $row->$field_name;
 					}
+                    $params['id'] = $field_name;
 					$out .= Form::text($field_name, $default_val, $params);
 					break;
 				case 'Password':
@@ -469,6 +478,7 @@ class LAFormMaker
 						$params['maxlength'] = $params['data-rule-maxlength'];
 						unset($params['data-rule-maxlength']);
 					}
+                    $params['id'] = $field_name;
 					$out .= Form::text($field_name, $default_val, $params);
 					break;
 				case 'Taginput':
@@ -480,6 +490,7 @@ class LAFormMaker
 					$params['multiple'] = "true";
 					$params['rel'] = "taginput";
 					$params['data-placeholder'] = "Add multiple " . Str::plural($label);
+                    $params['id'] = $field_name;
 					unset($params['placeholder']);
 					// Override the edit value
 					if (isset($row) && isset($row->$field_name)) {
@@ -513,10 +524,11 @@ class LAFormMaker
 					if (isset($row) && isset($row->$field_name)) {
 						$default_val = $row->$field_name;
 					}
+                    $params['id'] = $field_name;
 					$out .= Form::textarea($field_name, $default_val, $params);
 					break;
 				case 'TextField':
-					$out .= '<label for="' . $field_name . '">' . $label . ': ' . $required_ast . ' </label>';
+					$out .= '<label for="id_' . $field_name . '">' . $label . ': ' . $required_ast . ' </label>';
 					if ($default_val != null) {
 						$default_val = $defaultvalue;
 					}
@@ -538,6 +550,7 @@ class LAFormMaker
 					}
 					$params['data-rule-url'] = "true";
 					$params['placeholder'] = "https://exemplo.com.br";
+                    $params['id'] = $field_name;
 					$out .= Form::text($field_name, $default_val, $params);
 					break;
 			}
