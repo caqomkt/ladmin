@@ -1,6 +1,9 @@
+@php
+   $loadDatatables = true;
+@endphp
 @extends("la.layouts.app")
 @section("contentheader_title", "__module_name_2__")
-@section("contentheader_description", "Listagem de __module_name_2__")
+@section("contentheader_description", "Listagem")
 @section("section", "__module_name_2__")
 @section("sub_section", "Listagem")
 @section("htmlheader_title", "__module_name_2__")
