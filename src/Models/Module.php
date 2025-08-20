@@ -306,7 +306,7 @@ class Module extends Model
                 if($update) {
                     // Timestamp Edit Not working - http://stackoverflow.com/questions/34774628/how-do-i-make-doctrine-support-timestamp-columns
                     // Error Unknown column type "timestamp" requested. Any Doctrine type that you use has to be registered with \Doctrine\DBAL\Types\Type::addType()
-                    // $var = $table->timestamp($field->colname)->change();
+                    $var = $table->date($field->colname)->nullable()->change();
                 } else {
                     $var = $table->timestamp($field->colname)->nullable()->nullableTimestamps();
                 }
