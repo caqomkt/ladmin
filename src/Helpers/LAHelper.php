@@ -314,46 +314,46 @@ class LAHelper
 	}
 	// LAHelper::print_menu_topnav($menu)
 	public static function print_menu_topnav($menu, $active = false)
-	{
-		$childrens = \Dwij\Laraadmin\Models\Menu::where("parent", $menu->id)
-			->orderBy('hierarchy', 'asc')
-			->get();
+{
+    $childrens = \Dwij\Laraadmin\Models\Menu::where("parent", $menu->id)
+        ->orderBy('hierarchy', 'asc')
+        ->get();
 
-		$hasChildren = $childrens->count() > 0;
-		$activeClass = $active ? ' active' : '';
+    $hasChildren = $childrens->count() > 0;
+    $activeClass = $active ? ' active' : '';
 
-		if (!$hasChildren) {
-			// Item simples
-			return '<li class="nav-item' . $activeClass . '">
+    if (!$hasChildren) {
+        // Item simples
+        return '<li class="nav-item' . $activeClass . '">
                     <a class="nav-link" href="' . url(config("laraadmin.adminRoute") . '/' . $menu->url) . '">
                         <i class="fa ' . $menu->icon . '" aria-hidden="true"></i> 
                         ' . LAHelper::real_module_name($menu->name) . '
                     </a>
                 </li>';
-		}
+    }
 
-		// Item com filhos → pai vira dropdown
-		$str = '<li class="nav-item dropdown' . $activeClass . '">';
-		$str .= '<a class="nav-link dropdown-toggle" href="#" id="menu-' . $menu->id . '" role="button" 
+    // Item com filhos → pai vira dropdown
+    $str = '<li class="nav-item dropdown' . $activeClass . '">';
+    $str .= '<a class="nav-link dropdown-toggle" href="#" id="menu-' . $menu->id . '" role="button" 
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-		$str .= '<i class="fa ' . $menu->icon . '" aria-hidden="true"></i> ';
-		$str .= LAHelper::real_module_name($menu->name);
-		$str .= '</a>';
+    $str .= '<i class="fa ' . $menu->icon . '" aria-hidden="true"></i> ';
+    $str .= LAHelper::real_module_name($menu->name);
+    $str .= '</a>';
 
-		// Filhos como dropdown-item
-		$str .= '<div class="dropdown-menu" aria-labelledby="menu-' . $menu->id . '">';
-		foreach ($childrens as $children) {
-			$str .= '<a class="dropdown-item" href="' . url(config("laraadmin.adminRoute") . '/' . $children->url) . '">
+    // Filhos como dropdown-item
+    $str .= '<div class="dropdown-menu" aria-labelledby="menu-' . $menu->id . '">';
+    foreach ($childrens as $children) {
+        $str .= '<a class="dropdown-item" href="' . url(config("laraadmin.adminRoute") . '/' . $children->url) . '">
                     <i class="fa ' . $children->icon . '"></i> 
                     ' . LAHelper::real_module_name($children->name) . '
                  </a>';
-		}
-		$str .= '</div>';
+    }
+    $str .= '</div>';
 
-		$str .= '</li>';
+    $str .= '</li>';
 
-		return $str;
-	}
+    return $str;
+}
 
 	public static function laravel_ver()
 	{
