@@ -2,11 +2,11 @@
    $loadDatatables = true;
 @endphp
 @extends("la.layouts.app")
+@section("htmlheader_title", "__module_name_2__")
 @section("contentheader_title", "__module_name_2__")
 @section("contentheader_description", "Listagem")
 @section("section", "__module_name_2__")
 @section("sub_section", "Listagem")
-@section("htmlheader_title", "__module_name_2__")
 @section("headerElems")
 @la_access("__module_name__", "create")
     <button class="btn bg-gradient-primary btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Adicionar __singular_cap_var__</button>

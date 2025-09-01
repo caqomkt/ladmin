@@ -1,12 +1,12 @@
 @extends("la.layouts.app")
+@section("htmlheader_title", "Editar __module_name_2__: ".$__singular_var__->$view_col)
+
 @section("contentheader_title")
 <a href="{{ url(config('laraadmin.adminRoute') . '/__db_table_name__') }}">__singular_cap_var__</a> :
 @endsection
 @section("contentheader_description", $__singular_var__->$view_col)
-@section("section", "__module_name_2__")
 @section("section_url", url(config('laraadmin.adminRoute') . '/__db_table_name__'))
-@section("sub_section", "Editar")
-@section("htmlheader_title", "Editar __module_name_2__: ".$__singular_var__->$view_col)
+
 @section("main-content")
 @if (count($errors) > 0)
 <div class="alert alert-danger">
