@@ -1182,24 +1182,7 @@ class Module extends Model
                         break;
                 }
             } else {
-                switch($ftypes[$field['field_type']]) {
-                    case 'Currency':
-                        $row->{$field['colname']} = 0;
-                        break;
-                    case 'Multiselect':
-                        // TODO: Bug fix
-                        $row->{$field['colname']} = '[]';
-                        break;
-                    case 'Taginput':
-                        $row->{$field['colname']} = '[]';
-                        break;
-                    case 'Checkbox':
-                        $row->{$field['colname']} = 0;
-                    break;
-                    default:
-                        $row->{$field['colname']} = null;
-                        break;
-                }
+                continue;
             }
 
         }
