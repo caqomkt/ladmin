@@ -27,7 +27,7 @@ class MenuController extends Controller
         // for authentication (optional)
         // $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of Menus
      *
@@ -36,58 +36,74 @@ class MenuController extends Controller
     public function index()
     {
         $modules = Module::all();
-        // Send Menus with No Parent to Views
+
+        // Pega menus raiz
         $menuItems = Menu::where("parent", 0)->orderBy('hierarchy', 'asc')->get();
-        
-        return View('la.menus.index', [
+
+        // Separa por topnav
+        $menusHeader = $menuItems->filter(function ($m) {
+            return (int) $m->topnav === 1;
+        });
+        $menusSidebar = $menuItems->filter(function ($m) {
+            return (int) $m->topnav !== 1;
+        });
+
+        // Opcional: menus não exibidos
+        $menusNaoExibidos = Menu::whereNull('url')->get();
+
+        return view('la.menus.index', [
             'menus' => $menuItems,
-            'modules' => $modules
+            'modules' => $modules,
+            'menusHeader' => $menusHeader,
+            'menusSidebar' => $menusSidebar,
+            'menusNaoExibidos' => $menusNaoExibidos,
         ]);
     }
-    
-    /**
-     * Store a newly created Menu in Database
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $name = $request->input('name');
         $url = $request->input('url');
         $icon = $request->input('icon');
         $type = $request->input('type');
-        
-        if($type == "module") {
+        $topnav = $request->input('topnav', 0);
+
+        if ($type == "module") {
             $module_id = $request->input('module_id');
             $module = Module::find($module_id);
-            if(isset($module->id)) {
+            if (isset($module->id)) {
                 $name = $module->name;
                 $url = $module->name_db;
                 $icon = $module->fa_icon;
             } else {
-                return response()->json([
-                    "status" => "failure",
-                    "message" => "Module does not exists"
-                ], 200);
+                return response()->json(["status" => "failure", "message" => "Module not found"], 200);
             }
         }
+
         Menu::create([
             "name" => $name,
             "url" => $url,
             "icon" => $icon,
             "type" => $type,
-            "parent" => 0
+            "parent" => 0,
+            "topnav" => $topnav
         ]);
-        if($type == "module") {
-            return response()->json([
-                "status" => "success"
-            ], 200);
-        } else {
-            return redirect(config('laraadmin.adminRoute') . '/la_menus');
-        }
+
+        return $type == "module"
+            ? response()->json(["status" => "success"], 200)
+            : redirect(config('laraadmin.adminRoute') . '/la_menus');
     }
-    
+
+    public function update_topnav(Request $request)
+    {
+        $menu = Menu::findOrFail($request->id);
+        $menu->topnav = (int) $request->topnav;
+        $menu->save();
+
+        return response()->json(['status' => 'success']);
+    }
+
+
     /**
      * Update Custom Menu
      *
@@ -97,20 +113,54 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $name = $request->input('name');
-        $url = $request->input('url');
-        $icon = $request->input('icon');
-        $type = $request->input('type');
-        
-        $menu = Menu::find($id);
-        $menu->name = $name;
-        $menu->url = $url;
-        $menu->icon = $icon;
+        $menu = Menu::findOrFail($id);
+
+        $menu->name = $request->input('name');
+        $menu->url  = $request->input('url');
+        $menu->icon = $request->input('icon');
+        $menu->type = $request->input('type', 'custom');
+
+        // NOVO: posição (hierarchy)
+        $hierarchy = (int) $request->input('hierarchy', 1);
+        if ($hierarchy < 1) $hierarchy = 1;
+        $menu->hierarchy = $hierarchy;
+
+        // NOVO: topnav (vindo do editor)
+        if ($request->has('topnav_edit')) {
+            $menu->topnav = (int) $request->input('topnav_edit') === 1 ? 1 : 0;
+            // quando muda topnav, parent fica 0 (raiz) a menos que você controle árvore por drag/drop
+            if ($menu->parent != 0) $menu->parent = 0;
+        }
+
         $menu->save();
-        
-        return redirect(config('laraadmin.adminRoute') . '/la_menus');
+
+        // Normaliza posições dentro do mesmo agrupamento parent/topnav
+        $this->normalizeHierarchy($menu->parent, $menu->topnav);
+
+        return redirect(config('laraadmin.adminRoute') . '/la_menus')
+            ->with('success', 'Item atualizado.');
     }
-    
+
+    /**
+     * Garante ordem 1..n por grupo (parent/topnav)
+     */
+    private function normalizeHierarchy(int $parentId, int $topnav): void
+    {
+        $siblings = Menu::where('parent', $parentId)
+            ->where('topnav', $topnav)
+            ->orderBy('hierarchy', 'asc')
+            ->get();
+
+        $pos = 1;
+        foreach ($siblings as $s) {
+            if ((int)$s->hierarchy !== $pos) {
+                $s->hierarchy = $pos;
+                $s->save();
+            }
+            $pos++;
+        }
+    }
+
     /**
      * Remove the specified Menu from database
      *
@@ -120,28 +170,28 @@ class MenuController extends Controller
     public function destroy($id)
     {
         Menu::find($id)->delete();
-        
+
         // Redirecting to index() method for Listing
         return redirect()->route(config('laraadmin.adminRoute') . '.la_menus.index');
     }
-    
+
     /**
      * Update Menu Hierarchy
      *
      * @return mixed
      */
-    public function update_hierarchy()
+    public function update_hierarchy(Request $request)
     {
-        $parents = $request->input('jsonData');
+        $parents = $request->input('jsonData', []);
         $parent_id = 0;
-        
-        for($i = 0; $i < count($parents); $i++) {
+
+        for ($i = 0; $i < count($parents); $i++) {
             $this->apply_hierarchy($parents[$i], $i + 1, $parent_id);
         }
-        
-        return $parents;
+
+        return response()->json(['status' => 'success']);
     }
-    
+
     /**
      * Save Menu hierarchy Recursively
      *
@@ -156,10 +206,10 @@ class MenuController extends Controller
         $menu->parent = $parent_id;
         $menu->hierarchy = $num;
         $menu->save();
-        
+
         // apply hierarchy to children if exists
-        if(isset($menuItem['children'])) {
-            for($i = 0; $i < count($menuItem['children']); $i++) {
+        if (isset($menuItem['children'])) {
+            for ($i = 0; $i < count($menuItem['children']); $i++) {
                 $this->apply_hierarchy($menuItem['children'][$i], $i + 1, $menuItem['id']);
             }
         }
